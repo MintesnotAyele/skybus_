@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom';
 
  class Login extends Component {
 
@@ -11,7 +11,8 @@ import React, { Component } from 'react'
         <input type="password" name="password" placeholder="Enter Password Here" />
         <button className="btnn">Login</button>
 
-        <p className="link">Don't have an account? <a href="#">Sign up</a> here</p>
+        <p className="link">Don't have an account? 
+        <li><Link to="/components/signup">Signup</Link></li>   </p>
         <p className="liw">follow us with</p>
 
         <div className="icons">

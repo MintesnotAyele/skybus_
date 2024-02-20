@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
-
+import { Link } from 'react-router-dom';
  class Assistant extends Component {
   render() {
     return (
-      <div>asssistant
+      <div><h1>asssissss</h1>
+      <h1>asssissss</h1>
+      <h1>asssissss</h1>
 
-        <ul>schedule view</ul>
-        <ul>available seat view </ul>
+        <ul><li><Link to="/assis/viewschedule">viewschedule</Link></li>
+          <li><Link to="/assis/availableseat">available seat</Link></li>
+        </ul>
       </div>
     )
   }

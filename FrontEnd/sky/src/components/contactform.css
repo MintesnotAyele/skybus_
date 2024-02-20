@@ -133,7 +133,7 @@
   
     /* background image */
     #fancy-form {
-      background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url(../image/1.jpg);
+      /*background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url(../image/1.jpg);*/
       background-size: cover;
       background-position: center;
       height: auto;
