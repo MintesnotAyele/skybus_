@@ -6,9 +6,10 @@
     <title>Document</title>
 </head>
 <body>
-    {% extends 'base.html' %}
+    {% extends 'store/index.html' %}
 
 {% block content %}
+{% csrf_token %}
     <h2>Success!</h2>
     <p>The person has been added to the database.</p>
 {% endblock %}
