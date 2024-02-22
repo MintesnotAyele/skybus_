@@ -7,5 +7,16 @@
 </head>
 <body>
     <h3>login</h3>
+{% block content %}
+  <h2>Login</h2>
+  <form method="post">
+    {% csrf_token %}
+    <label for="username">Username: </label><br>
+    <input type="text" name="username" ><br>
+    <label for="">password</label><br>
+    <input type="text" name="password"><br>
+    <button type="submit">Login</button>
+  </form>
+{% endblock %}
 </body>
 </html>
