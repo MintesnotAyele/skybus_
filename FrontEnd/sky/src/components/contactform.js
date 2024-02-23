@@ -4,7 +4,9 @@ class ContactForm extends Component {
   render() {
     return (
       <section id="fancy-form">
+        
         <div className="container">
+        <img className="" src="https://cdn.pixabay.com/photo/2014/04/03/11/55/bus-312564_640.png" />
           <div className="form-sections">
             <div className="Form-left">
               <h1>Get In Touch</h1>
