@@ -35,10 +35,9 @@ class App extends Component {
             <Route path="/admins/cancelticket" element={<Cancelticket/>}/>
             <Route path="/assis/viewschedule" element={<Viewschedule/>}/>
             <Route path="/assis/availableseat" element={<Availableseat/>}/>
-
             <Route path="/contactform" element={<ContactForm />} />
           
-            
+    
             <Route path="/mystyle/style" element={<Style />} />
 
             
