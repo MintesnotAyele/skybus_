@@ -2,12 +2,12 @@ from django.shortcuts import render,redirect
 from rest_framework import viewsets
 from django.contrib.auth import login, authenticate, get_user_model,logout
 from django.contrib import messages
-from .form import UsersForm
+from .forms import UsersForm,LoginForm
 from.serializer import UsersSerializer
 from django.http import HttpResponse,HttpRequest
 from .models import Users
 from django.urls import reverse
-
+from django.contrib.auth.hashers import make_password, check_password
 
 class UserView(viewsets.ModelViewSet):
     serializer_class=UsersSerializer
@@ -26,30 +26,27 @@ def signup(request) :
 def signin(request):
     return  render(request,'store/login.html')
 
-def login_view(request):
-    if request.user.is_authenticated:
-         messages.success(request, "You are logged in")
-         return redirect("core:index")
+
+def login(request):
     if request.method == 'POST':
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        try:
-            user = Users.objects.get(username=username)
-        except Users.DoesNotExist:
-            messages.warning(request, f"User with email {username} does not exist")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-            messages.success(request, "You are logged in")
-            return redirect(reverse("index"))
-        else:
-            messages.warning(request, "User does not exist")
-
-    context = {
-        
-    }
-
-    return render(request, "store/login.html", context)
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            password = form.cleaned_data['password']
+            try:
+                user = Users.objects.get(username=username)
+                if (password==user.password):
+                    # Authentication successful
+                    # You can implement session handling here
+                    return redirect('index.html')  # Redirect to home page after login
+                else:
+                    # Authentication failed
+                    error_message = "Invalid username or password."
+                    return render(request, 'login.html', {'form': form, 'error_message': error_message})
+            except Users.DoesNotExist:
+                # User does not exist
+                error_message = "Invalid username or password."
+                return render(request, 'login.html', {'form': form, 'error_message': error_message})
+    else:
+        form = LoginForm()
+    return render(request, 'login.html', {'form': form})
