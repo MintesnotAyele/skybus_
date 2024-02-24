@@ -38,15 +38,15 @@ def login(request):
                 if (password==user.password):
                     # Authentication successful
                     # You can implement session handling here
-                    return redirect('index.html')  # Redirect to home page after login
+                    return redirect('home')  # Redirect to home page after login
                 else:
                     # Authentication failed
                     error_message = "Invalid username or password."
-                    return render(request, 'login.html', {'form': form, 'error_message': error_message})
+                    return render(request, 'store/login.html', {'form': form, 'error_message': error_message})
             except Users.DoesNotExist:
                 # User does not exist
                 error_message = "Invalid username or password."
-                return render(request, 'login.html', {'form': form, 'error_message': error_message})
+                return render(request, 'store/login.html', {'form': form, 'error_message': error_message})
     else:
         form = LoginForm()
-    return render(request, 'login.html', {'form': form})
+    return render(request, 'store/login.html', {'form': form})
