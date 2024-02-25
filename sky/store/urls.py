@@ -7,5 +7,7 @@ urlpatterns = [
     path('',views.home,name='home'),
     path('signup/',views.signup,name="signup"),
     path('login/',views.login, name='login'),
+    path('add_bus/', views.add_bus, name='add_bus'),
+    path('availabilities/', views.display_availabilities, name='availabilities'),
     #path('login/', LoginView.as_view(template_name='store/login.html'))
 ]

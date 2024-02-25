@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Schedules</title>
+</head>
+<body>
+    <h1>Available Schedules</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Bus Plate Number</th>
+                <th>Schedule Date</th>
+                <th>Destination</th>
+                <th>Time</th>
+                <th>Price</th>
+                <th>Available Seats</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for availability in availabilities %}
+            <tr>
+                <td>{{ availability.bus.palte_number }}</td>
+                <td>{{ availability.schedule.date }}</td>
+                <td>{{ availability.schedule.destination }}</td>
+                <td>{{ availability.schedule.time }}</td>
+                <td>{{ availability.schedule.price }}</td>
+                <td>{{ availability.available_seats }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

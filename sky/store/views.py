@@ -2,10 +2,10 @@ from django.shortcuts import render,redirect
 from rest_framework import viewsets
 from django.contrib.auth import login, authenticate, get_user_model,logout
 from django.contrib import messages
-from .forms import UsersForm,LoginForm
+from .forms import UsersForm,LoginForm,BusForm
 from.serializer import UsersSerializer
 from django.http import HttpResponse,HttpRequest
-from .models import Users
+from .models import Users,Availability
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 
@@ -50,3 +50,17 @@ def login(request):
     else:
         form = LoginForm()
     return render(request, 'store/login.html', {'form': form})
+def add_bus(request):
+    if request.method == 'POST':
+        form = BusForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('home')  # Redirect to a success page
+    else:
+        form = BusForm()
+    return render(request, 'store/add_bus.html', {'form': form})
+def display_availabilities(request):
+    availabilities = Availability.objects.select_related('bus', 'schedule').filter(available_seats__gt=0)
+    return render(request, 'store/availabilities.html', {'availabilities': availabilities})
+
+
