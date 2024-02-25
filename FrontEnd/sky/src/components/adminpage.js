@@ -10,6 +10,10 @@ class Adminpage extends Component {
           <li><Link to="/admins/busmanage">Bus Manage</Link></li>
           <li><Link to="/admins/updateprice">Update Price</Link></li>
           <li><Link to="/admins/cancelticket">cancelticket</Link></li>
+          view feed back
+          add bus 
+
+          
           
         </ul>
       </div>
