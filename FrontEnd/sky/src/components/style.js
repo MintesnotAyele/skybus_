@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './login.css';
 import './contactform.css';
+import './home.css';
 //import  './footer.css'
 
 class Style extends Component {
