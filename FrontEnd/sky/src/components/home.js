@@ -6,14 +6,14 @@ class Home extends Component {
     return (
 <div>      
 
-            <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+            <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-900">
         <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
             <a href="https://flowbite.com" class="flex items-center">
                 <img src="https://cdn.pixabay.com/photo/2014/04/03/11/55/bus-312564_640.png" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
                 <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">SkyBus</span>
             </a>
             <div class="flex items-center lg:order-2">
-                <a href="#" class="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"><Link to="/login">Log in</Link></a>
+                <a href="#" class="text-gray-800 dark:text-white hover:bg-gray-300 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-blue-400 focus:outline-none dark:focus:ring-gray-800"><Link to="/login">Log in</Link></a>
                 <a href="#" class="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">Get started</a>
                 <button data-collapse-toggle="mobile-menu-2" type="button" class="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="mobile-menu-2" aria-expanded="false">
                     <span class="sr-only">Open main menu</span>
@@ -56,7 +56,7 @@ class Home extends Component {
           </h1>
           <p className="par">
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt neque
-            atque eveniet <br />quis nesciunt. Quos consequuntur, fugit nemo ad
+            atque eveniet <br />
             delectus <br />a quae totam ipsa illum minus laudantium?
           </p>
           <button className="cn">
@@ -116,7 +116,7 @@ class Home extends Component {
 
 
 <div className='aboutus'>
-<div className="bg-gray-200 px-2 py-10">
+<div className=" px-2 py-12">
   <div id="features" className="mx-auto max-w-6xl ">
     <p className="text-center text-base font-semibold leading-7 text-primary-500">Aboutus</p>
     <h2 className="text-center font-display text-3xl font-bold tracking-tight text-slate-900 md:text-4xl">
@@ -150,7 +150,7 @@ class Home extends Component {
       <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
         <a href="/pricing" className="group">
           <img src="https://www.svgrepo.com/show/530440/machine-vision.svg" alt="" className="mx-auto h-10 w-10" />
-          <h3 className="my-3 font-display font-medium group-hover:text-primary-500">Free trial</h3>
+          <h3 className="my-3 font-display font-medium group-hover:text-primary-500">flexible</h3>
           <p className="mt-1.5 text-sm leading-6 text-secondary-500">
             We offer a free trial service without login. We provide many payment options including pay-as-you-go and subscription.
           </p>
@@ -159,7 +159,7 @@ class Home extends Component {
       <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
         <a href="/templates" className="group">
           <img src="https://www.svgrepo.com/show/530450/page-analysis.svg" alt="" className="mx-auto h-10 w-10" />
-          <h3 className="my-3 font-display font-medium group-hover:text-primary-500">90+ templates</h3>
+          <h3 className="my-3 font-display font-medium group-hover:text-primary-500">servies</h3>
           <p className="mt-1.5 text-sm leading-6 text-secondary-500">
             We offer many templates covering areas such as writing, education, lifestyle, and creativity to inspire your potential.
           </p>
@@ -168,7 +168,7 @@ class Home extends Component {
       <li className="rounded-xl bg-white px-6 py-8 shadow-sm">
         <a href="/download" className="group">
           <img src="https://www.svgrepo.com/show/530453/mail-reception.svg" alt="" className="mx-auto h-10 w-10" />
-          <h3 className="my-3 font-display font-medium group-hover:text-primary-500">Use Anywhere</h3>
+          <h3 className="my-3 font-display font-medium group-hover:text-primary-500">in wolkite</h3>
           <p className="mt-1.5 text-sm leading-6 text-secondary-500">
             Our product is compatible with multiple platforms including Web, Chrome, Windows, and Mac, you can use MagickPen anywhere.
           </p>

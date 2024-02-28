@@ -5,8 +5,8 @@ class ContactForm extends Component {
     return (
         <div className=" max-w-screen-lg mx-auto p-5">
         <div className="grid grid-cols-1 md:grid-cols-12 border">
-        <div className="bg-blue-900 md:col-span-4 p-10 text-white">
-            <p className="mt-4 text-sm leading-7 font-regular uppercase">
+        <div className="bg-gray-900 md:col-span-4 p-10 text-white">
+            <p className="mt-4 text-sm leading-7 font-regular uppercase text-sm 0.875rem;">
                     Contact
                 </p>
                 <h3 className="text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight">
@@ -23,7 +23,7 @@ class ContactForm extends Component {
                         xmlnsXlink="http://www.w3.org/1999/xlink">
                         {/* SVG content */}
                     </svg>
-                    <span className="text-sm">House #14, Street #12, Darulaman Road, Kabul, Afghanistan.</span>
+                    <span className="text-sm">Address #14, Street #12, Gurage, central Ethiopia, Ethiopia.</span>
                 </div>
                 <div className="flex items-center mt-5">
                     <svg className="h-6 mr-2 text-indigo-600" fill="currentColor" version="1.1"
@@ -31,7 +31,7 @@ class ContactForm extends Component {
                         xmlnsXlink="http://www.w3.org/1999/xlink">
                         {/* SVG content */}
                     </svg>
-                    <span className="text-sm">+93 749 99 65 50</span>
+                    <span className="text-sm">+251 9 99 65 50 50</span>
                 </div>
                 <div className="flex items-center mt-5">
     <svg className="h-8 mr-4 text-white-600" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
