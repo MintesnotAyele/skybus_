@@ -20,7 +20,6 @@ class Schedule(models.Model):
 class Availability(models.Model):
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    travel_date = models.DateField()
     available_seats = models.IntegerField()
 
 class Booking(models.Model):

@@ -129,8 +129,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#AUTHENTICATION_BACKENDS = [
-   # 'django.contrib.auth.backends.ModelBackend',
-    #'store.backends.CustomAuthenticationBackend',  # replace 'app_name' with the name of your app
-#]
 LOGIN_REDIRECT_URL = 'store/templates/store/success.html'  # replace 'url-name' with the name of the URL to redirect to after login
+
+CORS_ORIGIN_WHITELIST =(
+    'http://localhost:3000',
+)
