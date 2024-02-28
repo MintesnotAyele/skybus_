@@ -20,15 +20,14 @@ class Schedule(models.Model):
 class Availability(models.Model):
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
-    travel_date = models.DateField()
     available_seats = models.IntegerField()
 
 class Booking(models.Model):
     booking_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(Users, on_delete=models.CASCADE)
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
+    bus = models.ForeignKey(Bus, on_delete=models.CASCADE,null=True)
     booking_date = models.DateTimeField(auto_now_add=True)
-    number_of_seats_booked = models.IntegerField()
+    seat_number = models.IntegerField()
 class Payment(models.Model):
     payment_id = models.AutoField(primary_key=True)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
