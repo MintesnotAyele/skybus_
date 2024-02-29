@@ -13,3 +13,5 @@ class BusForm(forms.ModelForm):
     class Meta:
         model = Bus
         fields = ['palte_number', 'number_of_site', 'owner_name', 'owner_ac']
+class DestinationForm(forms.Form):
+    destination = forms.CharField(max_length=100)

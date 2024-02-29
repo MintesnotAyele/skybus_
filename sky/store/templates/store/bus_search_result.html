@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bus Search Result</title>
+</head>
+<body>
+    {% if bus_plate_number %}
+        <h2>The bus plate number for your destination is: {{ bus_plate_number }}</h2>
+    {% elif error_message %}
+        <h2>{{ error_message }}</h2>
+    {% endif %}
+</body>
+</html>
