@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from rest_framework import viewsets
 from django.contrib.auth import login, authenticate, get_user_model,logout
 from django.contrib import messages
-from .forms import UsersForm,LoginForm,BusForm
+from .forms import UsersForm,LoginForm,BusForm,DestinationForm
 from.serializer import UsersSerializer
 from django.http import HttpResponse,HttpRequest
 from .models import Users,Availability
@@ -62,5 +62,23 @@ def add_bus(request):
 def display_availabilities(request):
     availabilities = Availability.objects.select_related('bus', 'schedule').filter(available_seats__gt=0)
     return render(request, 'store/availabilities.html', {'availabilities': availabilities})
+
+
+def search_bus(request):
+    if request.method == 'POST':
+        form = DestinationForm(request.POST)
+        if form.is_valid():
+            destination = form.cleaned_data['destination']
+            # Query to get the bus id with the destination and smallest date
+            schedule = Schedule.objects.filter(destination=destination).order_by('departure_date').first()
+            if schedule:
+                # Get the bus plate number directly from the Bus table
+                bus_plate_number = schedule.bus.plate_number
+                return render(request, 'bus_search_result.html', {'bus_plate_number': bus_plate_number})
+            else:
+                return render(request, 'bus_search_result.html', {'error_message': 'No bus found for the destination'})
+    else:
+        form = DestinationForm()
+    return render(request, 'destination_form.html', {'form': form})
 
 
