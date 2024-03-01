@@ -12,6 +12,7 @@ import Header from './components/header';
 import Busmanage from './admins/busmanage';
 import Updateprice from './admins/updateprice';
 import Cancelticket from './admins/cancelticket';
+import Report from './admins/report';
 import Availableseat from './assis/availableseat';
 import Viewschedule from './assis/viewschedule';
 import './App.css';
@@ -33,6 +34,7 @@ class App extends Component {
             <Route path="/admins/busmanage" element={<Busmanage/>}/>
             <Route path="/admins/updateprice" element={<Updateprice/>}/>
             <Route path="/admins/cancelticket" element={<Cancelticket/>}/>
+            <Route path="/admins/report" element={<Report/>}/>
             <Route path="/assis/viewschedule" element={<Viewschedule/>}/>
             <Route path="/assis/availableseat" element={<Availableseat/>}/>
             <Route path="/contactform" element={<ContactForm />} />

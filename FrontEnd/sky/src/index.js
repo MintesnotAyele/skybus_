@@ -14,6 +14,7 @@ import ContactForm from './components/contactform';
 import Header from './components/header';
 import Busmanage from './admins/busmanage';
 import Cancelticket from './admins/cancelticket';
+import Report from './admins/report';
 import Viewschedule from './assis/viewschedule';
 import Availableseat from './assis/availableseat';
 import reportWebVitals from './reportWebVitals';
