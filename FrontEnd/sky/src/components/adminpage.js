@@ -14,7 +14,7 @@ class Adminpage extends Component {
           view feed back
           add bus 
 
-          
+        
           
         </ul>
       </div>

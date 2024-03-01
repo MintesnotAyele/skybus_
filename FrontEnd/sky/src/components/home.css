@@ -138,7 +138,7 @@ body{
 }
 
 
-/* body 2 */
+/* body 2 
 .content{
     width: 1200px;
     height: auto;
@@ -346,11 +346,11 @@ body{
 
     0%{
         color: #fff;
-        /* font-weight: 600; */
+       
     }
     50%{
         color: rgb(255, 156, 34);
-        /* font-size: 40px; */
+        /* font-size: 40px; 
     }
     100%{
         color:#fff;
@@ -361,11 +361,11 @@ body{
 
     0%{
         color: #fff;
-        /* font-weight: 600; */
+     
     }
     50%{
         color: rgb(255, 156, 34);
-        /* font-size: 50px; */
+    
     }
     100%{
         color:#fff;
@@ -380,8 +380,8 @@ body{
     border-radius: 10px;
     font-family: cursive;
     color: #fff;
-    /* justify-content: center; */
-
+   
+ 
 }
 .text-one{
     width: 200px;
@@ -409,13 +409,13 @@ body{
     }
     25%{
         border:1px solid rgb(34, 192, 255);
-        /* font-size: 50px; */
+        font-size: 50px; 
     }
     50%{
         border:1px solid #fff;
     }  
     100%{
-        /* border:1px solid #000000; */
+         border:1px solid #000000;
         border:1px solid rgb(34, 156, 255);
     } 
 }  
@@ -519,3 +519,4 @@ body{
     background-color: rgb(12, 181, 233);
 }
 
+*/
