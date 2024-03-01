@@ -4,20 +4,20 @@
 @tailwind utilities;
 
 
-/* background image */
+/* background image 
 #fancy-form {
     background-position: center;
     height: 100vh;
   }
   
-  /* container utility */
+  /* container utility 
   #fancy-form .container {
     width: 80%;
     margin: auto;
     overflow: hidden;
   }
   
-  /* main div */
+  /* main div 
   .form-sections {
     margin-top: 5rem;
     display: grid;
@@ -25,7 +25,7 @@
     grid-template-columns: repeat(2, 1fr);
   }
   
-  /* Form-left styling */
+  /* Form-left styling 
   .Form-left h1 {
     color: #fff;
     padding: 0;
@@ -53,9 +53,9 @@
     width: 25rem;
     margin-left: 0;
     border: 1px solid rgb(53, 52, 52);
-  }
+  }*/
   
-  /* social media icons */
+  /* social media icons 
   .fa {
     padding: 8px;
     font-size: 18px;
@@ -69,7 +69,7 @@
     color: rgb(16, 135, 190);
   }
   
-  /* Form Right Styling */
+  /* Form Right Styling 
   .Form-right h1 {
     color: #fff;
     padding: 0;
@@ -123,19 +123,19 @@
   
   form button:hover {
     background-color: orange;
-  }
+  }*/
   
   /* media queries */
-  @media (max-width: 968px) {
+  /*@media (max-width: 968px) {
     #fancy-form .form-sections {
       display: block;
       width: 100%;
       text-align: left;
     }
-  
+  */
 
   /* background image */
-#fancy-form {
+/*#fancy-form {
   background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.9)), url('./image/bus.jpg');
   background-size: cover;
   background-position: center;
@@ -147,10 +147,10 @@
     .form-sections .Form-right {
       margin-top: 2rem;
       margin-bottom: 2rem;
-    }
+    }*/
   
     /* social media icons */
-    .fa {
+    /*.fa {
       padding: 8px;
       font-size: 18px;
       width: 30px;
@@ -158,5 +158,5 @@
       text-decoration: none;
       color: rgb(187, 182, 182);
     }
-  }
+  }*/
   
