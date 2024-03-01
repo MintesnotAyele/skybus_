@@ -15,6 +15,7 @@ import Cancelticket from './admins/cancelticket';
 import Report from './admins/report';
 import Availableseat from './assis/availableseat';
 import Viewschedule from './assis/viewschedule';
+
 import './App.css';
 import Style from './components/style';
 
@@ -37,6 +38,7 @@ class App extends Component {
             <Route path="/admins/report" element={<Report/>}/>
             <Route path="/assis/viewschedule" element={<Viewschedule/>}/>
             <Route path="/assis/availableseat" element={<Availableseat/>}/>
+            <Route path="/Fpassenger/passanger" element={<Passanger/>}/>
             <Route path="/contactform" element={<ContactForm />} />
           
     
