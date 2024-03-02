@@ -1,29 +1,29 @@
 from django.shortcuts import render,redirect
 from rest_framework import viewsets,permissions,status
 from rest_framework.views import APIView
-from django.contrib.auth import login, authenticate, get_user_model,logout
+from django.contrib.auth import login, authenticate,logout
 from django.contrib import messages
 from .forms import UsersForm,LoginForm,BusForm,DestinationForm
-from.serializer import UsersSerializer, UserRegisterSerializer
+from.serializer import UsersSerializer
 from django.http import HttpResponse,HttpRequest
 from .models import Users,Availability,Schedule
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
-
+@api_view(['POST'])
+def login1(request):
+    email = request.data.get('email')
+    password = request.data.get('password')
+    user = authenticate(email=email, password=password)
+    if user:
+        return Response({'message': 'Login successful'})
+    else:
+        return Response({'message': 'Invalid username or password'}, status=401)
 class UserView(viewsets.ModelViewSet):
     serializer_class=UsersSerializer
     queryset = Users.objects.all()
-class UserRegister(APIView):
-    permission_class=(permissions.AllowAny,)
-    def post(self, request):
-        clean_data=request.data
-        serializer=UserRegisterSerializer(data=clean_data)
-        if serializer.is_valid(raise_exception=True):
-            user=serializer.create(clean_data)
-            if user:
-                return HttpResponse(serializer.data,status=status.HTTP_201_CREATED)
-        return HttpResponse(status=status.HTTP_400_BAD_REQUEST)
 def home(request):
     return render(request,"store/index.html")
 def signup(request) :
