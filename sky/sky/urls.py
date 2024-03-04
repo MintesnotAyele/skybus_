@@ -24,6 +24,6 @@ router.register(r'tasks',views.UserView,'task')
 urlpatterns = [
     path('',include( 'store.urls')),
     path('admin/', admin.site.urls),
-    path('api/' ,include(router.urls))
+    path('api/' ,include(router.urls)),
 ]
 """"kanu"""

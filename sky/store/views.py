@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from rest_framework import viewsets,permissions,status
+from rest_framework.viewsets import ViewSet
 from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate,logout
 from django.contrib import messages
@@ -13,14 +14,6 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 @api_view(['POST'])
-def login1(request):
-    email = request.data.get('email')
-    password = request.data.get('password')
-    user = authenticate(email=email, password=password)
-    if user:
-        return Response({'message': 'Login successful'})
-    else:
-        return Response({'message': 'Invalid username or password'}, status=401)
 class UserView(viewsets.ModelViewSet):
     serializer_class=UsersSerializer
     queryset = Users.objects.all()
@@ -62,35 +55,10 @@ def login(request):
     else:
         form = LoginForm()
     return render(request, 'store/login.html', {'form': form})
-def add_bus(request):
-    if request.method == 'POST':
-        form = BusForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')  # Redirect to a success page
-    else:
-        form = BusForm()
-    return render(request, 'store/add_bus.html', {'form': form})
 def display_availabilities(request):
     availabilities = Availability.objects.select_related('bus', 'schedule').filter(available_seats__gt=0)
     return render(request, 'store/availabilities.html', {'availabilities': availabilities})
 
 
-def search_bus(request):
-    if request.method == 'POST':
-        form = DestinationForm(request.POST)
-        if form.is_valid():
-            destination = form.cleaned_data['destination']
-            # Query to get the bus id with the destination and smallest date
-            schedule = Schedule.objects.filter(destination=destination).order_by('time').first()
-            if schedule:
-                # Get the bus plate number directly from the Bus table
-                bus_plate_number = schedule.busPlateNumber
-                return render(request, 'store/bus_search_result.html', {'bus_plate_number': bus_plate_number})
-            else:
-                return render(request, 'store/bus_search_result.html', {'error_message': 'No bus found for the destination'})
-    else:
-        form = DestinationForm()
-    return render(request, 'store/destination_form.html', {'form': form})
 
 
