@@ -1,6 +1,6 @@
 <a name="readme-top"></a>
 
-# <div align="center">🛰Your Project Title 🚀</div>
+# <div align="center">🛰Digital payment for Transportation  🚀</div>
 
 # 📗 Table of Contents
 
@@ -28,21 +28,21 @@
 
 <!-- PROJECT DESCRIPTION -->
 
-# 📖 Your Project Title  <a name="doctor-appointment"></a>
-This is a .....description of the project. 
-And enables the users to sign up and ........ 
+# 📖 Your Project Title  <a name="Digital payment for Transportation"></a>
+This is a description of the project. 
+And enables the users to sign up and and how to access the website and mobile app
 The project is a repository consisting of the following files:
 
 - JS files
 - CSS files
-- .....
-- ....
+- Data-base
+- Web-server
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## 🛠 Built With <a name="built-with"></a>
+## 🛠 Built With <a name="Django"></a>
 
-### Tech Stack <a name="tech-stack"></a>
+### Tech Stack <a name="react"></a>
   <ul>
     <li>
       <a href="https://rubyonrails.org/">
@@ -70,10 +70,12 @@ The project is a repository consisting of the following files:
 ### Key Features <a name="key-features"></a>
 
 - User can sign up
-- User can......
-- User can .....
-- User can .....
-- User can ......
+- User can login/logout
+- User can see information
+- User can book for transport
+- User can ticket request
+- user can give feedback
+- user can rating our service
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -93,7 +95,7 @@ The project is a repository consisting of the following files:
 
 ```
 git clone https://github.com/username/repoName.git
-cd repoName
+cd sky
 bundle install
 npm install
 ```
@@ -122,19 +124,19 @@ In the project directory, run:
 
 ### 👤 **Stud Name1**
 
-- GitHub: [Benawi](https://github.com/Benawi)
-- Linkdin: [Habtamu](https://www.linkedin.com/in/habtamualemayehu/)
+- GitHub: [@yenesew](https://github.com/yene-sew)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/yenesewsileshi/)
+
+
+
+### 👤 **Stud Name3**
+- GitHub: [Mintesnot](https://github.com/MintesnotAyele)
+- Linkdin: [Habtamu](https://www.linkedin.com/in/mintesnotayele/)
 
 ### 👤 **Stud Name3**
 
-- GitHub: [@toyman640](https://github.com/toyman640)
-
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/falako-omotoyosi/)
-### 👤 **Stud Name3**
-
-- GitHub: [@toyman640](https://github.com/toyman640)
-
-- LinkedIn: [LinkedIn](https://www.linkedin.com/in/falako-omotoyosi/)
+- GitHub: [@toyman640](https://github.com/samuelfikre)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/samuelfikre/)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
