@@ -13,10 +13,13 @@ from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
-@api_view(['POST'])
-class UserView(viewsets.ModelViewSet):
-    serializer_class=UsersSerializer
+from rest_framework import viewsets
+
+
+class UserViewSet(viewsets.ModelViewSet):
     queryset = Users.objects.all()
+    serializer_class = UsersSerializer
+
 def home(request):
     return render(request,"store/index.html")
 def signup(request) :
