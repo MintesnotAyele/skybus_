@@ -148,8 +148,8 @@ In the project directory, run:
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- Add section ......
-- Add .......
+- Add section of system
+- Add extra functions
 - Add extra styling
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -177,6 +177,7 @@ If you found this project helpful, consider giving a ⭐️!
 ## 🙏 Acknowledgments <a name="acknowledgements"></a>
 
 We would like to express our deepest gratitude to all the people and institutions that have contributed to make this project possible.
+specially for our advisor(Mr. Berihun G.) and department head(Mr. Habtamu Alemayehu).
 
 #### Development Team
 - **Falako Omotoyosi**: Thank you for being a productive partner with impressive technical thinking and good execusion style.

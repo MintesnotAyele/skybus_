@@ -36,38 +36,38 @@ import React, { Component } from 'react'
           <tbody>
             <tr>
               <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
+              <td className="border px-4 py-2">City Wolkite</td>
+              <td className="border px-4 py-2">City Emdibir</td>
               <td className="border px-4 py-2">2024-02-22</td>
             </tr>
             <tr>
               <td className="border px-4 py-2">2</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">City C</td>
+              <td className="border px-4 py-2">City Wolkite</td>
+              <td className="border px-4 py-2">City Woliso</td>
+              <td className="border px-4 py-2">2024-02-22</td>
+            </tr>
+            <tr>
+              <td className="border px-4 py-2">3</td>
+              <td className="border px-4 py-2">City wolkite</td>
+              <td className="border px-4 py-2">City Addis-Ababa</td>
+              <td className="border px-4 py-2">2024-02-22</td>
+            </tr>
+            <tr>
+              <td className="border px-4 py-2">4</td>
+              <td className="border px-4 py-2">City Wolkite</td>
+              <td className="border px-4 py-2">City Hossana</td>
+              <td className="border px-4 py-2">2024-02-22</td>
+            </tr>
+            <tr>
+              <td className="border px-4 py-2">5</td>
+              <td className="border px-4 py-2">City Wolkite</td>
+              <td className="border px-4 py-2">City Jima</td>
+              <td className="border px-4 py-2">2024-02-22</td>
+            </tr>
+            <tr>
+              <td className="border px-4 py-2">6</td>
+              <td className="border px-4 py-2">City Wolkite</td>
+              <td className="border px-4 py-2">City Butajira</td>
               <td className="border px-4 py-2">2024-02-23</td>
             </tr>
           </tbody>
