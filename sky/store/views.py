@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from rest_framework import viewsets,permissions,status
 from rest_framework.viewsets import ViewSet
 from rest_framework.views import APIView
@@ -7,57 +7,43 @@ from django.contrib import messages
 from .forms import UsersForm,LoginForm,BusForm,DestinationForm
 from.serializer import UsersSerializer
 from django.http import HttpResponse,HttpRequest
-from .models import Users,Availability,Schedule
+from .models import Users,Availability,Schedule,CustomUser
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
-
 from rest_framework import viewsets
-
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.serializers import AuthTokenSerializer
 
 class UserViewSet(viewsets.ModelViewSet):
-    queryset = Users.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UsersSerializer
 
 def home(request):
     return render(request,"store/index.html")
-def signup(request) :
-    if request.method == 'POST':
-        form = UsersForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return render(request, 'store/success.html')
-    else:
-        form = UsersForm()
-    return render(request,"store/signup.html" , {'form': form})
-def signin(request):
-    return  render(request,'store/login.html')
-
-
+@api_view(['POST'])
+def signup(request):
+    serializer = UsersSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        user.set_password(request.data['password'])
+        user.save()
+        token_serializer = AuthTokenSerializer(data={"username": user.username, "password": request.data['password']})
+        if token_serializer.is_valid():
+            token = Token.objects.create(user=user)
+            return Response({"token": token.key, "user": serializer.data})
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+@api_view(['POST'])
 def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            try:
-                user = Users.objects.get(username=username)
-                if (password==user.password):
-                    # Authentication successful
-                    # You can implement session handling here
-                    return redirect('desti')  # Redirect to home page after login
-                else:
-                    # Authentication failed
-                    error_message = "Invalid username or password."
-                    return render(request, 'store/login.html', {'form': form, 'error_message': error_message})
-            except Users.DoesNotExist:
-                # User does not exist
-                error_message = "Invalid username or password."
-                return render(request, 'store/login.html', {'form': form, 'error_message': error_message})
-    else:
-        form = LoginForm()
-    return render(request, 'store/login.html', {'form': form})
+    user =get_object_or_404(CustomUser,username=request.data['username'])
+    if not user.check_password(request.data['password']):
+        return Response({"detail":"Not found."},status=status.HTTP_404_NOT_FOUND)
+    token, created=Token.objects.get_or_create(user=user)
+    serializer = UsersSerializer(instance=user)
+    return Response({"token": token.key, "user": serializer.data})
+
+
 def display_availabilities(request):
     availabilities = Availability.objects.select_related('bus', 'schedule').filter(available_seats__gt=0)
     return render(request, 'store/availabilities.html', {'availabilities': availabilities})
