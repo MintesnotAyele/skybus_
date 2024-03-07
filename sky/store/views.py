@@ -36,12 +36,21 @@ def signup(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 @api_view(['POST'])
 def login(request):
-    user =get_object_or_404(CustomUser,username=request.data['username'])
+    user =get_object_or_404(CustomUser,email=request.data['email'])
+    serializer = UsersSerializer(instance=user)
+
+
+        
     if not user.check_password(request.data['password']):
         return Response({"detail":"Not found."},status=status.HTTP_404_NOT_FOUND)
-    token, created=Token.objects.get_or_create(user=user)
-    serializer = UsersSerializer(instance=user)
-    return Response({"token": token.key, "user": serializer.data})
+    token_serializer = AuthTokenSerializer(data={"username": user.username, "password": request.data['password']})
+    if token_serializer.is_valid():
+            
+        token = Token.objects.create(user=user)
+        
+        return Response({"token": token.key, "user": serializer.data})
+    
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 def display_availabilities(request):
