@@ -7,11 +7,11 @@ Usermodel=get_user_model()
 
 class UsersSerializer(serializers.ModelSerializer):
     class   Meta:
-        model = Usermodel
+        model = CustomUser
         fields=( 'id','username','email','password','phone_number')
 class UserRegisterSerializer(serializers.ModelSerializer):
      class   Meta:
-        model = Usermodel
+        model = CustomUser
         fields='__all__'
      def create(self, validated_data):
         user_obj =Usermodel.objects.create_user(email=validated_data['email'],password=validated_data['password'],phone_number=validated_data['phone_number'])
@@ -21,6 +21,9 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 class UserLoginSerializer(serializers.ModelSerializer):
     email=serializers.EmailField()
     password=serializers.CharField()
+    class   Meta:
+        model = CustomUser
+        fields = ['email', 'password']
     def check_user(self,validated_data):
         user=authenticate(username=validated_data['email'],password=validated_data['password'])
         if  not user:
