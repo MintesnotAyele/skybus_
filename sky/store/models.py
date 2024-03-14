@@ -2,22 +2,22 @@ from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, Group,Permission,PermissionsMixin
 class UserManager(BaseUserManager):
-    def create_user(self,email,password=None,phone_number=None):
+    def create_user(self,email,password=None,phone_number=None,username=None):
         if not email:
             raise ValueError('An email is required.')
         if not password:
             raise ValueError("A password is required.")
         email =self.normalize_email(email)
-        user = self.model(email=email, phone_number=phone_number)
+        user = self.model(email=email, phone_number=phone_number,username=username)
         user.set_password(password)
         user.save()
         return user
-    def create_superuser(self,email,password=None,phone_number=None):
+    def create_superuser(self,email,password=None,phone_number=None,username=None):
         if not email:
             raise ValueError('An email is required.')
         if not password:
             raise ValueError("A password is required.")
-        user =self.create_user(email,password,phone_number)
+        user =self.create_user(email,password,phone_number,username)
         user.is_superuser=True
         user.save()
         return user
@@ -32,15 +32,7 @@ class CustomUser(AbstractUser,PermissionsMixin):
     USERNAME_FIELD='email'
     REQUIRED_FIELDS =['username','phone_number']
     objects=UserManager()
-
     def __str__(self):
-        return self.username
-
-    # Add related_name to avoid clashes
-    groups = models.ManyToManyField(Group, related_name='custom_user_groups', blank=True, verbose_name=('groups'))
-    user_permissions = models.ManyToManyField(Permission, related_name='custom_user_permissions', blank=True, verbose_name=('user permissions'))
-
-    def str(self):
         return self.email
 
 
@@ -78,4 +70,11 @@ class Payment(models.Model):
     transaction_id = models.CharField(max_length=100)
     payment_status = models.CharField(max_length=50)
     booking = models.OneToOneField(Booking, on_delete=models.CASCADE)
-   
+from django.conf import settings
+from rest_framework.authtoken.models import Token
+
+class CustomToken(Token):
+    cuser = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='custom_auth_token')
+
+    # Optionally, add any additional fields or methods you need
+  
