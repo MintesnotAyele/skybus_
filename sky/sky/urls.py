@@ -21,6 +21,9 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register(r'Users', views.UserViewSet, basename='User')
+router.register(r'bus', views.AddBus, basename='bus')
+router.register(r'schedule', views.Scheduleview, basename='schedule')
+
 
 urlpatterns = [
     path('', include('store.urls')),

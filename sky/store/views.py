@@ -1,12 +1,12 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status,generics
 from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import UsersForm, LoginForm, BusForm, DestinationForm
-from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer
+from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer
 from django.http import HttpResponse, HttpRequest
-from .models import Users, Availability, Schedule, CustomUser
+from .models import Users, Availability, Schedule, CustomUser,Bus
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
@@ -18,8 +18,15 @@ from .validations import custom_validation, validate_email, validate_password
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
+    
     serializer_class = UsersSerializer
-
+class AddBus(viewsets.ModelViewSet):
+    queryset=Bus.objects.all()
+    serializer_class=BusSerializer
+class Scheduleview(viewsets.ModelViewSet):
+    
+    queryset = Schedule.objects.select_related('busPlateNumber').all().order_by('date')
+    serializer_class=ScheduleSerializer
 def home(request):
     return render(request, "store/index.html")
 
@@ -30,10 +37,8 @@ def signup(request):
         user = serializer.save()
         user.set_password(request.data['password'])
         user.save()
-        token_serializer = AuthTokenSerializer(data={"username": user.email, "password": request.data['password']})
-        if token_serializer.is_valid():
-            token = Token.objects.create(user=user)
-            return Response({"token": token.key, "user": serializer.data})
+        token, created = Token.objects.get_or_create(user =user)
+        return Response({"token": token.key, "user": serializer.data})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
@@ -45,10 +50,6 @@ def login(request):
         return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user =user)
     return Response({"token": token.key, "user": serializer.data})
-   
- 
-
-# Remove authentication and permission classes from these views
 class UserRegister(APIView):
     def post(self, request):
         clean_data = custom_validation(request.data)
@@ -84,3 +85,6 @@ class UserView(APIView):
     def get(self, request):
         serializer = UsersSerializer(request.user)
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+
+
+

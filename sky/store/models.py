@@ -54,6 +54,7 @@ class Schedule(models.Model):
     destination=models.CharField(max_length=100)
     time=models.TimeField()
     price=models.IntegerField()
+    available_seats = models.IntegerField(null=True)
 class Availability(models.Model):
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE)
     available_seats = models.IntegerField()

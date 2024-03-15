@@ -1,8 +1,9 @@
-from rest_framework import serializers
-from .models import Users,Bus,CustomUser
+from rest_framework import serializers,generics
+from .models import Users,Bus,CustomUser,Schedule
 from django.contrib.auth import authenticate, get_user_model
 
 Usermodel=get_user_model()
+
 
 
 class UsersSerializer(serializers.ModelSerializer):
@@ -29,3 +30,16 @@ class UserLoginSerializer(serializers.ModelSerializer):
         if  not user:
             raise  serializers.ValidationError('user not found')
         return user
+class BusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =Bus
+        fields="__all__"
+class BusSerializer1(serializers.ModelSerializer):
+    class Meta:
+        model = Bus
+        fields = ('palte_number',) 
+class ScheduleSerializer(serializers.ModelSerializer):
+    busPlateNumber=BusSerializer1()
+    class  Meta:
+        model=Schedule
+        fields='__all__'
