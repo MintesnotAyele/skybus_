@@ -23,6 +23,7 @@ router = DefaultRouter()
 router.register(r'Users', views.UserViewSet, basename='User')
 router.register(r'bus', views.AddBus, basename='bus')
 router.register(r'schedule', views.Scheduleview, basename='schedule')
+router.register('search',views.SearcheSchedule,basename='search')
 
 
 urlpatterns = [

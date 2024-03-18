@@ -29,6 +29,15 @@ class Scheduleview(viewsets.ModelViewSet):
     serializer_class=ScheduleSerializer
 def home(request):
     return render(request, "store/index.html")
+class SearcheSchedule(viewsets.ModelViewSet):
+    serializer_class = ScheduleSerializer
+
+    def get_queryset(self):
+        searched_destination = self.request.query_params.get('destination', None)
+        if searched_destination is not None:
+            return Schedule.objects.select_related('busPlateNumber').filter(destination=searched_destination).order_by('time')[:1]
+        else:
+            return Schedule.objects.none()
 
 @api_view(['POST'])
 def signup(request):
