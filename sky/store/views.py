@@ -1,84 +1,99 @@
-from django.shortcuts import render,redirect
-from rest_framework import viewsets
-from django.contrib.auth import login, authenticate, get_user_model,logout
+from django.shortcuts import render, redirect, get_object_or_404
+from rest_framework import viewsets, permissions, status,generics
+from rest_framework.views import APIView
+from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .forms import UsersForm,LoginForm,BusForm,DestinationForm
-from.serializer import UsersSerializer
-from django.http import HttpResponse,HttpRequest
-from .models import Users,Availability
+from .forms import UsersForm, LoginForm, BusForm, DestinationForm
+from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer
+from django.http import HttpResponse, HttpRequest
+from .models import Users, Availability, Schedule, CustomUser,Bus
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
+from rest_framework.authtoken.serializers import AuthTokenSerializer
+from rest_framework.authentication import SessionAuthentication
+from .validations import custom_validation, validate_email, validate_password
 
-class UserView(viewsets.ModelViewSet):
-    serializer_class=UsersSerializer
-    queryset = Users.objects.all()
+class UserViewSet(viewsets.ModelViewSet):
+    queryset = CustomUser.objects.all()
+    
+    serializer_class = UsersSerializer
+class AddBus(viewsets.ModelViewSet):
+    queryset=Bus.objects.all()
+    serializer_class=BusSerializer
+class Scheduleview(viewsets.ModelViewSet):
+    
+    queryset = Schedule.objects.select_related('busPlateNumber').all().order_by('date')
+    serializer_class=ScheduleSerializer
 def home(request):
-    return render(request,"store/index.html")
-def signup(request) :
-    if request.method == 'POST':
-        form = UsersForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return render(request, 'store/success.html')
-    else:
-        form = UsersForm()
-    return render(request,"store/signup.html" , {'form': form})
-def signin(request):
-    return  render(request,'store/login.html')
+    return render(request, "store/index.html")
+class SearcheSchedule(viewsets.ModelViewSet):
+    serializer_class = ScheduleSerializer
 
+    def get_queryset(self):
+        searched_destination = self.request.query_params.get('destination', None)
+        if searched_destination is not None:
+            return Schedule.objects.select_related('busPlateNumber').filter(destination=searched_destination).order_by('time')[:1]
+        else:
+            return Schedule.objects.none()
 
+@api_view(['POST'])
+def signup(request):
+    serializer = UsersSerializer(data=request.data)
+    if serializer.is_valid():
+        user = serializer.save()
+        user.set_password(request.data['password'])
+        user.save()
+        token, created = Token.objects.get_or_create(user =user)
+        return Response({"token": token.key, "user": serializer.data})
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['POST'])
 def login(request):
-    if request.method == 'POST':
-        form = LoginForm(request.POST)
-        if form.is_valid():
-            username = form.cleaned_data['username']
-            password = form.cleaned_data['password']
-            try:
-                user = Users.objects.get(username=username)
-                if (password==user.password):
-                    # Authentication successful
-                    # You can implement session handling here
-                    return redirect('home')  # Redirect to home page after login
-                else:
-                    # Authentication failed
-                    error_message = "Invalid username or password."
-                    return render(request, 'store/login.html', {'form': form, 'error_message': error_message})
-            except Users.DoesNotExist:
-                # User does not exist
-                error_message = "Invalid username or password."
-                return render(request, 'store/login.html', {'form': form, 'error_message': error_message})
-    else:
-        form = LoginForm()
-    return render(request, 'store/login.html', {'form': form})
-def add_bus(request):
-    if request.method == 'POST':
-        form = BusForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('home')  # Redirect to a success page
-    else:
-        form = BusForm()
-    return render(request, 'store/add_bus.html', {'form': form})
-def display_availabilities(request):
-    availabilities = Availability.objects.select_related('bus', 'schedule').filter(available_seats__gt=0)
-    return render(request, 'store/availabilities.html', {'availabilities': availabilities})
+    user = get_object_or_404(CustomUser, email=request.data['email'])
+    serializer = UsersSerializer(instance=user)
+    if not user.check_password(request.data['password']):
+        print("yesssdnooo")
+        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+    token, created = Token.objects.get_or_create(user =user)
+    return Response({"token": token.key, "user": serializer.data})
+class UserRegister(APIView):
+    def post(self, request):
+        clean_data = custom_validation(request.data)
+        serializer = UserRegisterSerializer(data=clean_data)
+        if serializer.is_valid(raise_exception=True):
+            user = serializer.create(clean_data)
+            if user:
+                return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
+class UserLogin(APIView):
+    def post(self, request):
+        data = request.data
+        assert validate_email(data)
+        assert validate_password(data)
+        serializer = UserLoginSerializer(data=data)
+        if serializer.is_valid(raise_exception=True):
+            
+            user = serializer.check_user(data)
+            print("no")
+            login(request._request, user)  # Access the Django HttpRequest using request._request
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_404_NOT_FOUND)
 
-def search_bus(request):
-    if request.method == 'POST':
-        form = DestinationForm(request.POST)
-        if form.is_valid():
-            destination = form.cleaned_data['destination']
-            # Query to get the bus id with the destination and smallest date
-            schedule = Schedule.objects.filter(destination=destination).order_by('departure_date').first()
-            if schedule:
-                # Get the bus plate number directly from the Bus table
-                bus_plate_number = schedule.bus.plate_number
-                return render(request, 'bus_search_result.html', {'bus_plate_number': bus_plate_number})
-            else:
-                return render(request, 'bus_search_result.html', {'error_message': 'No bus found for the destination'})
-    else:
-        form = DestinationForm()
-    return render(request, 'destination_form.html', {'form': form})
+# You might want to remove authentication from UserLogout as well
+class UserLogout(APIView):
+    def post(self, request):
+        logout(request)
+        return Response(status=status.HTTP_200_OK)
+
+# You might want to remove authentication from UserView as well
+class UserView(APIView):
+    def get(self, request):
+        serializer = UsersSerializer(request.user)
+        return Response({'user': serializer.data}, status=status.HTTP_200_OK)
+
 
 

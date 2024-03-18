@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'store',
     'corsheaders',
     'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -86,7 +87,7 @@ DATABASES = {
         'PASSWORD': '161616'
     }
 }
-
+AUTH_USER_MODEL='store.CustomUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -106,6 +107,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (),
+    'DEFAULT_AUTHENTICATION_CLASSES': (),
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
