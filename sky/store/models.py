@@ -61,10 +61,15 @@ class Availability(models.Model):
 
 class Booking(models.Model):
     booking_id = models.AutoField(primary_key=True)
-    customer_id = models.ForeignKey(Users, on_delete=models.CASCADE)
+    customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     bus = models.ForeignKey(Bus, on_delete=models.CASCADE,null=True)
     booking_date = models.DateTimeField(auto_now_add=True)
     seat_number = models.IntegerField()
+    def save(self, *args, **kwargs):
+        if not self.pk:  # If the instance is being created
+            last_seat_number = Booking.objects.aggregate(models.Max('seat_number'))['seat_number__max'] or 0
+            self.seat_number = last_seat_number + 1
+        super().save(*args, **kwargs)
 class Payment(models.Model):
     payment_id = models.AutoField(primary_key=True)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)

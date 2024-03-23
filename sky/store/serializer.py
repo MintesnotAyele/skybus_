@@ -1,5 +1,5 @@
 from rest_framework import serializers,generics
-from .models import Users,Bus,CustomUser,Schedule
+from .models import Users,Bus,CustomUser,Schedule,Booking
 from django.contrib.auth import authenticate, get_user_model
 
 Usermodel=get_user_model()
@@ -42,4 +42,12 @@ class ScheduleSerializer(serializers.ModelSerializer):
     busPlateNumber=BusSerializer1()
     class  Meta:
         model=Schedule
+        fields='__all__'
+class ScheduleSerializer1(serializers.ModelSerializer):
+    class  Meta:
+        model=Schedule
+        fields='__all__'
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Booking
         fields='__all__'
