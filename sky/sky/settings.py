@@ -140,3 +140,17 @@ LOGIN_REDIRECT_URL = 'store/templates/store/success.html'  # replace 'url-name' 
 CORS_ORIGIN_WHITELIST =(
     'http://localhost:3000',
 )
+#dydi wcyw rvuv grjp
+# settings.py
+
+# Email configurations
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  # SMTP server address
+EMAIL_PORT = 587  # SMTP port (587 for TLS)
+EMAIL_USE_TLS = True  # Enable TLS encryption
+EMAIL_HOST_USER = 'ayelemintesnot77@gmail.com.com'  # SMTP username (your email address)
+EMAIL_HOST_PASSWORD = 'dydiwcywrvuvgrjp'  # SMTP password
+
+# URL to the root of the website used in email
+
+# Other settings...
