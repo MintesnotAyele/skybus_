@@ -99,7 +99,12 @@ def login(request):
         print("yesssdnooo")
         return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user =user)
-    return Response({"token": token.key, "user": serializer.data})
+    if user.is_superuser:
+        # If superuser, redirect to admin React page
+        return Response({"token": token.key, "user": serializer.data, "redirect_url": "/adminpage"})
+    else:
+        # If not superuser, redirect to customer React page
+        return Response({"token": token.key, "user": serializer.data, "redirect_url": "/customerpage"})
 class UserRegister(APIView):
     def post(self, request):
         clean_data = custom_validation(request.data)

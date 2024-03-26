@@ -7,7 +7,8 @@ class Login extends Component {
     super(props);
     this.state = {
       email: '',
-      password: ''
+      password: '',
+      redirectUrl: ''
     };
   }
 
@@ -22,13 +23,20 @@ class Login extends Component {
         email: this.state.email,
         password: this.state.password
       });
-      // Handle successful response here, e.g., store token in localStorage, redirect user, etc.
-      console.log(response.data);
+      // Ensure response and response.data exist before accessing data
+      if (response && response.data && response.status === 200 && response.data.redirect_url) {
+        // Redirect user programmatically using history object
+        this.props.history.push(response.data.redirect_url);
+      } else {
+        // Handle unexpected response structure
+        console.error('Unexpected response:', response);
+      }
     } catch (error) {
       // Handle error here, e.g., show error message to user
-      console.error('Error:', error.response.data);
+      console.error('Error:', error.response ? error.response.data : error.message);
     }
   };
+  
 
   render() {
     return (
