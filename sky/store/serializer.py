@@ -1,10 +1,14 @@
 from rest_framework import serializers,generics
 from .models import Users,Bus,CustomUser,Schedule,Booking
 from django.contrib.auth import authenticate, get_user_model
+from djoser.serializers import  UserCreateSerializer
 
 Usermodel=get_user_model()
 
-
+class UserCreateSerializer(UserCreateSerializer):
+    class  Meta(UserCreateSerializer.Meta):
+        model =Usermodel
+        fields=['id','email','password','phone_number']
 
 class UsersSerializer(serializers.ModelSerializer):
     class   Meta:
