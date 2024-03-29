@@ -84,3 +84,5 @@ class CustomToken(Token):
 
     # Optionally, add any additional fields or methods you need
   
+class Canclerequest(models.Model):
+    bookingid=models.ForeignKey(Booking,on_delete=models.CASCADE)

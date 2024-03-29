@@ -18,13 +18,11 @@ from .validations import custom_validation, validate_email, validate_password
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
-    
     serializer_class = UsersSerializer
 class AddBus(viewsets.ModelViewSet):
     queryset=Bus.objects.all()
     serializer_class=BusSerializer
 class Scheduleview(viewsets.ModelViewSet):
-    
     queryset = Schedule.objects.select_related('busPlateNumber').all().order_by('date')
     serializer_class=ScheduleSerializer
 class Scheduleview1(viewsets.ModelViewSet):
@@ -101,10 +99,22 @@ def login(request):
     token, created = Token.objects.get_or_create(user =user)
     if user.is_superuser:
         # If superuser, redirect to admin React page
-        return Response({"token": token.key, "user": serializer.data, "redirect_url": "/adminpage"})
+        return Response({"token": token.key, "user": serializer.data, "redirect_url": "/components/adminpage"})
     else:
         # If not superuser, redirect to customer React page
         return Response({"token": token.key, "user": serializer.data, "redirect_url": "/customerpage"})
+class Logout(APIView):
+    def post(self, request, format=None):
+        # Get the token from the request headers
+        token = request.headers.get('Authorization').split(' ')[1]
+
+        # Delete the token from the database
+        try:
+            Token.objects.get(key=token).delete()
+        except Token.DoesNotExist:
+            return Response({"detail": "Invalid token."}, status=status.HTTP_400_BAD_REQUEST)
+
+        return Response({"detail": "Successfully logged out."}, status=status.HTTP_200_OK)
 class UserRegister(APIView):
     def post(self, request):
         clean_data = custom_validation(request.data)
@@ -140,6 +150,14 @@ class UserView(APIView):
     def get(self, request):
         serializer = UsersSerializer(request.user)
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
-
-
+    
+class Adminuserview(generics.RetrieveAPIView):
+    queryset=CustomUser.objects.all()
+    serializer_class=UsersSerializer
+class Adminuserupdate(generics.UpdateAPIView):
+    queryset=CustomUser.objects.all()
+    serializer_class=UsersSerializer
+class Adminuserdelet(generics.RetrieveDestroyAPIView):
+    queryset=CustomUser.objects.all()
+    serializer_class=UsersSerializer
 

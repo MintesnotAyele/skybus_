@@ -108,12 +108,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-       
-    ),
+REST_FRAMEWORK={
+    'DEFAULT_PERMISSION_CLASSES':(),
+    'DEFAULT_AUTHENTICATION_CLASSES':(),
 }
 SIMPLE_JWT = {
    'AUTH_HEADER_TYPES': ('JWT',),
@@ -160,17 +157,3 @@ EMAIL_HOST_PASSWORD = 'dydiwcywrvuvgrjp'  # SMTP password
 # URL to the root of the website used in email
 
 # Other settings...
-DJOSER = {
-    'LOGIN_FIELD': 'email',
-    'PASSWORD_CHANGED_EMAIL_CONFIRMATION': True,
-    'PASSWORD_RESET_CONFIRM_URL': 'password/reset/{uid}/{token}',
-    'USERNAME_RESET_CONFIRM_URL': 'password/reset/{uid}/{token}',
-    'SEND_CONFIRMATION_EMAIL':True,
-    'ACTIVATION_URL':'activate/{uid}/{token}',
-    'SEND_ACTIVATION_EMAIL':True,
-    'SERIALIZERS':{
-        'user_create': 'store.serializer.UserCreateSerializer',
-        'user': 'store.serializer.UserCreateSerializer',
-        'user_delete': 'djoser.serializer.UserDeleteSerializer',
-    }
-}
