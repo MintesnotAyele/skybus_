@@ -13,11 +13,15 @@ class Adminpage extends Component {
           <li><Link to="/admins/report">report</Link></li>
           view feed back
           add bus 
+  </ul>
+  
+  
 
         
+    
+        
           
-        </ul>
-      </div>
+       </div> 
     );
   }
 }

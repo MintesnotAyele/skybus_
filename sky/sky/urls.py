@@ -22,14 +22,19 @@ from rest_framework.routers import DefaultRouter
 router = DefaultRouter()
 router.register(r'Users', views.UserViewSet, basename='User')
 router.register(r'bus', views.AddBus, basename='bus')
-router.register(r'schedule', views.Scheduleview, basename='schedule')
+router.register(r'schedule', views.Scheduleview1, basename='schedule')
 router.register('search',views.SearcheSchedule,basename='search')
+router.register(r'book', views.Bookingview, basename='book')
+
+# 
 
 
 urlpatterns = [
     path('', include('store.urls')),
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
+    path('auth/',include('djoser.urls')),
+    path('auth/',include('djoser.urls.jwt')),
 ]
 
 

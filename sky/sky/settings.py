@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'rest_framework.authtoken',
+    'djoser',
 ]
 
 MIDDLEWARE = [
@@ -107,10 +108,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
-REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (),
-    'DEFAULT_AUTHENTICATION_CLASSES': (),
+REST_FRAMEWORK={
+    'DEFAULT_PERMISSION_CLASSES':(),
+    'DEFAULT_AUTHENTICATION_CLASSES':(),
+}
+SIMPLE_JWT = {
+   'AUTH_HEADER_TYPES': ('JWT',),
 }
 
 # Internationalization
@@ -140,3 +143,17 @@ LOGIN_REDIRECT_URL = 'store/templates/store/success.html'  # replace 'url-name' 
 CORS_ORIGIN_WHITELIST =(
     'http://localhost:3000',
 )
+#dydi wcyw rvuv grjp
+# settings.py
+
+# Email configurations
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # or 465 for SSL
+EMAIL_USE_TLS = True  # TLS is required for Gmail
+EMAIL_HOST_USER = 'ayelemintesnot77@gmail.com'  # SMTP username (your email address)
+EMAIL_HOST_PASSWORD = 'ftfpuqxkmijpvhdt'  # SMTP password
+
+# URL to the root of the website used in email ftfp uqxk mijp vhdt
+
+# Other settings...

@@ -1,10 +1,14 @@
 from rest_framework import serializers,generics
-from .models import Users,Bus,CustomUser,Schedule
+from .models import Users,Bus,CustomUser,Schedule,Booking
 from django.contrib.auth import authenticate, get_user_model
+
 
 Usermodel=get_user_model()
 
-
+class UserCreateSerializer(serializers.ModelSerializer):
+    class  Meta:
+        model =Usermodel
+        fields=['id','email','password','phone_number']
 
 class UsersSerializer(serializers.ModelSerializer):
     class   Meta:
@@ -43,3 +47,22 @@ class ScheduleSerializer(serializers.ModelSerializer):
     class  Meta:
         model=Schedule
         fields='__all__'
+class ScheduleSerializer1(serializers.ModelSerializer):
+    class  Meta:
+        model=Schedule
+        fields='__all__'
+class BookingSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Booking
+        fields='__all__'
+class UsersSerializer1(serializers.ModelSerializer):
+    email_verified = serializers.BooleanField(default=False, write_only=True)
+
+    class Meta:
+        model = CustomUser
+        fields = ['username', 'email', 'password','phone_number', 'email_verified']
+        extra_kwargs = {'password': {'write_only': True}}
+
+    def create(self, validated_data):
+        user = CustomUser.objects.create_user(**validated_data)
+        return user

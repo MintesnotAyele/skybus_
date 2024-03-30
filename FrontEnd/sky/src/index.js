@@ -18,6 +18,7 @@ import Report from './admins/report';
 import Viewschedule from './assis/viewschedule';
 import Availableseat from './assis/availableseat';
 import reportWebVitals from './reportWebVitals';
+import { BrowserRouter as Router } from 'react-router-dom';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
