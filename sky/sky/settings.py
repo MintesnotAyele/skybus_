@@ -148,12 +148,12 @@ CORS_ORIGIN_WHITELIST =(
 
 # Email configurations
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'  # SMTP server address
-EMAIL_PORT = 587  # SMTP port (587 for TLS)
-EMAIL_USE_TLS = True  # Enable TLS encryption
-EMAIL_HOST_USER = 'ayelemintesnot77@gmail.com.com'  # SMTP username (your email address)
-EMAIL_HOST_PASSWORD = 'dydiwcywrvuvgrjp'  # SMTP password
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587  # or 465 for SSL
+EMAIL_USE_TLS = True  # TLS is required for Gmail
+EMAIL_HOST_USER = 'ayelemintesnot77@gmail.com'  # SMTP username (your email address)
+EMAIL_HOST_PASSWORD = 'ftfpuqxkmijpvhdt'  # SMTP password
 
-# URL to the root of the website used in email
+# URL to the root of the website used in email ftfp uqxk mijp vhdt
 
 # Other settings...

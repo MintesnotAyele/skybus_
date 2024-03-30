@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import UsersForm, LoginForm, BusForm, DestinationForm
-from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1
+from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer
 from django.http import HttpResponse, HttpRequest
 from .models import Users, Availability, Schedule, CustomUser,Bus,Booking
 from django.urls import reverse
@@ -15,6 +15,8 @@ from rest_framework.authtoken.models import Token
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authentication import SessionAuthentication
 from .validations import custom_validation, validate_email, validate_password
+from django.core.mail import send_mail
+from django.conf import settings
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -80,14 +82,37 @@ def book_bus_seat(request):
 
 @api_view(['POST'])
 def signup(request):
-    serializer = UsersSerializer(data=request.data)
+    serializer = UserCreateSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
         user.set_password(request.data['password'])
+        user.is_active = False  # User is inactive until email is verified
         user.save()
-        token, created = Token.objects.get_or_create(user =user)
-        return Response({"token": token.key, "user": serializer.data})
+
+        # Generate and send verification token via email
+        verification_token = Token.objects.create(user=user)
+        send_verification_email(user.email, verification_token.key)
+
+        return Response({"message": "User created. Please check your email for verification instructions."})
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+def send_verification_email(email, token):
+    subject = 'Email Verification'
+    message = f'Please click the following link to verify your email: http://127.0.0.1:8000/verify-email/{token}/'
+    send_mail(subject, message, 'from@example.com', [email])
+@api_view(['GET'])
+def verify_email(request, token):
+    try:
+        token_obj = Token.objects.get(key=token)
+        user = token_obj.user
+        if not user.is_active:
+            user.is_active = True
+            user.save()
+            return Response({"message": "Email verified successfully. You can now login."})
+        else:
+            return Response({"message": "Email is already verified."}, status=status.HTTP_400_BAD_REQUEST)
+    except Token.DoesNotExist:
+        return Response({"message": "Invalid or expired token."}, status=status.HTTP_400_BAD_REQUEST)
 
 @api_view(['POST'])
 def login(request):
@@ -99,7 +124,8 @@ def login(request):
     token, created = Token.objects.get_or_create(user =user)
     if user.is_superuser:
         # If superuser, redirect to admin React page
-        return Response({"token": token.key, "user": serializer.data, "redirect_url": "/components/adminpage"})
+        print('kanu')
+        return Response({"token": token.key, "user": serializer.data, "redirect_url": "/adminpage"})
     else:
         # If not superuser, redirect to customer React page
         return Response({"token": token.key, "user": serializer.data, "redirect_url": "/customerpage"})

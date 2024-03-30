@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import axios from 'axios'; // Import Axios library
 
 class Login extends Component {
@@ -26,6 +27,7 @@ class Login extends Component {
       // Ensure response and response.data exist before accessing data
       if (response && response.data && response.status === 200 && response.data.redirect_url) {
         // Redirect user programmatically using history object
+        window.alert(response.data.redirect_url);
         this.props.history.push(response.data.redirect_url);
       } else {
         // Handle unexpected response structure
