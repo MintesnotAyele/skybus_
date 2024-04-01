@@ -74,11 +74,7 @@ class Login extends Component {
                     </div>
                     <a className="text-sm font-medium text-primary-600 hover:underline white:text-primary-500">Forgot password?</a>
                   </div>
-<<<<<<< HEAD
-                  <li><Link to="/Fpassenger/passanger"><button type="submit" className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"> Signin</button></Link></li>
-=======
-                  <button type="submit" className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
->>>>>>> be9ae6c5a6402b57bbc64cf80e16b5b0df1da183
+                  <button type="submit" className="w-full text-white bg-blue-400 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"><Link to="/Fpassenger/passanger">sign in</Link></button>
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Don’t have an account yet? <a className="font-medium text-primary-600 hover:underline dark:text-primary-500"><Link to="/components/signup">Signup</Link></a>
                   </p>

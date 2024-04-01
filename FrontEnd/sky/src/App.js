@@ -40,6 +40,7 @@ class App extends Component {
             <Route path="/assis/viewschedule" element={<Viewschedule/>}/>
             <Route path="/assis/availableseat" element={<Availableseat/>}/>
             <Route path="/Fpassenger/passanger" element={<Passanger/>}/>
+            <Route path="/Fpassenger/pass" element={<Pass/>}/>
             <Route path="/contactform" element={<ContactForm />} />
           
     
