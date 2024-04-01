@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { withRouter } from 'react-router-dom';
 import axios from 'axios'; // Import Axios library
+import {Link, Navigate } from 'react-router-dom';
 
 class Login extends Component {
+  
   constructor(props) {
     super(props);
+    
     this.state = {
       email: '',
       password: '',
@@ -24,14 +25,21 @@ class Login extends Component {
         email: this.state.email,
         password: this.state.password
       });
+     
+     const  rsp = response.data.user;
+      console.log(rsp);
+      console.log(rsp.is_superuser);
       // Ensure response and response.data exist before accessing data
-      if (response && response.data && response.status === 200 && response.data.redirect_url) {
-        // Redirect user programmatically using history object
-        window.alert(response.data.redirect_url);
-        this.props.history.push(response.data.redirect_url);
-      } else {
+      if(rsp.is_superuser){
+        console.log('noo');
+        this.setState({ redirectUrl: '/adminpage' });
+        console.log('yess');
+      }
+       else if(rsp.is_staff) {
         // Handle unexpected response structure
-        console.error('Unexpected response:', response);
+        this.setState({  redirectUrl: '/assistant'});
+      }else{
+        this.setState({ redirectUrl:'/passenger'});
       }
     } catch (error) {
       // Handle error here, e.g., show error message to user
@@ -78,6 +86,7 @@ class Login extends Component {
                   <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                     Don’t have an account yet? <a className="font-medium text-primary-600 hover:underline dark:text-primary-500"><Link to="/components/signup">Signup</Link></a>
                   </p>
+                  {this.state.redirectUrl && <Navigate to={this.state.redirectUrl} />}
                 </form>
               </div>
             </div>
