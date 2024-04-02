@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import UsersForm, LoginForm, BusForm, DestinationForm
-from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer
+from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer
 from django.http import HttpResponse, HttpRequest
 from .models import Users, Availability, Schedule, CustomUser,Bus,Booking
 from django.urls import reverse
@@ -122,13 +122,8 @@ def login(request):
         print("yesssdnooo")
         return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
     token, created = Token.objects.get_or_create(user =user)
-    if user.is_superuser:
-        # If superuser, redirect to admin React page
-        print('kanu')
-        return Response({"token": token.key, "user": serializer.data, "redirect_url": "/adminpage"})
-    else:
         # If not superuser, redirect to customer React page
-        return Response({"token": token.key, "user": serializer.data, "redirect_url": "/customerpage"})
+    return Response({"token": token.key, "user": serializer.data})
 class Logout(APIView):
     def post(self, request, format=None):
         # Get the token from the request headers
@@ -182,7 +177,7 @@ class Adminuserview(generics.RetrieveAPIView):
     serializer_class=UsersSerializer
 class Adminuserupdate(generics.UpdateAPIView):
     queryset=CustomUser.objects.all()
-    serializer_class=UsersSerializer
+    serializer_class=UserUpdateSerializer
 class Adminuserdelet(generics.RetrieveDestroyAPIView):
     queryset=CustomUser.objects.all()
     serializer_class=UsersSerializer

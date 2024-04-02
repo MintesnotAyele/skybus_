@@ -14,6 +14,10 @@ class UsersSerializer(serializers.ModelSerializer):
     class   Meta:
         model = CustomUser
         fields='__all__'
+class UserUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Usermodel
+        fields=['is_staff']
 class UserRegisterSerializer(serializers.ModelSerializer):
      class   Meta:
         model = CustomUser
