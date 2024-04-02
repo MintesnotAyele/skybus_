@@ -8,6 +8,7 @@ import Adminpage from './components/adminpage';
 import Assistant from './components/assistant';
 import ContactForm from './components/contactform';
 import Passanger from './Fpassenger/passanger';
+import Pass from './Fpassenger/pass'
 import Header from './components/header';
 import Busmanage from './admins/busmanage';
 import Updateprice from './admins/updateprice';
@@ -39,6 +40,7 @@ class App extends Component {
             <Route path="/assis/viewschedule" element={<Viewschedule/>}/>
             <Route path="/assis/availableseat" element={<Availableseat/>}/>
             <Route path="/Fpassenger/passanger" element={<Passanger/>}/>
+            <Route path="/Fpassenger/pass" element={<Pass/>}/>
             <Route path="/contactform" element={<ContactForm />} />
           
     
