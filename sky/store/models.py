@@ -86,3 +86,4 @@ class CustomToken(Token):
   
 class Canclerequest(models.Model):
     bookingid=models.ForeignKey(Booking,on_delete=models.CASCADE)
+    Requested_time=models.DateTimeField(auto_now_add=True)
