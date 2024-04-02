@@ -1,7 +1,29 @@
 import React, { Component } from 'react'
+import axios from 'axios';
 
  class Viewschedule extends Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+        schedules: []
+      };
+    }
+  
+    componentDidMount() {
+      this.fetchSchedules();
+    }
+  
+    fetchSchedules = () => {
+      axios.get('http://localhost:8000/api/schedule/')
+        .then(response => {
+          this.setState({ schedules: response.data });
+        })
+        .catch(error => {
+          console.error('Error fetching schedules:', error);
+        });
+    };
   render() {
+    const { schedules } = this.state;
     return (
       
         <div>
@@ -27,49 +49,23 @@ import React, { Component } from 'react'
         <table className="w-full bg-white shadow-md rounded">
           <thead>
             <tr>
-              <th className="border px-4 py-2">Bid</th>
-              <th className="border px-4 py-2">From</th>
+              <th className="border px-4 py-2">busPlateNumber</th>
               <th className="border px-4 py-2">Destination</th>
               <th className="border px-4 py-2">Date</th>
+              <th className="border px-4 py-2">time</th>
+              <th className="border px-4 py-2">price</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
+          {schedules.map(schedule => (
+            <tr key={schedule.id}>
+              <td className="border px-4 py-2">{schedule.busPlateNumber.palte_number}</td>
+              <td className="border px-4 py-2">{schedule.destination}</td>
+              <td className="border px-4 py-2">{schedule.date}</td>
+              <td className="border px-4 py-2">{schedule.time}</td>
+              <td className="border px-4 py-2">{schedule.price}</td>
             </tr>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">1</td>
-              <td className="border px-4 py-2">City A</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">2024-02-22</td>
-            </tr>
-            <tr>
-              <td className="border px-4 py-2">2</td>
-              <td className="border px-4 py-2">City B</td>
-              <td className="border px-4 py-2">City C</td>
-              <td className="border px-4 py-2">2024-02-23</td>
-            </tr>
+            ))}
           </tbody>
         </table>
       </div>

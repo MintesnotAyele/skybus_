@@ -28,8 +28,8 @@ class Scheduleview(viewsets.ModelViewSet):
     queryset = Schedule.objects.select_related('busPlateNumber').all().order_by('date')
     serializer_class=ScheduleSerializer
 class Scheduleview1(viewsets.ModelViewSet):
-    queryset =Schedule.objects.all().order_by('date')
-    serializer_class=ScheduleSerializer1
+    queryset=Schedule.objects.select_related('busPlateNumber').all().order_by('date')
+    serializer_class=ScheduleSerializer
 def home(request):
     return render(request, "store/index.html")
 class SearcheSchedule(viewsets.ModelViewSet):
@@ -44,6 +44,13 @@ class SearcheSchedule(viewsets.ModelViewSet):
 class Bookingview(viewsets.ModelViewSet):
     queryset=Booking.objects.all()
     serializer_class=BookingSerializer
+@api_view(['POST'])
+def addSchedlue(request):
+    serializer=ScheduleSerializer(data=request.data)
+    if serializer.is_valid():
+        sce=serializer.save()
+    
+        return Response({"message": "User created. Please check your email for verification instructions."})
 
 @api_view(['POST'])
 def book_bus_seat(request):
