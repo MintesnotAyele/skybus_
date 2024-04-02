@@ -46,12 +46,27 @@ class Bookingview(viewsets.ModelViewSet):
     serializer_class=BookingSerializer
 @api_view(['POST'])
 def addSchedlue(request):
-    serializer=ScheduleSerializer(data=request.data)
-    if serializer.is_valid():
-        sce=serializer.save()
+    busPlateNumber=request.data.get('busPlateNumber')
+    date=request.data.get('date')
+    destination=request.data.get('destination')
+    time=request.data.get('time')
+    price=request.data.get('price')
+    available_seats = request.data.get('available_seats')
+    try:
+        
+        buss=Bus.objects.get(palte_number=busPlateNumber)
+    except Bus.DoesNotExist:
+        return Response({'message': 'bus does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
+    sechedule = Schedule.objects.create(
+        busPlateNumber=buss,
+        date=date,
+        destination=destination,
+        time=time,
+        price=price,
+        available_seats=available_seats   
+    )
+    return Response({'message': 'schedule added successfully.'}, status=status.HTTP_201_CREATED)
     
-        return Response({"message": "User created. Please check your email for verification instructions."})
-
 @api_view(['POST'])
 def book_bus_seat(request):
     # Assuming the request data contains 'customer_id', 'bus_id', and 'seat_number'
