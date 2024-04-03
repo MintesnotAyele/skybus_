@@ -17,6 +17,7 @@ from rest_framework.authentication import SessionAuthentication
 from .validations import custom_validation, validate_email, validate_password
 from django.core.mail import send_mail
 from django.conf import settings
+from rest_framework.decorators import action
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -38,9 +39,23 @@ class SearcheSchedule(viewsets.ModelViewSet):
     def get_queryset(self):
         searched_destination = self.request.query_params.get('destination', None)
         if searched_destination is not None:
+           
             return Schedule.objects.select_related('busPlateNumber').filter(destination=searched_destination).order_by('time')[:1]
         else:
             return Schedule.objects.none()
+    @action(detail=True, methods=['get'])
+    def booked_seats(self, request, pk=None):
+        sc=request.data.get('schedule')
+        print(sc)
+        schedule1=Schedule.objects.get(id=sc)
+        
+        
+        schedule = self.get_object()
+       
+
+        booked_seats = Booking.objects.filter(schedule=schedule1).values_list('seat_number', flat=True)
+        print(booked_seats)
+        return Response(booked_seats)
 class Bookingview(viewsets.ModelViewSet):
     queryset=Booking.objects.all()
     serializer_class=BookingSerializer
@@ -73,15 +88,18 @@ def book_bus_seat(request):
     customer_id = request.data.get('customer_id')
     bus_id = request.data.get('bus')
     seat_number = request.data.get('seat_number')
+    schedule=request.data.get('schedule')
     try:
         customer = CustomUser.objects.get(id=customer_id)
         buss=Bus.objects.get(id=bus_id)
+        schedule=Schedule.objects.get(id=schedule)
     except CustomUser.DoesNotExist:
         return Response({'message': 'Customer does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
 
 
     # Fetch the booking details
     booking = Booking.objects.create(
+        schedule=schedule,
         customer_id=customer,
         bus=buss,
         seat_number=seat_number

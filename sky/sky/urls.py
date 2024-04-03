@@ -35,6 +35,7 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('auth/',include('djoser.urls')),
     path('auth/',include('djoser.urls.jwt')),
+     path('api/search/<int:schedule>/booked_seats/', views.SearcheSchedule.booked_seats, name='booked-seats'),
 ]
 
 
