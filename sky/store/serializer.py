@@ -59,6 +59,10 @@ class BookingSerializer(serializers.ModelSerializer):
     class Meta:
         model=Booking
         fields='__all__'
+class BookingSerializer1(serializers.ModelSerializer):
+    class Meta:
+        model=Booking
+        fields=['seat_number']
 class UsersSerializer1(serializers.ModelSerializer):
     email_verified = serializers.BooleanField(default=False, write_only=True)
 

@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import UsersForm, LoginForm, BusForm, DestinationForm
-from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer
+from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1
 from django.http import HttpResponse, HttpRequest
 from .models import Users, Availability, Schedule, CustomUser,Bus,Booking
 from django.urls import reverse
@@ -43,19 +43,17 @@ class SearcheSchedule(viewsets.ModelViewSet):
             return Schedule.objects.select_related('busPlateNumber').filter(destination=searched_destination).order_by('time')[:1]
         else:
             return Schedule.objects.none()
-    @action(detail=True, methods=['get'])
-    def booked_seats(self, request, pk=None):
-        sc=request.data.get('schedule')
-        print(sc)
-        schedule1=Schedule.objects.get(id=sc)
-        
-        
-        schedule = self.get_object()
-       
-
-        booked_seats = Booking.objects.filter(schedule=schedule1).values_list('seat_number', flat=True)
-        print(booked_seats)
+   
         return Response(booked_seats)
+class BookedSeat(viewsets.ModelViewSet):
+    serializer_class=BookingSerializer1
+    def get_queryset(self):
+        schede=self.request.query_params.get('schedule',None)
+        if schede is not None:
+            booked_seats = Booking.objects.filter(schedule=schede)
+            return booked_seats
+        else:
+            return Booking.objects.none()
 class Bookingview(viewsets.ModelViewSet):
     queryset=Booking.objects.all()
     serializer_class=BookingSerializer

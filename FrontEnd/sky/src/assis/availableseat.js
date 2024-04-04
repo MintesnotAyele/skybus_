@@ -18,12 +18,15 @@ class Availableseat extends Component {
       const schedules = response.data;
       const availableSeatsMap = {};
       for (const schedule of schedules){
-        const bookedSeatsResponse = await axios.get(`http://localhost:8000/api/search/?schedule=${schedule.id}/booked_seats/`);
-        console.log(response.data);
+        const bookedSeatsResponse = await axios.get(`http://localhost:8000/api/bookedseats/?schedule=${schedule.id}`);
+        console.log(bookedSeatsResponse.data);
         const bookedSeats = bookedSeatsResponse.data;
         const totalSeats = schedule.available_seats;
-        const availableSeats = Array.from({ length: totalSeats }, (_, index) => index + 1).filter(seat => !bookedSeats.includes(seat));
+        const bookedSeatNumbers = bookedSeats.map(seat => seat.seat_number);
+        const availableSeats = Array.from({ length: totalSeats }, (_, index) => index + 1).filter(seat => !bookedSeatNumbers.includes(seat));
         availableSeatsMap[schedule.id] = availableSeats;
+        console.log(availableSeats)
+        console.log(Object.values(bookedSeats))
 
       }
       this.setState({ schedules, availableSeatsMap });
@@ -65,7 +68,7 @@ class Availableseat extends Component {
                 <th>From</th>
                 <th>To</th>
                 <th>Departure Time</th>
-                <th>Number of Seats</th>
+                <th>price</th>
                 <th>Number of Available Seats</th>
               </tr>
             </thead>
@@ -76,7 +79,7 @@ class Availableseat extends Component {
                   <td>{schedule.date}</td>
                   <td>{schedule.destination}</td>
                   <td>{schedule.time}</td>
-                  <td>{schedule.available_seats}</td>
+                  <td>{schedule.price}</td>
                   <td>
                     <select className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm">
                     {availableSeatsMap[schedule.id] && availableSeatsMap[schedule.id].map(seat => (
