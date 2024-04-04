@@ -13,14 +13,17 @@ import Header from './components/header';
 import Busmanage from './admins/busmanage';
 import Updateprice from './admins/updateprice';
 import Cancelticket from './admins/cancelticket';
+import Addbus from './admins/addbus';
+import Style from './components/style';
+import Feedback from './admins/feedback';
 import Report from './admins/report';
 import Availableseat from './assis/availableseat';
 import Viewschedule from './assis/viewschedule';
 import Bookedticket from './admins/bookedticket';
-import Addbus from './admins/addbus';
+
 
 import './App.css';
-import Style from './components/style';
+
 
 class App extends Component {
   render() {
@@ -46,7 +49,7 @@ class App extends Component {
             <Route path="/contactform" element={<ContactForm />} />
            <Route path="/admins/bookedticket" element={<Bookedticket/>} />
           <Route path="admins/addbus" element={<Addbus/>}/>
-    
+          <Route path="admins/feedback" element={<Feedback/>}/>
             <Route path="/mystyle/style" element={<Style />} />
 
             
