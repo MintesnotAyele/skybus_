@@ -7,7 +7,7 @@ class Adminpage extends Component {
     return (
       <div>
       <div class="min-h-screen bg-gray-50/50">
-  <aside class="bg-gradient-to-br from-gray-500 to-gray-900 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
+  <aside class="bg-gradient-to-br from-gray-600 to-gray-900 -translate-x-80 fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
     <div class="relative border-b border-white/20">
       <a class="flex items-center gap-4 py-6 px-8" href="#/">
         <h6 class="block antialiased tracking-normal font-sans text-base font-semibold leading-relaxed text-white">Material Tailwind Dashboard</h6>
@@ -75,16 +75,21 @@ class Adminpage extends Component {
             </button>
           </a>
         </li>
+      
+
         <li>
-          <a class="" href="#">
+          <a >  <li><Link to="/admins/feedback">
             <button class="middle none font-sans font-bold center transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none text-xs py-3 rounded-lg text-white hover:bg-white/10 active:bg-white/30 w-full flex items-center gap-4 px-4 capitalize" type="button">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" class="w-5 h-5 text-inherit">
                 <path fill-rule="evenodd" d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z" clip-rule="evenodd"></path>
               </svg>
               <p class="block antialiased font-sans text-base leading-relaxed text-inherit font-medium capitalize">notifactions</p>
             </button>
+            </Link></li>
           </a>
         </li>
+
+
       </ul>
       <ul class="mb-4 flex flex-col gap-1">
         <li class="mx-3.5 mt-4 mb-2">
@@ -276,7 +281,7 @@ class Adminpage extends Component {
             <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"></path>
             </svg>
         </a>
-        <h2 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug !mb-2 text-primary">Frameworks Integration</h2>
+        <h2 class=" bg-sky block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug !mb-2 text-primary">Frameworks Integration</h2>
         </div>
         <p class="block antialiased font-sans text-base font-light leading-relaxed text-inherit !mb-4 !font-normal !text-gray-600">Framework-specific guides that cover our recommended approach to installing @material-tailwind/react in a number of popular environments. Select your preferred framework from the list below and follow the instructions.</p>
         <div class="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4" id="frameworks-integration">
@@ -518,18 +523,8 @@ class Adminpage extends Component {
   </div>
 </div>
 
-<div className='flex flex-row-reverse'>
-        </div>
-        <div className='flex flex-row-reverse'>
-        <ul>
-          <li><Link to="/admins/busmanage">Bus Manage</Link></li>
-          <li><Link to="/admins/updateprice">Update Price</Link></li>
-          <li><Link to="/admins/cancelticket">cancelticket</Link></li>
-          <li><Link to="/admins/report">report</Link></li>
-          view feed back
-          add bus 
-  </ul>
-        </div>
+
+      
 
 </div>
     );
