@@ -84,12 +84,10 @@ def addSchedlue(request):
 def book_bus_seat(request):
     # Assuming the request data contains 'customer_id', 'bus_id', and 'seat_number'
     customer_id = request.data.get('customer_id')
-    bus_id = request.data.get('bus')
     seat_number = request.data.get('seat_number')
     schedule=request.data.get('schedule')
     try:
         customer = CustomUser.objects.get(id=customer_id)
-        buss=Bus.objects.get(id=bus_id)
         schedule=Schedule.objects.get(id=schedule)
     except CustomUser.DoesNotExist:
         return Response({'message': 'Customer does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
@@ -99,13 +97,12 @@ def book_bus_seat(request):
     booking = Booking.objects.create(
         schedule=schedule,
         customer_id=customer,
-        bus=buss,
         seat_number=seat_number
     )
 
     # Decrease available seats of the bus in the schedule
     try:
-        schedule = Schedule.objects.get(busPlateNumber=bus_id)
+        
         schedule.available_seats -= 1
         if schedule.available_seats == 0:
             # If available seats become zero, delete the bus schedule

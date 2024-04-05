@@ -63,7 +63,6 @@ class Booking(models.Model):
     schedule=models.ForeignKey(Schedule, on_delete=models.CASCADE,null=True)
     booking_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    bus = models.ForeignKey(Bus, on_delete=models.CASCADE,null=True)
     booking_date = models.DateTimeField(auto_now_add=True)
     seat_number = models.IntegerField()
    

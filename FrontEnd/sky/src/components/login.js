@@ -27,17 +27,23 @@ class Login extends Component {
       });
      
      const  rsp = response.data.user;
-      console.log(rsp);
+     const rsp1=response.data.token;
+     console.log(rsp)
+      console.log(rsp.id,"djjhd");
+      
       console.log(rsp.is_superuser);
+      sessionStorage.setItem('token', rsp1.token);
       // Ensure response and response.data exist before accessing data
       if(rsp.is_superuser){
         console.log('noo');
         this.setState({ redirectUrl: '/adminpage' });
         console.log('yess');
+
       }
        else if(rsp.is_staff) {
         // Handle unexpected response structure
-        this.setState({  redirectUrl: '/assistant'});
+        localStorage.setItem("useId",rsp.id);
+        this.setState({  redirectUrl: '/assistant/'});
       }else{
         this.setState({ redirectUrl:'/passenger'});
       }

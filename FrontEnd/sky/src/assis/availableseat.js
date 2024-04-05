@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+
 
 class Availableseat extends Component {
   state = {
@@ -9,6 +12,32 @@ class Availableseat extends Component {
   };
  
       
+  handleBook = async (scheduleId, event) => {
+    try {
+       // Assuming token is stored in sessionStorage
+  
+    
+       const seatNumber = parseInt(event.target.parentElement.parentElement.children[5].children[0].value);
+  
+      // Extract user ID from the decoded token
+      const userId = localStorage.getItem("useId")
+      // Decode the token to get the user ID
+      console.log(seatNumber)
+      const response = await axios.post('http://localhost:8000/booking', {
+        customer_id: userId,
+        seat_number: seatNumber,
+        schedule: scheduleId
+      });
+      console.log(userId)
+      console.log(response.data);
+      // Assuming you want to refresh the available seats after booking
+      this.handleSearch();
+    } catch (error) {
+      console.error('Error booking seat:', error);
+    }
+  };
+
+
 
 
   handleSearch = async () => {
@@ -86,6 +115,14 @@ class Availableseat extends Component {
                         <option key={seat}>{seat}</option>
                       ))}
                     </select>
+                  </td>
+                  <td>
+                  <button
+                      onClick={(event) => this.handleBook(schedule.id, event)}
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Book
+                    </button>
                   </td>
                 </tr>
               ))}
