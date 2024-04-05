@@ -281,7 +281,7 @@ class Adminpage extends Component {
             <path stroke-linecap="round" stroke-linejoin="round" d="M5.25 8.25h15m-16.5 7.5h15m-1.8-13.5l-3.9 19.5m-2.1-19.5l-3.9 19.5"></path>
             </svg>
         </a>
-        <h2 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug !mb-2 text-primary">Frameworks Integration</h2>
+        <h2 class=" bg-sky block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug !mb-2 text-primary">Frameworks Integration</h2>
         </div>
         <p class="block antialiased font-sans text-base font-light leading-relaxed text-inherit !mb-4 !font-normal !text-gray-600">Framework-specific guides that cover our recommended approach to installing @material-tailwind/react in a number of popular environments. Select your preferred framework from the list below and follow the instructions.</p>
         <div class="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4" id="frameworks-integration">
