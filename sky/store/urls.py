@@ -11,6 +11,7 @@ urlpatterns = [
     path('view',views.UserView.as_view(),name='view'),
     path('booking',views.book_bus_seat,name='booking'),
     path('ad/view/<int:pk>/',views.Adminuserview.as_view(),name="admin-view"),
+    path('pay',views.chappa,name='pay'),
     path('ad/update/<int:pk>/',views.Adminuserupdate.as_view(),name='update'),
     path('ad/delete',views.Adminuserdelet.as_view(),name='delete'),
     path('verify-email/<str:token>/',views.verify_email, name='verify_email'),

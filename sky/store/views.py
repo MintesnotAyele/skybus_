@@ -18,6 +18,8 @@ from .validations import custom_validation, validate_email, validate_password
 from django.core.mail import send_mail
 from django.conf import settings
 from rest_framework.decorators import action
+from django.http import JsonResponse
+import requests
 
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
@@ -216,4 +218,31 @@ class Adminuserupdate(generics.UpdateAPIView):
 class Adminuserdelet(generics.RetrieveDestroyAPIView):
     queryset=CustomUser.objects.all()
     serializer_class=UsersSerializer
-
+@api_view(['POST'])
+def chappa(request):
+  pp=request.data.get('price')
+  url = "https://api.chapa.co/v1/transaction/initialize"
+  payload = {
+      "amount": pp,
+      "currency": "ETB",
+      "email": "abebech_bekele@gmail.com",
+      "first_name": "Bilen",
+      "last_name": "Gizachew",
+      "phone_number": "0912345678",
+      "tx_ref": "chewatatest-6669",
+      "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+      "return_url": "http://localhost:3000",
+      "customization": {
+          "title": "Payment ",
+          "description": "I love "
+      }
+  }
+  headers = {
+      'Authorization': 'Bearer CHASECK_TEST-M4Cw1oetgc8wNhMmVs0amV0upJmNXX94',
+      'Content-Type': 'application/json'
+  }
+  
+  response = requests.post(url, json=payload, headers=headers)
+  data = response.text
+  print(data)
+  return Response({response})

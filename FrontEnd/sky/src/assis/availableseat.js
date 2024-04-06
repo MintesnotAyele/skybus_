@@ -12,7 +12,7 @@ class Availableseat extends Component {
   };
  
       
-  handleBook = async (scheduleId, event) => {
+  handleBook = async (scheduleId, price,event) => {
     try {
        // Assuming token is stored in sessionStorage
   
@@ -21,7 +21,17 @@ class Availableseat extends Component {
   
       // Extract user ID from the decoded token
       const userId = localStorage.getItem("useId")
+
+      const chapaResponse = await axios.post('http://localhost:8000/pay', {
+        customer_id: userId,
+        price: price,
+
+      });
+  
+      // 2. Handle Payment Response from Chapa API
+      const paymentReference = chapaResponse.data.payment_reference;
       // Decode the token to get the user ID
+      console.log (paymentReference);
       console.log(seatNumber)
       const response = await axios.post('http://localhost:8000/booking', {
         customer_id: userId,
@@ -118,7 +128,7 @@ class Availableseat extends Component {
                   </td>
                   <td>
                   <button
-                      onClick={(event) => this.handleBook(schedule.id, event)}
+                      onClick={(event) => this.handleBook(schedule.id, schedule.price,event)}
                       className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Book
