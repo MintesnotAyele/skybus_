@@ -27,7 +27,10 @@ class Availableseat extends Component {
         price: price,
 
       });
-  
+      const redirectUrl = chapaResponse.data.url;
+
+      // Redirect the user to the response URL
+      window.location.href = redirectUrl;
       // 2. Handle Payment Response from Chapa API
       const paymentReference = chapaResponse.data.payment_reference;
       // Decode the token to get the user ID
