@@ -27,14 +27,11 @@ class Availableseat extends Component {
         price: price,
 
       });
-      const redirectUrl = chapaResponse.data.url;
-
+      const redirectUrl=chapaResponse.data.data.checkout_url;
+      console.log (redirectUrl);
       // Redirect the user to the response URL
       window.location.href = redirectUrl;
       // 2. Handle Payment Response from Chapa API
-      const paymentReference = chapaResponse.data.payment_reference;
-      // Decode the token to get the user ID
-      console.log (paymentReference);
       console.log(seatNumber)
       const response = await axios.post('http://localhost:8000/booking', {
         customer_id: userId,

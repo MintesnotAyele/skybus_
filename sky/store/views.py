@@ -220,29 +220,39 @@ class Adminuserdelet(generics.RetrieveDestroyAPIView):
     serializer_class=UsersSerializer
 @api_view(['POST'])
 def chappa(request):
-  pp=request.data.get('price')
-  url = "https://api.chapa.co/v1/transaction/initialize"
-  payload = {
-      "amount": pp,
-      "currency": "ETB",
-      "email": "abebeche@gmail.com",
-      "first_name": "Ben",
-      "last_name": "Giew",
-      "phone_number": "0912365478",
-      "tx_ref": "chewatatest-6669",
-      "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-      "return_url": "http://localhost:3000",
-      "customization": {
-          "title": "Payment ",
-          "description": "I love "
-      }
-  }
-  headers = {
-      'Authorization': 'Bearer CHASECK_TEST-M4Cw1oetgc8wNhMmVs0amV0upJmNXX94',
-      'Content-Type': 'application/json'
-  }
-  
-  response = requests.post(url, json=payload, headers=headers)
-  data = response.text
-  print(data)
-  return Response({response})
+    try:
+        pp = request.data.get('price')
+        url = "https://api.chapa.co/v1/transaction/initialize"
+        payload = {
+            "amount": pp,
+            "currency": "ETB",
+            "email": "alu@gmail.com",
+            "first_name": "alu",
+            "last_name": "lulu",
+            "phone_number": "0933205652",
+            "tx_ref": "chewatatest-8886",
+            "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
+            "return_url": "http://localhost:3000",
+            "customization": {
+                "title": "ayy",
+                "description": "it"
+            }
+        }
+        headers = {
+            'Authorization': 'Bearer CHASECK_TEST-M4Cw1oetgc8wNhMmVs0amV0upJmNXX94',
+            'Content-Type': 'application/json'
+        }
+
+        response = requests.post(url, json=payload, headers=headers)
+        data = response.text
+        print(data)
+          # Log the URL for debugging
+
+        # Extract the relevant information from the response
+        data = response.json()
+        status_code = response.status_code
+
+        # Construct and return a DRF Response object
+        return Response(data, status=status_code)
+    except Exception as e:
+        return Response({'message': 'Internal Server Error'}, status=500)
