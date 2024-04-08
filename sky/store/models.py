@@ -72,14 +72,6 @@ class Payment(models.Model):
     transaction_id = models.CharField(max_length=100)
     payment_status = models.CharField(max_length=50)
     booking = models.OneToOneField(Booking, on_delete=models.CASCADE)
-from django.conf import settings
-from rest_framework.authtoken.models import Token
-
-class CustomToken(Token):
-    cuser = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='custom_auth_token')
-
-    # Optionally, add any additional fields or methods you need
-  
 class Canclerequest(models.Model):
     bookingid=models.ForeignKey(Booking,on_delete=models.CASCADE)
     Requested_time=models.DateTimeField(auto_now_add=True)

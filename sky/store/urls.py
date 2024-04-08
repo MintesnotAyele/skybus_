@@ -16,6 +16,8 @@ urlpatterns = [
     path('ad/delete',views.Adminuserdelet.as_view(),name='delete'),
     path('verify-email/<str:token>/',views.verify_email, name='verify_email'),
     path('addschedule/',views.addSchedlue,name='sechedule'),
+    path('cancle',views.Cancle,name='cancle'),
+    path('cancel/<int:pk>/', views.Cancleview.as_view({'delete': 'destroy'}), name='cancel_delete'),
    # path('bus',views.AddBus.as_view(),name='bus')
     #path('availabilities/', views.display_availabilities, name='availabilities'),
    

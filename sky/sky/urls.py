@@ -26,6 +26,7 @@ router.register(r'schedule', views.Scheduleview1, basename='schedule')
 router.register(r'search',views.SearcheSchedule,basename='search')
 router.register(r'book', views.Bookingview, basename='book')
 router.register(r'bookedseats',views.BookedSeat,basename='booked')
+router.register(r'canclation',views.Cancleview,basename='cancle')
 
 # 
 

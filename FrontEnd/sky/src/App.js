@@ -13,6 +13,7 @@ import Header from './components/header';
 import Busmanage from './admins/busmanage';
 import Updateprice from './admins/updateprice';
 import Cancelticket from './admins/cancelticket';
+import Aprovecancle from './admins/aprove';
 import Addbus from './admins/addbus';
 import Style from './components/style';
 import Feedback from './admins/feedback';
@@ -41,6 +42,7 @@ class App extends Component {
             <Route path="/admins/busmanage" element={<Busmanage/>}/>
             <Route path="/admins/updateprice" element={<Updateprice/>}/>
             <Route path="/admins/cancelticket" element={<Cancelticket/>}/>
+            <Route path="/admins/aprove" element={<Aprovecancle/>}/>
             <Route path="/admins/report" element={<Report/>}/>
             <Route path="/assis/viewschedule" element={<Viewschedule/>}/>
             <Route path="/assis/availableseat" element={<Availableseat/>}/>

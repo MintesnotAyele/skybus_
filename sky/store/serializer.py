@@ -1,5 +1,5 @@
 from rest_framework import serializers,generics
-from .models import Users,Bus,CustomUser,Schedule,Booking
+from .models import Users,Bus,CustomUser,Schedule,Booking,Canclerequest
 from django.contrib.auth import authenticate, get_user_model
 
 
@@ -74,3 +74,7 @@ class UsersSerializer1(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
+class CancleSerializer(serializers.ModelSerializer):
+    class  Meta:
+        model=Canclerequest
+        fields='__all__'

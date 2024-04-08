@@ -4,9 +4,9 @@ from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import UsersForm, LoginForm, BusForm, DestinationForm
-from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1
+from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
 from django.http import HttpResponse, HttpRequest
-from .models import Users, Availability, Schedule, CustomUser,Bus,Booking
+from .models import Users, Availability, Schedule, CustomUser,Bus,Booking,Canclerequest
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
@@ -81,6 +81,21 @@ def addSchedlue(request):
         available_seats=available_seats   
     )
     return Response({'message': 'schedule added successfully.'}, status=status.HTTP_201_CREATED)
+@api_view(['POST'])
+def Cancle(request):
+    bookig=request.data.get('bookingId')
+    print(bookig)
+    try:
+        book=Booking.objects.get(booking_id=bookig)  
+    except  Booking.DoesNotExist:
+        return Response({'message':'bokking doesnot exist.'})  
+    Canclerequest.objects.create(
+        bookingid=book
+    )
+    return Response({'message': 'canclation request submited.'}, status=status.HTTP_201_CREATED)
+class Cancleview(viewsets.ModelViewSet):
+    queryset=Canclerequest.objects.all()
+    serializer_class= CancleSerializer
     
 @api_view(['POST'])
 def book_bus_seat(request):
@@ -230,7 +245,7 @@ def chappa(request):
             "first_name": "alu",
             "last_name": "lulu",
             "phone_number": "0933205652",
-            "tx_ref": "chewatatest-8886",
+            "tx_ref": "chewatatest-99777",
             "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
             "return_url": "http://localhost:3000",
             "customization": {
@@ -256,3 +271,5 @@ def chappa(request):
         return Response(data, status=status_code)
     except Exception as e:
         return Response({'message': 'Internal Server Error'}, status=500)
+
+
