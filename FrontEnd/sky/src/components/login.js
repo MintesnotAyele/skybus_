@@ -33,6 +33,7 @@ class Login extends Component {
       
       console.log(rsp.is_superuser);
       sessionStorage.setItem('token', rsp1.token);
+      localStorage.setItem("useId",rsp.id);
       // Ensure response and response.data exist before accessing data
       if(rsp.is_superuser){
         console.log('noo');
@@ -42,7 +43,7 @@ class Login extends Component {
       }
        else if(rsp.is_staff) {
         // Handle unexpected response structure
-        localStorage.setItem("useId",rsp.id);
+        
         this.setState({  redirectUrl: '/assistant/'});
       }else{
         this.setState({ redirectUrl:'/passenger'});

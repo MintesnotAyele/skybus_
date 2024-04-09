@@ -4,7 +4,7 @@ from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
 from .forms import UsersForm, LoginForm, BusForm, DestinationForm
-from .serializer import UsersSerializer, UserRegisterSerializer, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
+from .serializer import UsersSerializer, UserRegisterSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
 from django.http import HttpResponse, HttpRequest
 from .models import Users, Availability, Schedule, CustomUser,Bus,Booking,Canclerequest
 from django.urls import reverse
@@ -58,7 +58,7 @@ class BookedSeat(viewsets.ModelViewSet):
             return Booking.objects.none()
 class Bookingview(viewsets.ModelViewSet):
     queryset=Booking.objects.all()
-    serializer_class=BookingSerializer
+    serializer_class=BookingE
 @api_view(['POST'])
 def addSchedlue(request):
     busPlateNumber=request.data.get('busPlateNumber')
@@ -96,7 +96,16 @@ def Cancle(request):
 class Cancleview(viewsets.ModelViewSet):
     queryset=Canclerequest.objects.all()
     serializer_class= CancleSerializer
-    
+@api_view(['POST'])
+def increment_available_seats(request):
+    schedule_id = request.data.get('schedule_id')
+    try:
+        schedule = Schedule.objects.get(pk=schedule_id)
+        schedule.available_seats += 1
+        schedule.save()
+        return Response({'message': 'Available seats incremented successfully'}, status=200)
+    except Schedule.DoesNotExist:
+        return Response({'message': 'Schedule not found'}, status=404)
 @api_view(['POST'])
 def book_bus_seat(request):
     # Assuming the request data contains 'customer_id', 'bus_id', and 'seat_number'
@@ -237,6 +246,7 @@ class Adminuserdelet(generics.RetrieveDestroyAPIView):
 def chappa(request):
     try:
         pp = request.data.get('price')
+        mm=request.data.get('userId')
         url = "https://api.chapa.co/v1/transaction/initialize"
         payload = {
             "amount": pp,
@@ -245,7 +255,7 @@ def chappa(request):
             "first_name": "alu",
             "last_name": "lulu",
             "phone_number": "0933205652",
-            "tx_ref": "chewatatest-99777",
+            "tx_ref": "chewatatest-99779",
             "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
             "return_url": "http://localhost:3000",
             "customization": {

@@ -1,20 +1,43 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-class Aprovecancle extends Component {
+class ApproveCancel extends Component {
     state = {
-        id: '' // State to store the ID entered by the user
+        cancelRequests: [],
+        idToDelete: ''
     };
 
-    handleChange = (event) => {
-        this.setState({ id: event.target.value }); // Update state with the value entered in the text field
+    componentDidMount() {
+        this.fetchCancelRequests();
+    }
+
+    fetchCancelRequests = async () => {
+        try {
+            const response = await axios.get('http://localhost:8000/api/canclation/'); // Replace with your API endpoint
+            this.setState({ cancelRequests: response.data });
+        } catch (error) {
+            console.error('Error fetching cancel requests:', error);
+        }
     };
 
-    handleDelete = async () => {
-        const { id } = this.state; // Get the ID from the state
+    handleDelete = async (id,bokingid,scheduleId) => {
         try {
             await axios.delete(`http://localhost:8000/cancel/${id}/`);
-            // Optionally, perform any additional logic after deletion
+            this.setState(prevState => ({
+                cancelRequests: prevState.cancelRequests.filter(request => request.id !== id),
+                idToDelete: ''
+            }));
+            console.log('Deletion successful');
+        } catch (error) {
+            console.error('Error deleting:', error);
+        }
+        try {
+            await axios.delete(`http://localhost:8000/cancelbook/${bokingid}/`);
+            await axios.post('http://localhost:8000/increment-seats/', { schedule_id: scheduleId });
+            this.setState(prevState => ({
+                cancelRequests: prevState.cancelRequests.filter(request => request.id !== id),
+                idToDelete: ''
+            }));
             console.log('Deletion successful');
         } catch (error) {
             console.error('Error deleting:', error);
@@ -22,19 +45,38 @@ class Aprovecancle extends Component {
     };
 
     render() {
-        const { id } = this.state;
+        const { cancelRequests, idToDelete } = this.state;
         return (
             <div>
-                <input 
-                    type="text" 
-                    value={id} 
-                    onChange={this.handleChange} 
-                    placeholder="Enter ID" 
-                />
-                <button onClick={this.handleDelete}>Delete</button>
+                <h2 className="text-2xl font-bold mb-4">Cancel Requests</h2>
+                <table className="w-full bg-white shadow-md rounded">
+                    <thead>
+                        <tr>
+                            <th className="border px-4 py-2">ID</th>
+                            <th className="border px-4 py-2">Bookingid</th>
+                            <th className="border px-4 py-2">Email</th>
+                            <th className="border px-4 py-2">Time</th>
+                            <th className="border px-4 py-2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {cancelRequests.map(request => (
+                            <tr key={request.id}>
+                                <td className="border px-4 py-2">{request.id}</td>
+                                <td className="border px-4 py-2">{request.bookingid.booking_id}</td>
+                                <td className="border px-4 py-2">{request.bookingid.customer_id.email}</td>
+                                <td className="border px-4 py-2">{request.Requested_time}</td>
+                                <td>
+                                    <button onClick={() => this.handleDelete(request.id, request.bookingid.booking_id,request.bookingid.schedule)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Approve</button>
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
             </div>
         );
     }
 }
 
-export default Aprovecancle;
+export default ApproveCancel;
+

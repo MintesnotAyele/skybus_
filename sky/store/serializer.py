@@ -3,7 +3,17 @@ from .models import Users,Bus,CustomUser,Schedule,Booking,Canclerequest
 from django.contrib.auth import authenticate, get_user_model
 
 
+
 Usermodel=get_user_model()
+class UserbookSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=CustomUser
+        fields=['email']
+class BookingE(serializers.ModelSerializer):
+    customer_id=UserbookSerializer()
+    class Meta:
+        model=Booking
+        fields='__all__'
 
 class UserCreateSerializer(serializers.ModelSerializer):
     class  Meta:
@@ -75,6 +85,7 @@ class UsersSerializer1(serializers.ModelSerializer):
         user = CustomUser.objects.create_user(**validated_data)
         return user
 class CancleSerializer(serializers.ModelSerializer):
+    bookingid=BookingE()
     class  Meta:
         model=Canclerequest
         fields='__all__'
