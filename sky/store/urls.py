@@ -20,6 +20,8 @@ urlpatterns = [
     path('cancel/<int:pk>/', views.Cancleview.as_view({'delete': 'destroy'}), name='cancel_delete'),
     path('cancelbook/<int:pk>/', views.Bookingview.as_view({'delete': 'destroy'}), name='cancel_delete_book'),
     path('increment-seats/', views.increment_available_seats, name='increment_available_seats'),
+    path('sendEmail/', views.sendDeclien,name='sendEmail'),
+    path('paypal/',views.paypal_payment,name='PayPal'),  # Paypal payment    
    # path('bus',views.AddBus.as_view(),name='bus')
     #path('availabilities/', views.display_availabilities, name='availabilities'),
    

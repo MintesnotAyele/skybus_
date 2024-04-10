@@ -19,7 +19,19 @@ class ApproveCancel extends Component {
             console.error('Error fetching cancel requests:', error);
         }
     };
-
+    handlDicline=async(id,email)=> {
+        try {
+            await axios.delete(`http://localhost:8000/cancel/${id}/`);
+            await axios.post('http://localhost:8000/sendEmail/', { email: email });
+            this.setState(prevState =>({
+              cancelRequests :prevState.cancelRequests.filter(request => request.id !== id ),
+              idToDelete:'' 
+            }));
+            console.log('Deletion successful without aproval');
+        } catch (error) {
+            
+        }
+    }
     handleDelete = async (id,bokingid,scheduleId) => {
         try {
             await axios.delete(`http://localhost:8000/cancel/${id}/`);
@@ -57,6 +69,7 @@ class ApproveCancel extends Component {
                             <th className="border px-4 py-2">Email</th>
                             <th className="border px-4 py-2">Time</th>
                             <th className="border px-4 py-2">Action</th>
+                            <th className="border px-4 py-2">Action2</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -68,6 +81,9 @@ class ApproveCancel extends Component {
                                 <td className="border px-4 py-2">{request.Requested_time}</td>
                                 <td>
                                     <button onClick={() => this.handleDelete(request.id, request.bookingid.booking_id,request.bookingid.schedule)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Approve</button>
+                                </td>
+                                <td>
+                                    <button onClick={() => this.handlDicline(request.id,request.bookingid.customer_id.email)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Declien</button>
                                 </td>
                             </tr>
                         ))}

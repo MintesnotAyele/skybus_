@@ -20,7 +20,14 @@ from django.conf import settings
 from rest_framework.decorators import action
 from django.http import JsonResponse
 import requests
+from  datetime import datetime
+import paypalrestsdk
 
+paypalrestsdk.configure({
+    "mode": settings.PAYPAL_MODE,
+    "client_id": settings.PAYPAL_CLIENT_ID,
+    "client_secret": settings.PAYPAL_CLIENT_SECRET
+})
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UsersSerializer
@@ -161,6 +168,15 @@ def send_verification_email(email, token):
     subject = 'Email Verification'
     message = f'Please click the following link to verify your email: http://127.0.0.1:8000/verify-email/{token}/'
     send_mail(subject, message, 'from@example.com', [email])
+@api_view(['POST'])
+def sendDeclien(request):
+    email = request.data.get('email')
+    send_email_message(email)
+    return Response({"message": "eamil message sent to the user."})
+def send_email_message(email):
+    subject = 'Email message for cancle request'
+    message = f'your request is not accepted becuase of time'
+    send_mail(subject, message, 'mintesnotAyele@example.com', [email])
 @api_view(['GET'])
 def verify_email(request, token):
     try:
@@ -245,8 +261,10 @@ class Adminuserdelet(generics.RetrieveDestroyAPIView):
 @api_view(['POST'])
 def chappa(request):
     try:
+        now=datetime.now()
         pp = request.data.get('price')
         mm=request.data.get('userId')
+        ddt= now.strftime("%Y%m%d%H%M%S")
         url = "https://api.chapa.co/v1/transaction/initialize"
         payload = {
             "amount": pp,
@@ -255,7 +273,7 @@ def chappa(request):
             "first_name": "alu",
             "last_name": "lulu",
             "phone_number": "0933205652",
-            "tx_ref": "chewatatest-99779",
+            "tx_ref": f'tx_{mm}{ddt}',
             "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
             "return_url": "http://localhost:3000",
             "customization": {
@@ -281,5 +299,40 @@ def chappa(request):
         return Response(data, status=status_code)
     except Exception as e:
         return Response({'message': 'Internal Server Error'}, status=500)
+@api_view(['POST'])
+def paypal_payment(request):
+    try:
+        # Get the payment amount from the request
+        amount = request.data.get('price')
 
+        # Create a PayPal Payment object
+        payment = paypalrestsdk.Payment({
+            "intent": "sale",
+            "payer": {
+                "payment_method": "paypal"
+            },
+            "transactions": [
+                {
+                    "amount": {
+                        "total": amount,
+                        "currency": "USD"
+                    }
+                }
+            ],
+            "redirect_urls": {
+                "return_url": "http://localhost:3000",
+                "cancel_url": "http://localhost:3000/adminpage"
+            }
+        })
 
+        # Create the payment
+        if payment.create():
+            # Redirect the user to PayPal for payment approval
+            for link in payment.links:
+                if link.method == "REDIRECT":
+                    return JsonResponse({'redirect_url': link.href})
+        else:
+            return JsonResponse({'error': payment.error})
+    except Exception as e:
+        return Response({'message': 'Internal Server Error'}, status=500)
+   

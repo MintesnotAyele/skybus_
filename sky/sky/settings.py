@@ -11,6 +11,16 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from decouple import config
+
+PAYPAL_MODE = 'sandbox'
+PAYPAL_CLIENT_ID='AR0tI0hOSG9hEFHKzm36mophmrE7iz4z5ZDT7YqKZVrbls8RK4oEsaU8kMwteTuEgA7XwU9BlCXBWvNc'
+PAYPAL_CLIENT_SECRET='ENm8By0p3XLh7vvlZcGPwi6Urtiz1_NxqL6jHH9_E2QkAGPhadHokoX23F-OKi0D9jfW8WzWxE_3nOwz'
+
+
+
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,6 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'paypal.standard.ipn',
 ]
 
 MIDDLEWARE = [
@@ -52,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware'
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'sky.urls'
@@ -139,7 +150,7 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = 'store/templates/store/success.html'  # replace 'url-name' with the name of the URL to redirect to after login
-
+CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST =(
     'http://localhost:3000',
 )

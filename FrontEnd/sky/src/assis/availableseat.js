@@ -10,8 +10,22 @@ class Availableseat extends Component {
     destination: '',
     availableSeatsMap: {}
   };
- 
-      
+   handleBook1 = async (scheduleId, price, event) => {
+    try {
+      // Send a POST request to initiate PayPal payment
+      const response = await axios.post('http://localhost:8000/paypal/', {
+        price: price
+      });
+     console.log(response);
+      // Check if the response contains a redirect URL
+      if (response.data.redirect_url) {
+        // Set the redirect URL to the state
+        window.location.href = response.data.redirect_url;
+      }
+    } catch (error) {
+      console.error('Error initiating PayPal payment:', error);
+    }
+  };
   handleBook = async (scheduleId, price,event) => {
     try {
        // Assuming token is stored in sessionStorage
@@ -129,6 +143,12 @@ class Availableseat extends Component {
                   <td>
                   <button
                       onClick={(event) => this.handleBook(schedule.id, schedule.price,event)}
+                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                      Book
+                    </button>
+                    <button
+                      onClick={(event) => this.handleBook1(schedule.id, schedule.price,event)}
                       className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Book
