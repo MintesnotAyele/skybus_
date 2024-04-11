@@ -16,10 +16,12 @@ import Cancelticket from './admins/cancelticket';
 import Aprovecancle from './admins/aprove';
 import Addbus from './admins/addbus';
 import Style from './components/style';
+import ForgotPassword from './components/ForgotPassword';
+import ResetPassword from './components/ResetPassword';
 import Feedback from './admins/feedback';
 import Report from './admins/report';
 import Availableseat from './assis/availableseat';
-import Viewschedule from './assis/viewschedule';
+import Viewschedule from './assis/viewschedule'; 
 import Bookedticket from './admins/bookedticket';
 
 
@@ -39,6 +41,8 @@ class App extends Component {
             <Route path="/components/signup" element={<Signup />} />
             <Route path="/passenger" element={<Passanger />} />
             <Route path="/adminpage" element={<Adminpage />} />
+            <Route path="/forgot" element={<ForgotPassword />} />
+            <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
             <Route path="/admins/busmanage" element={<Busmanage/>}/>
             <Route path="/admins/updateprice" element={<Updateprice/>}/>
             <Route path="/admins/cancelticket" element={<Cancelticket/>}/>

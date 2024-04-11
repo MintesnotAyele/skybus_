@@ -22,6 +22,18 @@ from django.http import JsonResponse
 import requests
 from  datetime import datetime
 import paypalrestsdk
+from paypalrestsdk import Payment
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.encoding import force_bytes, force_str
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+
+class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
+    def _make_hash_value(self, user, timestamp):
+        return (
+            str(user.pk) + str(timestamp) + str(user.is_active)
+        )
+
+password_reset_token = PasswordResetTokenGenerator()
 
 paypalrestsdk.configure({
     "mode": settings.PAYPAL_MODE,
@@ -177,6 +189,16 @@ def send_email_message(email):
     subject = 'Email message for cancle request'
     message = f'your request is not accepted becuase of time'
     send_mail(subject, message, 'mintesnotAyele@example.com', [email])
+
+@api_view(['POST'])
+def sendAprove(request):
+    email = request.data.get('email')
+    send_aprove_email_message(email)
+    return Response({"message": "eamil message sent to the user."})
+def send_aprove_email_message(email):
+    subject = 'Email message for cancle request'
+    message = f'your request is accepted check your account'
+    send_mail(subject, message, 'mintesnotAyele@example.com', [email])
 @api_view(['GET'])
 def verify_email(request, token):
     try:
@@ -324,15 +346,67 @@ def paypal_payment(request):
                 "cancel_url": "http://localhost:3000/adminpage"
             }
         })
-
+        print(payment.create())
+       # payment_id = "PAYID-MYLZ6QY5B299006KT3606119"
+        #payer_id = "UYU297GKV4YN4"
+        #payment = Payment.find(payment_id)
+        #payment_details = Payment.find(payment_id)
+        #print(payment_details.to_dict())
         # Create the payment
         if payment.create():
-            # Redirect the user to PayPal for payment approval
+            request.session['paymentId'] = payment.id
+            # Get the approval URL from the payment object
+            approval_url = None
             for link in payment.links:
                 if link.method == "REDIRECT":
-                    return JsonResponse({'redirect_url': link.href})
+                    approval_url = link.href
+                    break
+
+            if approval_url:
+                return JsonResponse({'redirect_url': approval_url})
+            else:
+                return JsonResponse({'error': 'Approval URL not found'}, status=500)
         else:
-            return JsonResponse({'error': payment.error})
+            error_message = payment.error.get('message', 'Unknown error')
+            return JsonResponse({'error': error_message}, status=500)
     except Exception as e:
-        return Response({'message': 'Internal Server Error'}, status=500)
+        return JsonResponse({'message': str(e)}, status=500)
+@api_view(['POST'])
+def forgot_password(request):
+    email = request.data.get('email')
+    user = CustomUser.objects.filter(email=email).first()
+    if user:
+        # Generate a password reset token
+        uid = urlsafe_base64_encode(force_bytes(user.pk))
+        token = password_reset_token.make_token(user)
+        
+        # Encode user ID and token to be sent in the password reset link
+        reset_link = f'http://localhost:3000/reset-password/{uid}/{token}/'  # Replace with your frontend URL
+        
+        # Send the password reset link to the user's email
+        send_mail(
+            'Password Reset',
+            f'Click the link below to reset your password:\n{reset_link}',
+            'from@example.com',
+            [email],
+            fail_silently=False,
+        )
+        return Response({'message': 'Password reset link sent to your email'}, status=status.HTTP_200_OK)
+    else:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+def reset_password(request, uidb64, token):
+    try:
+        uid = urlsafe_base64_decode(uidb64).decode()  # Decode the byte-like object to a string
+        user = CustomUser.objects.get(pk=uid)
+        if password_reset_token.check_token(user, token):
+            new_password = request.data.get('new_password')
+            user.set_password(new_password)
+            user.save()
+            return Response({'message': 'Password reset successful'}, status=status.HTTP_200_OK)
+        else:
+            return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
+    except CustomUser.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
    

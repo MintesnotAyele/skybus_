@@ -71,7 +71,7 @@ class Payment(models.Model):
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
     transaction_id = models.CharField(max_length=100)
     payment_status = models.CharField(max_length=50)
-    booking = models.OneToOneField(Booking, on_delete=models.CASCADE)
+    
 class Canclerequest(models.Model):
     bookingid=models.ForeignKey(Booking,on_delete=models.CASCADE)
     Requested_time=models.DateTimeField(auto_now_add=True)

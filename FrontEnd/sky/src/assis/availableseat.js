@@ -18,7 +18,9 @@ class Availableseat extends Component {
       });
      console.log(response);
       // Check if the response contains a redirect URL
+      console.log(response.data.redirect_url);
       if (response.data.redirect_url) {
+        console.log(response.data.redirect_url);
         // Set the redirect URL to the state
         window.location.href = response.data.redirect_url;
       }

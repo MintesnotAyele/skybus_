@@ -97,7 +97,15 @@ DATABASES = {
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': '161616'
-    }
+    },
+    'second_db': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'skybackup',
+        'USER': 'root',
+        'PASSWORD': '161616',
+        'HOST': 'localhost'
+        
+    },
 }
 AUTH_USER_MODEL='store.CustomUser'
 

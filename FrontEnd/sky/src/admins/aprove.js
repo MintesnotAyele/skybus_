@@ -32,9 +32,10 @@ class ApproveCancel extends Component {
             
         }
     }
-    handleDelete = async (id,bokingid,scheduleId) => {
+    handleDelete = async (id,bokingid,scheduleId,email) => {
         try {
             await axios.delete(`http://localhost:8000/cancel/${id}/`);
+            await axios.post('http://localhost:8000/sendEmailA/', { email: email });
             this.setState(prevState => ({
                 cancelRequests: prevState.cancelRequests.filter(request => request.id !== id),
                 idToDelete: ''
@@ -80,7 +81,7 @@ class ApproveCancel extends Component {
                                 <td className="border px-4 py-2">{request.bookingid.customer_id.email}</td>
                                 <td className="border px-4 py-2">{request.Requested_time}</td>
                                 <td>
-                                    <button onClick={() => this.handleDelete(request.id, request.bookingid.booking_id,request.bookingid.schedule)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Approve</button>
+                                    <button onClick={() => this.handleDelete(request.id, request.bookingid.booking_id,request.bookingid.schedule,request.bookingid.customer_id.email)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Approve</button>
                                 </td>
                                 <td>
                                     <button onClick={() => this.handlDicline(request.id,request.bookingid.customer_id.email)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Declien</button>
