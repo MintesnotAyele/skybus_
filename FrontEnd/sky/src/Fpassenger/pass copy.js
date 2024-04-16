@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
-
-class Passenger extends Component {
+import { Link } from 'react-router-dom';
+class Pass extends Component {
   render() {
     return (
-     <div>
-  
+    
+    <div >
 
-<div class=" w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 h-[calc(100vh-32px)] fixed inset-0 z-50 my-4 ml-4 flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+
+<div class="flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
     <a href="#" class="mx-auto">
         <img class="w-15 h-5 sm:h-7" src="https://cdn.pixabay.com/photo/2014/04/03/11/55/bus-312564_640.png" alt=""/>
     </a>
@@ -136,11 +137,11 @@ class Passenger extends Component {
    
         
 
+ </div>
 
-
-      </div>
+  
     );
   }
 }
 
-export default Passenger;
+export default Pass;

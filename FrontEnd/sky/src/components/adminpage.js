@@ -135,6 +135,9 @@ class Adminpage extends Component {
           </Link></li>
           </a>
         </li>
+
+
+
       </ul>
     </div>
   </aside>
@@ -273,6 +276,8 @@ class Adminpage extends Component {
           </div>
         </div>
       </div>
+
+
       <div class='flex min-h-screen items-center justify-center min-h-screen px-24'>
     <div>
         <div class="group relative -ml-4 flex scroll-mt-40 items-center pl-4">
@@ -354,6 +359,9 @@ class Adminpage extends Component {
         </div>
     </div>
 </div>
+
+
+
       <div class="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
         <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
           <div class="relative bg-clip-border rounded-xl overflow-hidden bg-transparent text-gray-700 shadow-none m-0 flex items-center justify-between p-6">
