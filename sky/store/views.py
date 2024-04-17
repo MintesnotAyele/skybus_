@@ -178,7 +178,7 @@ def signup(request):
 
 def send_verification_email(email, token):
     subject = 'Email Verification'
-    message = f'Please click the following link to verify your email: http://127.0.0.1:8000/verify-email/{token}/'
+    message = f'Please click the following link to verify your email: http://127.0.0.1:3000/verifiy/{token}/'
     send_mail(subject, message, 'from@example.com', [email])
 @api_view(['POST'])
 def sendDeclien(request):
@@ -199,7 +199,7 @@ def send_aprove_email_message(email):
     subject = 'Email message for cancle request'
     message = f'your request is accepted check your account'
     send_mail(subject, message, 'mintesnotAyele@example.com', [email])
-@api_view(['GET'])
+@api_view(['POST'])
 def verify_email(request, token):
     try:
         token_obj = Token.objects.get(key=token)
@@ -217,12 +217,15 @@ def verify_email(request, token):
 def login(request):
     user = get_object_or_404(CustomUser, email=request.data['email'])
     serializer = UsersSerializer(instance=user)
-    if not user.check_password(request.data['password']):
-        print("yesssdnooo")
-        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
-    token, created = Token.objects.get_or_create(user =user)
+    if user.is_active:
+
+       if not user.check_password(request.data['password']):
+          print("yesssdnooo")
+          return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+       token, created = Token.objects.get_or_create(user =user)
         # If not superuser, redirect to customer React page
-    return Response({"token": token.key, "user": serializer.data})
+       return Response({"token": token.key, "user": serializer.data})
+    return Response({"detail":"user is not active user first activate it"})
 class Logout(APIView):
     def post(self, request, format=None):
         # Get the token from the request headers
@@ -268,7 +271,7 @@ class UserLogout(APIView):
 # You might want to remove authentication from UserView as well
 class UserView(APIView):
     def get(self, request):
-        serializer = UsersSerializer(request.user)
+        serializer = UsersSerializer1(request.user)
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
     
 class Adminuserview(generics.RetrieveAPIView):

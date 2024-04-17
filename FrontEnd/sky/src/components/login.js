@@ -28,12 +28,13 @@ class Login extends Component {
      
      const  rsp = response.data.user;
      const rsp1=response.data.token;
-     console.log(rsp)
+     console.log(rsp1)
       console.log(rsp.id,"djjhd");
       
       console.log(rsp.is_superuser);
       sessionStorage.setItem('token', rsp1.token);
       localStorage.setItem("useId",rsp.id);
+      localStorage.setItem('token',rsp1.token);
       // Ensure response and response.data exist before accessing data
       if(rsp.is_superuser){
         console.log('noo');

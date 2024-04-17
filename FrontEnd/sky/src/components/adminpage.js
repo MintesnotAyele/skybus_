@@ -1,6 +1,7 @@
 // Adminpage.js
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import RequireAuth from './RequireAuth';
 
 class Adminpage extends Component {
   render() {
@@ -531,4 +532,4 @@ class Adminpage extends Component {
   }
 }
 
-export default Adminpage;
+export default RequireAuth(Adminpage);
