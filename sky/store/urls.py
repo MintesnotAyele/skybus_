@@ -21,7 +21,6 @@ urlpatterns = [
     path('cancelbook/<int:pk>/', views.Bookingview.as_view({'delete': 'destroy'}), name='cancel_delete_book'),
     path('increment-seats/', views.increment_available_seats, name='increment_available_seats'),
     path('sendEmail/', views.sendDeclien,name='sendEmail'),
-    path('paypal/',views.paypal_payment,name='PayPal'), 
      path('sendEmailA/', views.sendAprove,name='sendEmailA'),
      path('forgot-password/', views.forgot_password,name='forgot'), 
      path('reset-password/<str:uidb64>/<str:token>/', views.reset_password, name='reset_password'),# Paypal payment    

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { FaTrashAlt, FaEdit } from 'react-icons/fa';
+import {Link, Navigate } from 'react-router-dom';
 
 class Userman extends Component {
   constructor(props) {
@@ -86,7 +87,8 @@ class Userman extends Component {
                     <td className="border px-4 py-2">{schedule.price}</td>
                     <td className="border px-4 py-2">
                       <FaTrashAlt onClick={() => this.handleDelete(schedule.id)} style={{ cursor: 'pointer' }} />
-                      <FaEdit onClick={() => this.handleUpdate(schedule.id)} style={{ cursor: 'pointer', marginLeft: '10px' }} />
+                      <Link to={`/edit/${schedule.id}`}><FaEdit onClick={() => this.handleUpdate(schedule.id)} style={{ cursor: 'pointer', marginLeft: '10px' }} /></Link>
+
                     </td>
                   </tr>
                 ))}
