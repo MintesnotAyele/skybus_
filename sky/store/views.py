@@ -21,8 +21,6 @@ from rest_framework.decorators import action
 from django.http import JsonResponse
 import requests
 from  datetime import datetime
-import paypalrestsdk
-from paypalrestsdk import Payment
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
@@ -35,11 +33,6 @@ class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
 
 password_reset_token = PasswordResetTokenGenerator()
 
-paypalrestsdk.configure({
-    "mode": settings.PAYPAL_MODE,
-    "client_id": settings.PAYPAL_CLIENT_ID,
-    "client_secret": settings.PAYPAL_CLIENT_SECRET
-})
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UsersSerializer
@@ -178,7 +171,7 @@ def signup(request):
 
 def send_verification_email(email, token):
     subject = 'Email Verification'
-    message = f'Please click the following link to verify your email: http://127.0.0.1:8000/verify-email/{token}/'
+    message = f'Please click the following link to verify your email: http://127.0.0.1:3000/verifiy/{token}/'
     send_mail(subject, message, 'from@example.com', [email])
 @api_view(['POST'])
 def sendDeclien(request):
@@ -199,7 +192,7 @@ def send_aprove_email_message(email):
     subject = 'Email message for cancle request'
     message = f'your request is accepted check your account'
     send_mail(subject, message, 'mintesnotAyele@example.com', [email])
-@api_view(['GET'])
+@api_view(['POST'])
 def verify_email(request, token):
     try:
         token_obj = Token.objects.get(key=token)
@@ -217,12 +210,15 @@ def verify_email(request, token):
 def login(request):
     user = get_object_or_404(CustomUser, email=request.data['email'])
     serializer = UsersSerializer(instance=user)
-    if not user.check_password(request.data['password']):
-        print("yesssdnooo")
-        return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
-    token, created = Token.objects.get_or_create(user =user)
+    if user.is_active:
+
+       if not user.check_password(request.data['password']):
+          print("yesssdnooo")
+          return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
+       token, created = Token.objects.get_or_create(user =user)
         # If not superuser, redirect to customer React page
-    return Response({"token": token.key, "user": serializer.data})
+       return Response({"token": token.key, "user": serializer.data})
+    return Response({"detail":"user is not active user first activate it"})
 class Logout(APIView):
     def post(self, request, format=None):
         # Get the token from the request headers
@@ -268,7 +264,7 @@ class UserLogout(APIView):
 # You might want to remove authentication from UserView as well
 class UserView(APIView):
     def get(self, request):
-        serializer = UsersSerializer(request.user)
+        serializer = UsersSerializer1(request.user)
         return Response({'user': serializer.data}, status=status.HTTP_200_OK)
     
 class Adminuserview(generics.RetrieveAPIView):
@@ -321,56 +317,7 @@ def chappa(request):
         return Response(data, status=status_code)
     except Exception as e:
         return Response({'message': 'Internal Server Error'}, status=500)
-@api_view(['POST'])
-def paypal_payment(request):
-    try:
-        # Get the payment amount from the request
-        amount = request.data.get('price')
 
-        # Create a PayPal Payment object
-        payment = paypalrestsdk.Payment({
-            "intent": "sale",
-            "payer": {
-                "payment_method": "paypal"
-            },
-            "transactions": [
-                {
-                    "amount": {
-                        "total": amount,
-                        "currency": "USD"
-                    }
-                }
-            ],
-            "redirect_urls": {
-                "return_url": "http://localhost:3000",
-                "cancel_url": "http://localhost:3000/adminpage"
-            }
-        })
-        print(payment.create())
-       # payment_id = "PAYID-MYLZ6QY5B299006KT3606119"
-        #payer_id = "UYU297GKV4YN4"
-        #payment = Payment.find(payment_id)
-        #payment_details = Payment.find(payment_id)
-        #print(payment_details.to_dict())
-        # Create the payment
-        if payment.create():
-            request.session['paymentId'] = payment.id
-            # Get the approval URL from the payment object
-            approval_url = None
-            for link in payment.links:
-                if link.method == "REDIRECT":
-                    approval_url = link.href
-                    break
-
-            if approval_url:
-                return JsonResponse({'redirect_url': approval_url})
-            else:
-                return JsonResponse({'error': 'Approval URL not found'}, status=500)
-        else:
-            error_message = payment.error.get('message', 'Unknown error')
-            return JsonResponse({'error': error_message}, status=500)
-    except Exception as e:
-        return JsonResponse({'message': str(e)}, status=500)
 @api_view(['POST'])
 def forgot_password(request):
     email = request.data.get('email')
