@@ -4,9 +4,7 @@ import { Link } from 'react-router-dom';
   render() {
     return (
       <div>
-     
-
-        
+       
 <div class="flex flex-col h-screen bg-gray-700">
 
   
@@ -14,7 +12,7 @@ import { Link } from 'react-router-dom';
         <div class="flex items-center">
             <div class="flex items-center"> 
                 <img src="https://cdn.pixabay.com/photo/2014/04/03/11/55/bus-312564_640.png" alt="Logo" class="w-28 h-18 mr-2"/>
-                <h2 class="font-bold text-xl text-blue-500 ">wolkite bus station assistance page </h2>
+                <h2 class="font-bold text-xl text-blue-500 ">wolkite bus station Assistant page </h2>
             </div>
             <div class="md:hidden flex items-center">
                 <button id="menuBtn">
@@ -37,18 +35,15 @@ import { Link } from 'react-router-dom';
     <div class="flex-1 flex flex-wrap">
       
      
-    <div class="flex flex-col items-center mt-6 -mx-2">
-        <img class="object-cover w-24 h-24 mx-2 rounded-full" 
-        src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA0L3BmLWljb240LWppcjIwNjItcG9yLWwtam9iNzg4LnBuZw.png" alt="avatar"/>
-        <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">samuel fikre</h4>
-        <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">samuel@example.com</p>
-    </div>
-
-
-     
-        <div class="p-2 bg-orange-100 w-full md:w-60 flex flex-col md:flex hidden" id="sideNav">
+        <div class="p-2 bg-orange-100 w-full h-full md:w-60 flex flex-col md:flex hidden" id="sideNav">
             <nav>
 
+            <div class="flex flex-col items-center mt-6 -mx-2">
+        <img class="object-cover w-24 h-24 mx-2 rounded-full" 
+        src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA0L3BmLWljb240LWppcjIwNjItcG9yLWwtam9iNzg4LnBuZw.png" alt="avatar"/>
+        <h4 class="mx-2 mt-2 font-medium text-blue-200 dark:text-gray-200">assistant</h4>
+        <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">assis@example.com</p>
+    </div>
 
               
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
@@ -56,6 +51,10 @@ import { Link } from 'react-router-dom';
                 <Link to="/assis/availableseat"><i class="fas fa-home mr-2"></i>availableseat</Link>
                 </a>
 
+
+                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
+                <Link to="/admins/feedback"><i class="fas fa-home mr-2"></i>notification</Link>
+                </a>
                
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
                 
