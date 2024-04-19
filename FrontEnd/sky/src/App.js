@@ -23,19 +23,19 @@ import Report from './admins/report';
 import Availableseat from './assis/availableseat';
 import Viewschedule from './assis/viewschedule'; 
 import Bookedticket from './admins/bookedticket';
-<<<<<<< HEAD
+
 //import Approve from './admins/approve';
 //import Approved from './admins/approvedticket';
 
 import './App.css';
 import Approvedticket from './admins/approvedticket';
 
-=======
+
 import './App.css';
 import Verify from './Fpassenger/verifiy';
 import Userman from './admins/userman';
 import Editschedule from './admins/editschedule';
->>>>>>> ca25ed6242e3efc4ae4a7cbba78ce2afb6de74eb
+
 
 
 class App extends Component {
