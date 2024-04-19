@@ -58,7 +58,7 @@ import React, { Component } from 'react'
         
     </div>
     <div class="flex items-center justify-center mb-4">
-        <button class="bg-sky-900 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+        <button class="bg-sky-800 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
             type="submit">
             download
         </button>

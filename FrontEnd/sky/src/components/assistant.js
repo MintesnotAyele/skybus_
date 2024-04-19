@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
+import RequireAuth from './RequireAuth';
  class Assistant extends Component {
   render() {
     return (
@@ -234,4 +235,4 @@ import { Link } from 'react-router-dom';
   }
 }
 
-export default Assistant
+export default RequireAuth(Assistant)

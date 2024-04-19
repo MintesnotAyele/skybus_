@@ -18,7 +18,7 @@ class BookingE(serializers.ModelSerializer):
 class UserCreateSerializer(serializers.ModelSerializer):
     class  Meta:
         model =Usermodel
-        fields=['id','email','password','phone_number']
+        fields=['id','email','password','phone_number','username','first_name','last_name']
 
 class UsersSerializer(serializers.ModelSerializer):
     class   Meta:
@@ -27,7 +27,7 @@ class UsersSerializer(serializers.ModelSerializer):
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model=Usermodel
-        fields=['is_staff']
+        fields=['is_staff','is_active']
 class UserRegisterSerializer(serializers.ModelSerializer):
      class   Meta:
         model = CustomUser

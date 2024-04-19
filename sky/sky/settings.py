@@ -11,11 +11,11 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
-from decouple import config
+#from decouple import config
 
-PAYPAL_MODE = 'sandbox'
-PAYPAL_CLIENT_ID='AR0tI0hOSG9hEFHKzm36mophmrE7iz4z5ZDT7YqKZVrbls8RK4oEsaU8kMwteTuEgA7XwU9BlCXBWvNc'
-PAYPAL_CLIENT_SECRET='ENm8By0p3XLh7vvlZcGPwi6Urtiz1_NxqL6jHH9_E2QkAGPhadHokoX23F-OKi0D9jfW8WzWxE_3nOwz'
+#PAYPAL_MODE = 'sandbox'
+#PAYPAL_CLIENT_ID='AR0tI0hOSG9hEFHKzm36mophmrE7iz4z5ZDT7YqKZVrbls8RK4oEsaU8kMwteTuEgA7XwU9BlCXBWvNc'
+#PAYPAL_CLIENT_SECRET='ENm8By0p3XLh7vvlZcGPwi6Urtiz1_NxqL6jHH9_E2QkAGPhadHokoX23F-OKi0D9jfW8WzWxE_3nOwz'
 
 
 
@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
-    'paypal.standard.ipn',
+    
 ]
 
 MIDDLEWARE = [
