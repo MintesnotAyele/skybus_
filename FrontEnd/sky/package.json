@@ -20,10 +20,10 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  
   "eslintConfig": {
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "eslint-config-react-app/base"
     ]
   },
   "browserslist": {

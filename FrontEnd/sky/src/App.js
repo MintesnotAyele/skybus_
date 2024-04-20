@@ -23,12 +23,22 @@ import Report from './admins/report';
 import Availableseat from './assis/availableseat';
 import Viewschedule from './assis/viewschedule'; 
 import Bookedticket from './admins/bookedticket';
+import Addbusschedule from './admins/addbusschedule';
+
+//import Approve from './admins/approve';
+
+
+import './App.css';
+import Approvedticket from './admins/approvedticket';
+
+
 import './App.css';
 import Verify from './Fpassenger/verifiy';
 import Userman from './admins/userman';
 import Editschedule from './admins/editschedule';
 import Userup from './admins/userup';
 import Editu from './admins/editu';
+
 
 
 class App extends Component {
@@ -64,6 +74,8 @@ class App extends Component {
            <Route path="/admins/bookedticket" element={<Bookedticket/>} />
           <Route path="admins/addbus" element={<Addbus/>}/>
           <Route path="admins/feedback" element={<Feedback/>}/>
+          <Route path="admins/approvedticket" element={<Approvedticket/>}/>
+          <Route path="admins/addbusschedule" element={<Addbusschedule/>}/>
             <Route path="/mystyle/style" element={<Style />} />
 
             
