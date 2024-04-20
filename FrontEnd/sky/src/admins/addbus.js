@@ -27,7 +27,7 @@ export class Addbus extends Component {
                       <label for="plate">plate number</label>
                       <input type="text"  class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" />
                     </div>
-      
+      cd skybus_
                     <div class="md:col-span-3">
                       <label for="address">Address / Street</label>
                       <input type="text" name="address" id="address" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value="" placeholder="" />
