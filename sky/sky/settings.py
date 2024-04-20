@@ -56,6 +56,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -63,7 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
+    
 ]
 
 ROOT_URLCONF = 'sky.urls'
@@ -162,6 +163,26 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST =(
     'http://localhost:3000',
 )
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    "http://localhost:3000/*",  # Allow all paths from http://localhost:3000
+]
+CORS_ALLOW_ALL_HEADERS = True
+CORS_ALLOWED_ORIGINS = [
+    
+    "http://localhost:3000",
+    "http://127.0.0.1:9000",
+]
+# Optional: Allow credentials (cookies, authorization headers, etc.)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+#res.setHeader("Access-Control-Allow-Origin", "*");
 #dydi wcyw rvuv grjp
 # settings.py
 
