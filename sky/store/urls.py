@@ -24,7 +24,7 @@ urlpatterns = [
      path('sendEmailA/', views.sendAprove,name='sendEmailA'),
      path('forgot-password/', views.forgot_password,name='forgot'), 
      path('reset-password/<str:uidb64>/<str:token>/', views.reset_password, name='reset_password'),# Paypal payment 
-     path('schedule/<int:pk>/', views.schedule_detail,name='schedule'),   
+    
    # path('bus',views.AddBus.as_view(),name='bus')
     #path('availabilities/', views.display_availabilities, name='availabilities'),
    

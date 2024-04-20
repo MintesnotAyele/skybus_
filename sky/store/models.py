@@ -28,6 +28,7 @@ class CustomUser(AbstractUser,PermissionsMixin):
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=100)
     phone_number = models.IntegerField()
+    
 
     USERNAME_FIELD='email'
     REQUIRED_FIELDS =['username','phone_number']

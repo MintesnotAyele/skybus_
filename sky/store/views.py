@@ -36,26 +36,19 @@ password_reset_token = PasswordResetTokenGenerator()
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UsersSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 class AddBus(viewsets.ModelViewSet):
     queryset=Bus.objects.all()
     serializer_class=BusSerializer
 class Scheduleview1(viewsets.ModelViewSet):
     queryset = Schedule.objects.select_related('busPlateNumber').all().order_by('date')
     serializer_class = ScheduleSerializer
-
-    def update(self, request, *args, **kwargs):
-        bus_plate_number = request.data.get('busPlateNumber')
-
-        try:
-            bus = Bus.objects.get(palte_number=bus_plate_number)
-        except Bus.DoesNotExist:
-            return Response({'message': 'Bus with this plate number does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(busPlateNumber=bus)  # Assuming busPlateNumber is the ForeignKey field name in your Schedule model
-        return Response(serializer.data)
 class Scheduleview(viewsets.ModelViewSet):
     queryset = Schedule.objects.all().order_by('date')
     serializer_class = ScheduleSerializer1
@@ -198,11 +191,12 @@ def book_bus_seat(request):
 
 @api_view(['POST'])
 def signup(request):
-    serializer = UserCreateSerializer(data=request.data)
+    serializer = UsersSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
         user.set_password(request.data['password'])
-        user.is_active = False  # User is inactive until email is verified
+        user.is_active = False 
+        print(user) # User is inactive until email is verified
         user.save()
 
         # Generate and send verification token via email
@@ -399,21 +393,3 @@ def reset_password(request, uidb64, token):
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
     except CustomUser.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-@api_view(['GET', 'OPTIONS'])  # Allow GET requests and preflight OPTIONS requests
-def schedule_detail(request, pk):
-    try:
-        schedule = Schedule.objects.select_related('busPlateNumber').get(pk=pk)
-    except Schedule.DoesNotExist:
-        return Response({'error': 'Schedule not found'}, status=404)
-    
-    if request.method == 'GET':
-        serializer = ScheduleSerializer(schedule)
-        return Response(serializer.data)
-
-    # Handle OPTIONS requests for preflight checks
-    elif request.method == 'OPTIONS':
-        response = Response()
-        response['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-        response['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
-        response['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'  # Adjust headers as needed
-        return response   
