@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
+<<<<<<< HEAD
 import { Link } from 'react-router-dom';
 
+=======
+import {Link, Navigate } from 'react-router-dom';
+>>>>>>> a0ece910b3d83a44bee71eeee788f9f2ffe22298
 class Passenger extends Component {
   render() {
     return (
