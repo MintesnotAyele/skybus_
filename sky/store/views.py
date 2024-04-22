@@ -132,11 +132,20 @@ def addSchedlue(request):
 @api_view(['POST'])
 def Cancle(request):
     bookig=request.data.get('bookingId')
+    email=request.data.get('email')
+    try:
+        user=CustomUser.objects.get(email=email)
+    except CustomUser.DoesNotExist:
+        return Response({'message': 'user does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
     print(bookig)
     try:
         book=Booking.objects.get(booking_id=bookig)  
     except  Booking.DoesNotExist:
         return Response({'message':'bokking doesnot exist.'})  
+    userbook=Booking.objects.filter(customer_id=user)
+    print(userbook)
+    if book not in userbook:
+        return Response({'message':'you are not allowed to cancle this booking.'})
     Canclerequest.objects.create(
         bookingid=book
     )
