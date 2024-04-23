@@ -104,6 +104,18 @@ class BookedSeat(viewsets.ModelViewSet):
             return booked_seats
         else:
             return Booking.objects.none()
+class BookedSeat1(viewsets.ModelViewSet):
+    serializer_class = BookingSerializer
+    
+    def get_queryset(self):
+        user = self.request.query_params.get('customer_id', None)
+        
+        if user is not None:
+            last_booked_seat = Booking.objects.filter(customer_id=user).order_by('booking_date').last()
+            return Booking.objects.filter(pk=last_booked_seat.pk) if last_booked_seat else Booking.objects.none()
+        else:
+            return Booking.objects.none()
+
 class Bookingview(viewsets.ModelViewSet):
     queryset=Booking.objects.all()
     serializer_class=BookingE
@@ -163,6 +175,15 @@ def increment_available_seats(request):
         return Response({'message': 'Available seats incremented successfully'}, status=200)
     except Schedule.DoesNotExist:
         return Response({'message': 'Schedule not found'}, status=404)
+@api_view(['GET'])
+def book_bus(request):
+    customer_id = request.data.get('customer_id')
+    try:
+        customer = CustomUser.objects.get(id=customer_id)
+    except CustomUser.DoesNotExist:
+        return Response({'message': 'Customer does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 @api_view(['POST'])
 def book_bus_seat(request):
     # Assuming the request data contains 'customer_id', 'bus_id', and 'seat_number'
@@ -339,7 +360,7 @@ def chappa(request):
             "phone_number": "0933205652",
             "tx_ref": f'tx_{mm}{ddt}',
             "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-            "return_url": "http://localhost:3000",
+            "return_url": "http://localhost:3000/admins/approvedticket",
             "customization": {
                 "title": "ayy",
                 "description": "it"

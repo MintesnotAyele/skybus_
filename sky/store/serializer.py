@@ -9,11 +9,6 @@ class UserbookSerializer(serializers.ModelSerializer):
     class Meta:
         model=CustomUser
         fields=['email']
-class BookingE(serializers.ModelSerializer):
-    customer_id=UserbookSerializer()
-    class Meta:
-        model=Booking
-        fields='__all__'
 
 class UserCreateSerializer(serializers.ModelSerializer):
     class  Meta:
@@ -84,6 +79,13 @@ class UsersSerializer1(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
+
+class BookingE(serializers.ModelSerializer):
+    customer_id=UserbookSerializer()
+    schedule=ScheduleSerializer()
+    class Meta:
+        model=Booking
+        fields='__all__'
 class CancleSerializer(serializers.ModelSerializer):
     bookingid=BookingE()
     class  Meta:

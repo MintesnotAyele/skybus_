@@ -1,79 +1,72 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
-
- class Approvedticket extends Component {
-  
-  render() {
-    return (
-      <div>
-        <div class="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
-    <div class="text-2xl py-4 px-6 bg-blue-400 text-white text-center font-bold uppercase">
-        Book an Approvememt
-    </div>
-    <form class="py-4 px-6">
-    <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2" for="name">
-           custumor Name
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="name" type="text" placeholder="name of customer"/>
-    </div>
-    <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2" for="email">
-             Email
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="email" type="email" placeholder="customer email"/>
-    </div>
-    <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2" for="phone">
-           bus Number
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="phone" type="tel" placeholder="bus number"/>
-    </div>
-    <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2" for="date">
-            Date
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="phone" type="tel" placeholder="date"/>
-    </div>
-    <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2" for="time">
-            Time
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="phone" type="tel" placeholder="travel time"/>
-    </div>
-    <div class="mb-4">
-        <label class="block text-gray-700 font-bold mb-2" for="service">
-            plate number
-        </label>
-        <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            id="phone" type="tel" placeholder="plate number"/>
-    </div>
-    <div class="mb-4">
+const Approvedticket = () => {
+  const [ticketDetails, setTicketDetails] = useState(null);
+  const [error, setError] = useState(null);
+  const user = localStorage.getItem('useId');
+  const fetchTicket = async () => {
+    try {
       
-        
-    </div>
-    <div class="flex items-center justify-center mb-4">
-        <button class="bg-sky-800 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
-            type="submit">
-            download
-        </button>
-    </div>
-    <div class="flex items-center justify-center mb-4">
-        <button class="bg-red-600 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
-            type="submit">
-            delete
-        </button>
-    </div>
-</form>
-</div>
-      </div>
-    )
-  }
-}
+      const response = await axios.get(`http://localhost:8000/api/bookedseats1/?customer_id=${user}`);
+      // Assuming the response.data is a single Booking object
+      setTicketDetails(response.data);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
-export default Approvedticket
+  const handleDownload = () => {
+    // Implement PDF download logic here
+    // For example, you can use a library like react-pdf to generate and download the PDF
+  };
+
+  return (
+    <div>
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={fetchTicket}
+      >
+        Display Ticket
+      </button>
+      {ticketDetails && (
+        <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="text-2xl py-4 px-6 bg-blue-400 text-white text-center font-bold uppercase">
+            Book an Approval
+          </div>
+
+          <form className="py-4 px-6">
+            <div className="col-sm-6 mb-5">
+              <h6 className="proclinic-text-color">TICKET DETAILS:</h6>
+              <span><strong>USER_EMAIL:</strong> {ticketDetails.name}</span>
+              <br />
+              <span><strong>TICKETID:</strong> {ticketDetails.booking_id}</span>
+              <br />
+              <span><strong>BUSPLATENUMBER: </strong> {ticketDetails.schedule}</span>
+              <br />
+              <span><strong>Seat_number: </strong> {ticketDetails.seat_number}</span>
+              <br />
+              <span><strong>Phone:</strong> 0974789926</span>
+            </div>
+            <div className="flex items-center justify-center mb-4">
+              <button className="bg-sky-800 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+                type="button"
+                onClick={handleDownload}>
+                Download
+              </button>
+            </div>
+            <div className="flex items-center justify-center mb-4">
+              <button className="bg-red-600 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+                type="submit">
+                Delete
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
+      {error && <div>Error: {error}</div>}
+    </div>
+  );
+};
+
+export default Approvedticket;
