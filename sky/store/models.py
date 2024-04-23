@@ -28,6 +28,7 @@ class CustomUser(AbstractUser,PermissionsMixin):
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=100)
     phone_number = models.IntegerField()
+    
 
     USERNAME_FIELD='email'
     REQUIRED_FIELDS =['username','phone_number']
@@ -48,6 +49,7 @@ class Bus(models.Model):
     number_of_site=models.IntegerField()
     owner_name=models.CharField(max_length=100)
     owner_ac=models.IntegerField()
+    city=models.CharField(max_length=50,null=True )
 class Schedule(models.Model):
     busPlateNumber= models.ForeignKey(Bus,on_delete=models.CASCADE)
     date=models.DateField()

@@ -37,6 +37,8 @@ import './App.css';
 import Verify from './Fpassenger/verifiy';
 import Userman from './admins/userman';
 import Editschedule from './admins/editschedule';
+import Userup from './admins/userup';
+import Editu from './admins/editu';
 
 
 
@@ -55,7 +57,9 @@ class App extends Component {
             <Route path="/adminpage" element={<Adminpage />} />
             <Route path="/forgot" element={<ForgotPassword />} />
             <Route path="/userman" element={<Userman />} />
+            <Route path="/userup" element={<Userup />} />
             <Route path="/edit/:id" element={<Editschedule />} />
+            <Route path="/editu/:id" element={<Editu />} />
             <Route path="/verifiy/:token" element={<Verify />} />
             <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
             <Route path="/admins/busmanage" element={<Busmanage/>}/>
