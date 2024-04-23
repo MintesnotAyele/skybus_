@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 class Home extends Component {
   render() {
     return (
-<div>      
+<div  >      
 
         <div
           id="google_translate_element"
@@ -15,9 +15,9 @@ class Home extends Component {
      
 
             <nav class="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-900">
-        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
+        <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl " >
             <a href="https://flowbite.com" class="flex items-center">
-                <img src="https://cdn.pixabay.com/photo/2014/04/03/11/55/bus-312564_640.png" class="mr-3 h-6 sm:h-9" alt="Flowbite Logo" />
+                <img src="https://cdn.pixabay.com/photo/2014/04/03/11/55/bus-312564_640.png" class="mr-3 h-6 sm:h-9" alt="sky Logo" />
                 <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">SkyBus</span>
             </a>
             <div class="flex items-center lg:order-2">
@@ -44,7 +44,7 @@ class Home extends Component {
                         <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Features</a>
                     </li>
                     <li>
-                        <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700">Team</a>
+                        <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"><Link to="/mystyle/aboutus">aboutus</Link></a>
                     </li>
                     <li>
                         <a href="#" class="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 lg:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white lg:dark:hover:bg-transparent dark:border-gray-700"><Link to="/contactform">Contact</Link></a>
@@ -56,7 +56,7 @@ class Home extends Component {
     <div>
 
 
-    <div className="content">
+    <div className="content " >
           <h1>
             WOLKITE BUS STATION <br />
             <span>WE MAKE IT EASY TO BUY </span> <br />

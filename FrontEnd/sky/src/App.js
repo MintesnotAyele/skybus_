@@ -23,7 +23,8 @@ import Report from './admins/report';
 import Availableseat from './assis/availableseat';
 import Viewschedule from './assis/viewschedule'; 
 import Bookedticket from './admins/bookedticket';
-import Addbusschedule from './admins/addbusschedule';
+import Addbusschedule from './admins/addbusschedule'; 
+import Aboutus from './aboutus';
 
 //import Approve from './admins/approve';
 
@@ -47,7 +48,7 @@ class App extends Component {
           
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/assistant" element={<Assistant />} />
+            <Route path="/components/assistant" element={<Assistant />} />
             <Route path="/login" element={<Login />} />
             <Route path="/components/signup" element={<Signup />} />
             <Route path="/passenger" element={<Passanger />} />
@@ -72,8 +73,9 @@ class App extends Component {
           <Route path="admins/feedback" element={<Feedback/>}/>
           <Route path="admins/approvedticket" element={<Approvedticket/>}/>
           <Route path="admins/addbusschedule" element={<Addbusschedule/>}/>
+          <Route path="aboutus/aboutus" element={<Aboutus/>}/>
             <Route path="/mystyle/style" element={<Style />} />
-
+            <Route path="mystyle/aboutus" element={<Aboutus/>}/>
             
           </Routes>
           
