@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom';
-//import RequireAuth from './RequireAuth';
+import RequireAuth from './RequireAuth';
  class Assistant extends Component {
   render() {
     return (
