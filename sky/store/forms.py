@@ -1,10 +1,6 @@
 from django import forms
-from .models import Users,Bus
+from .models import Bus
 
-class UsersForm(forms.ModelForm):
-    class Meta:
-        model = Users
-        fields = ['username', 'email', 'password','phone_number']
 
 class LoginForm(forms.Form):
     username = forms.CharField()

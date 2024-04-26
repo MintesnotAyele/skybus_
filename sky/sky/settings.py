@@ -94,14 +94,14 @@ WSGI_APPLICATION = 'sky.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sky',
+        'NAME': 'skybackup',
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': '161616'
     },
     'second_db': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skybackup',
+        'NAME': 'sky',
         'USER': 'root',
         'PASSWORD': '161616',
         'HOST': 'localhost'
@@ -162,6 +162,7 @@ LOGIN_REDIRECT_URL = 'store/templates/store/success.html'  # replace 'url-name' 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST =(
     'http://localhost:3000',
+    'http://chapa.co/,
 )
 CORS_ALLOWED_ORIGIN_REGEXES = [
     "http://localhost:3000/*",  # Allow all paths from http://localhost:3000

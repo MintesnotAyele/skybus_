@@ -69,7 +69,7 @@ const Approvedticket = () => {
               <br />
               <span><strong>TICKETID:</strong> {ticket.booking_id}</span>
               <br />
-              <span><strong>BUSPLATENUMBER: </strong> {ticket.schedule.busPlateNumber.plate_number}</span>
+              <span><strong>BUSPLATENUMBER: </strong> {ticket.schedule.busPlateNumber.palte_number}</span>
               <br />
               <span><strong>Seat_number: </strong> {ticket.seat_number}</span>
               <br />

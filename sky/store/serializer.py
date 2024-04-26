@@ -1,5 +1,5 @@
 from rest_framework import serializers,generics
-from .models import Users,Bus,CustomUser,Schedule,Booking,Canclerequest
+from .models import Bus,CustomUser,Schedule,Booking,Canclerequest,Payment
 from django.contrib.auth import authenticate, get_user_model
 
 
@@ -90,4 +90,8 @@ class CancleSerializer(serializers.ModelSerializer):
     bookingid=BookingE()
     class  Meta:
         model=Canclerequest
+        fields='__all__'
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Payment
         fields='__all__'

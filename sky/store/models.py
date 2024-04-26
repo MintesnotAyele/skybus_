@@ -35,15 +35,6 @@ class CustomUser(AbstractUser,PermissionsMixin):
     objects=UserManager()
     def __str__(self):
         return self.email
-
-
-class Users(models.Model):
-    username = models.CharField(max_length=50)
-    email = models.EmailField(unique=True)
-    password = models.CharField(max_length=100)
-    phone_number = models.IntegerField()
-    def str(self):
-        return self.username
 class Bus(models.Model):
     palte_number=models.CharField(max_length=50,unique=True)
     number_of_site=models.IntegerField()
@@ -69,10 +60,12 @@ class Booking(models.Model):
     seat_number = models.IntegerField()
    
 class Payment(models.Model):
+    user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     payment_id = models.AutoField(primary_key=True)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
-    transaction_id = models.CharField(max_length=100)
-    payment_status = models.CharField(max_length=50)
+    payment_status = models.CharField(max_length=20, default='pending')
+    transaction_id = models.CharField(max_length=100,unique=True)
+    
     
 class Canclerequest(models.Model):
     bookingid=models.ForeignKey(Booking,on_delete=models.CASCADE)

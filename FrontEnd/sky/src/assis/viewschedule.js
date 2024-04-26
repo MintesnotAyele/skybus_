@@ -12,8 +12,8 @@ import axios from 'axios';
     componentDidMount() {
       this.fetchSchedules();
     }
-  
     fetchSchedules = () => {
+      console.log('kanu');
       axios.get('http://localhost:8000/api/schedule/')
         .then(response => {
           this.setState({ schedules: response.data });

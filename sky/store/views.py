@@ -3,10 +3,9 @@ from rest_framework import viewsets, permissions, status,generics
 from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .forms import UsersForm, LoginForm, BusForm, DestinationForm
-from .serializer import UsersSerializer, UserRegisterSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
+from .serializer import UsersSerializer, UserRegisterSerializer,PaymentSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
 from django.http import HttpResponse, HttpRequest
-from .models import Users, Availability, Schedule, CustomUser,Bus,Booking,Canclerequest
+from .models import  Availability, Schedule, CustomUser,Bus,Booking,Canclerequest,Payment
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
@@ -24,6 +23,7 @@ from  datetime import datetime
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+import uuid
 
 class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
@@ -342,13 +342,27 @@ class Adminuserupdate(generics.UpdateAPIView):
 class Adminuserdelet(generics.RetrieveDestroyAPIView):
     queryset=CustomUser.objects.all()
     serializer_class=UsersSerializer
+class Paymentview(viewsets.ModelViewSet):
+    queryset=Payment.objects.all()
+    serializer_class=PaymentSerializer
 @api_view(['POST'])
 def chappa(request):
     try:
+         
         now=datetime.now()
         pp = request.data.get('price')
-        mm=request.data.get('userId')
+        mm=request.data.get('customer_id')
+        reference = str(uuid.uuid4())
+        print(pp)
+        print(mm)
+        user = CustomUser.objects.get(id=mm)
+        print(user)
         ddt= now.strftime("%Y%m%d%H%M%S")
+        payment = Payment.objects.create(
+            user=user,
+            amount_paid=pp,
+            transaction_id=reference,
+        )
         url = "https://api.chapa.co/v1/transaction/initialize"
         payload = {
             "amount": pp,
@@ -357,9 +371,9 @@ def chappa(request):
             "first_name": "alu",
             "last_name": "lulu",
             "phone_number": "0933205652",
-            "tx_ref": f'tx_{mm}{ddt}',
-            "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-            "return_url": "http://localhost:3000/admins/approvedticket",
+            "tx_ref": reference,
+            "callback_url": "http://localhost:3000/assis/viewschedule",
+             #"return_url": "http://localhost:3000/admins/approvedticket",
             "customization": {
                 "title": "ayy",
                 "description": "it"
@@ -383,6 +397,27 @@ def chappa(request):
         return Response(data, status=status_code)
     except Exception as e:
         return Response({'message': 'Internal Server Error'}, status=500)
+api_view(['POST'])
+def ChapaCallbackView( request):
+         print('kanu')
+         data = request.POST
+         reference = data.get("tx_ref")
+         print(reference)
+        
+        # Find the payment by reference
+         try:
+             payment = Payment.objects.get(transaction_id=reference)
+         except Payment.DoesNotExist:
+            return Response({"error": "Payment not found"}, status=404)
+        
+         if data.get("status") == "successful":
+            payment.payment_status = "successful"
+         else:
+            payment.payment_status = "failed"
+        
+         payment.save()
+        
+         return Response({"message": "Payment status updated"})
 
 @api_view(['POST'])
 def forgot_password(request):

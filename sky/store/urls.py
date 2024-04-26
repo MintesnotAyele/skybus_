@@ -24,7 +24,8 @@ urlpatterns = [
     path('sendEmail/', views.sendDeclien,name='sendEmail'),
      path('sendEmailA/', views.sendAprove,name='sendEmailA'),
      path('forgot-password/', views.forgot_password,name='forgot'), 
-     path('reset-password/<str:uidb64>/<str:token>/', views.reset_password, name='reset_password'),# Paypal payment 
+     path('reset-password/<str:uidb64>/<str:token>/', views.reset_password, name='reset_password'),
+     path('chapa-callback/', views.ChapaCallbackView, name='chapa_callback'),# Paypal payment 
     
    # path('bus',views.AddBus.as_view(),name='bus')
     #path('availabilities/', views.display_availabilities, name='availabilities'),
