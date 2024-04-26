@@ -80,7 +80,7 @@ class SearcheSchedule(viewsets.ModelViewSet):
         searched_destination = self.request.query_params.get('destination', None)
         if searched_destination is not None:
            
-            return Schedule.objects.select_related('busPlateNumber').filter(destination=searched_destination).order_by('time')[:1]
+            return Schedule.objects.select_related('busPlateNumber').filter(destination=searched_destination, available_seats__gt=0).order_by('time')[:1]
         else:
             return Schedule.objects.none()
 class SearcheSchedule2(viewsets.ModelViewSet):
@@ -105,13 +105,15 @@ class BookedSeat(viewsets.ModelViewSet):
         else:
             return Booking.objects.none()
 class BookedSeat1(viewsets.ModelViewSet):
-    serializer_class = BookingSerializer
+    queryset=Booking.objects.all()
+    serializer_class = BookingE
     
     def get_queryset(self):
         user = self.request.query_params.get('customer_id', None)
-        
+        print (user)
         if user is not None:
             last_booked_seat = Booking.objects.filter(customer_id=user).order_by('booking_date').last()
+            print(last_booked_seat)
             return Booking.objects.filter(pk=last_booked_seat.pk) if last_booked_seat else Booking.objects.none()
         else:
             return Booking.objects.none()
@@ -208,11 +210,8 @@ def book_bus_seat(request):
     try:
         
         schedule.available_seats -= 1
-        if schedule.available_seats == 0:
-            # If available seats become zero, delete the bus schedule
-            schedule.delete()
-        else:
-            schedule.save()
+        
+        schedule.save()
     except Schedule.DoesNotExist:
         # Handle case where schedule does not exist for the bus
         pass

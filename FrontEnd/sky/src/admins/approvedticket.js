@@ -2,32 +2,28 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import {Link } from 'react-router-dom';
-//import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 const Approvedticket = () => {
-  const [ticketDetails, setTicketDetails] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [ticketDetails, setTicketDetails] = useState([]);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
-  //const history = useHistory();
-
   const user = localStorage.getItem('useId');
 
   const fetchTicket = async () => {
-    setLoading(true);
     try {
       const response = await axios.get(`http://localhost:8000/api/bookedseats1/?customer_id=${user}`);
       setTicketDetails(response.data);
     } catch (error) {
       setError(error.message);
-    } finally {
-      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchTicket();
+  }, []);
+
   const handleDownload = () => {
-    setLoading(true);
     const input = document.getElementById('formToDownload');
 
     html2canvas(input).then((canvas) => {
@@ -50,8 +46,7 @@ const Approvedticket = () => {
       }
 
       pdf.save('form.pdf');
-      setShowModal(true); // Show modal after successful download
-      setLoading(false);
+      setShowModal(true); // Show success modal after successful download
     });
   };
 
@@ -62,31 +57,23 @@ const Approvedticket = () => {
 
   return (
     <div>
-      <button
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-        onClick={fetchTicket}
-      >
-        Display Ticket
-      </button>
-      {loading && <div>Loading...</div>}
-      {ticketDetails && !loading && (
-        <div className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
+      {ticketDetails.map((ticket, index) => (
+        <div key={index} className="max-w-md mx-auto mt-10 bg-white shadow-lg rounded-lg overflow-hidden">
           <div className="text-2xl py-4 px-6 bg-blue-400 text-white text-center font-bold uppercase">
             Book an Approval
           </div>
-
-          <form className="py-4 px-6" id="formToDownload">
+          <form className="py-4 px-6" id="formToDownload" key={index}>
             <div className="col-sm-6 mb-5">
               <h6 className="proclinic-text-color">TICKET DETAILS:</h6>
-              <span><strong>USER_EMAIL:</strong> {ticketDetails.name}</span>
+              <span><strong>USER_EMAIL:</strong> {ticket.customer_id.email}</span>
               <br />
-              <span><strong>TICKETID:</strong> {ticketDetails.booking_id}</span>
+              <span><strong>TICKETID:</strong> {ticket.booking_id}</span>
               <br />
-              <span><strong>BUSPLATENUMBER: </strong> {ticketDetails.schedule}</span>
+              <span><strong>BUSPLATENUMBER: </strong> {ticket.schedule.busPlateNumber.plate_number}</span>
               <br />
-              <span><strong>Seat_number: </strong> {ticketDetails.seat_number}</span>
+              <span><strong>Seat_number: </strong> {ticket.seat_number}</span>
               <br />
-              <span><strong>Phone:</strong> 0974789926</span>
+              <span><strong>Phone:</strong> {ticket.customer_id.phone_number}</span>
             </div>
           </form>
           <div className="flex items-center justify-center mb-4">
@@ -97,14 +84,13 @@ const Approvedticket = () => {
             </button>
           </div>
           <div className="flex items-center justify-center mb-4">
-            <button className="bg-red-600 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
+            <Link to= "/"><button className="bg-red-600 text-white py-2 px-4 rounded hover:bg-gray-800 focus:outline-none focus:shadow-outline"
               type="submit">
-              Delete
-            </button>
+              Cancle
+            </button></Link>
           </div>
         </div>
-      )}
-      {error && !loading && <div>Error: {error}</div>}
+      ))}
       {/* Modal Popup */}
       {showModal && (
         <div className="fixed z-10 inset-0 overflow-y-auto">
@@ -112,9 +98,7 @@ const Approvedticket = () => {
             <div className="fixed inset-0 transition-opacity">
               <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
             </div>
-
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen"></span>&#8203;
-
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
@@ -137,10 +121,9 @@ const Approvedticket = () => {
                 </div>
               </div>
               <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-              <Link to={`/`}><button onClick={closeModalAndRedirect} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                <button onClick={closeModalAndRedirect} type="button" className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
                   Close
-                </button></Link>
-                
+                </button>
               </div>
             </div>
           </div>

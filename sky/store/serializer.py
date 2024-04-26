@@ -8,7 +8,7 @@ Usermodel=get_user_model()
 class UserbookSerializer(serializers.ModelSerializer):
     class Meta:
         model=CustomUser
-        fields=['email']
+        fields=['email','phone_number']
 
 class UserCreateSerializer(serializers.ModelSerializer):
     class  Meta:
