@@ -15,6 +15,8 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authentication import SessionAuthentication
 from .validations import custom_validation, validate_email, validate_password
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils import timezone
 from django.conf import settings
 from rest_framework.decorators import action
 from django.http import JsonResponse
@@ -453,3 +455,17 @@ def reset_password(request, uidb64, token):
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
     except CustomUser.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+@api_view(['POST'])
+def sendReminder(request):
+    schedule = request.data.get('id')
+    bookings = Booking.objects.filter(schedule_id=schedule)
+    print(bookings)
+    for booking in bookings:
+            send_reminder_email(booking.customer_id.email, booking.schedule)
+    return Response({"message": "eamil message sent to the user."})
+def send_reminder_email(user_email, schedule_details):
+    subject = 'Reminder: Bus Schedule Starting Soon'
+    print(schedule_details)
+    message = f'your bus ' + schedule_details.busPlateNumber.palte_number + ' is starting in 15 minutes'
+    send_mail(subject, message, 'ayelemintesnot77@gmail.com', [user_email])
+    print('yess')

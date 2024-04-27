@@ -174,6 +174,14 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:9000",
     'https://checkout.chapa.co',
 ]
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'rpc://'
+
+# Configure Celery to use Django settings
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
 # Optional: Allow credentials (cookies, authorization headers, etc.)
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [

@@ -1,6 +1,9 @@
 from django.db import models
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import AbstractUser, Group,Permission,PermissionsMixin
+from django.dispatch import receiver
+from django.db.models.signals import post_save
+from django.utils import timezone
 class UserManager(BaseUserManager):
     def create_user(self,email,password=None,phone_number=None,username=None):
         if not email:
@@ -57,8 +60,7 @@ class Booking(models.Model):
     booking_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     booking_date = models.DateTimeField(auto_now_add=True)
-    seat_number = models.IntegerField()
-   
+    seat_number = models.IntegerField() 
 class Payment(models.Model):
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     payment_id = models.AutoField(primary_key=True)
