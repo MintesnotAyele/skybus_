@@ -41,6 +41,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_cron',
+    'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,9 +54,12 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'dbbackup',
+    "django_apscheduler",
     
 ]
-
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR/ 'backup'}
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -66,6 +71,13 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
+CRON_CLASSES = [
+    'sky.cron.MyCronJob',
+]
+
+#CRONJOBS = [
+   # ('*/1 * * * *', 'sky.cron.my_scheduled_job')
+#]
 
 ROOT_URLCONF = 'sky.urls'
 
