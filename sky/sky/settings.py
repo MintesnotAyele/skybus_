@@ -162,7 +162,7 @@ LOGIN_REDIRECT_URL = 'store/templates/store/success.html'  # replace 'url-name' 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST =(
     'http://localhost:3000',
-    'http://chapa.co/,
+    'https://checkout.chapa.co/',
 )
 CORS_ALLOWED_ORIGIN_REGEXES = [
     "http://localhost:3000/*",  # Allow all paths from http://localhost:3000
@@ -172,6 +172,7 @@ CORS_ALLOWED_ORIGINS = [
     
     "http://localhost:3000",
     "http://127.0.0.1:9000",
+    'https://checkout.chapa.co',
 ]
 # Optional: Allow credentials (cookies, authorization headers, etc.)
 CORS_ALLOW_CREDENTIALS = True
@@ -183,6 +184,7 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+#9ade90dc-1570-4db5-a29e-867e4062fe3a
 #res.setHeader("Access-Control-Allow-Origin", "*");
 #dydi wcyw rvuv grjp
 # settings.py

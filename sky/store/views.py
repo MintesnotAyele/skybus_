@@ -24,7 +24,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 import uuid
-
+from django.views import View
 class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
         return (
@@ -348,16 +348,12 @@ class Paymentview(viewsets.ModelViewSet):
 @api_view(['POST'])
 def chappa(request):
     try:
-         
-        now=datetime.now()
+        now = datetime.now()
         pp = request.data.get('price')
-        mm=request.data.get('customer_id')
+        mm = request.data.get('customer_id')
         reference = str(uuid.uuid4())
-        print(pp)
-        print(mm)
         user = CustomUser.objects.get(id=mm)
-        print(user)
-        ddt= now.strftime("%Y%m%d%H%M%S")
+        ddt = now.strftime("%Y%m%d%H%M%S")
         payment = Payment.objects.create(
             user=user,
             amount_paid=pp,
@@ -372,8 +368,7 @@ def chappa(request):
             "last_name": "lulu",
             "phone_number": "0933205652",
             "tx_ref": reference,
-            "callback_url": "http://localhost:3000/assis/viewschedule",
-             #"return_url": "http://localhost:3000/admins/approvedticket",
+            "callback_url": "http://localhost:8000/chapa-callback/",
             "customization": {
                 "title": "ayy",
                 "description": "it"
@@ -387,7 +382,6 @@ def chappa(request):
         response = requests.post(url, json=payload, headers=headers)
         data = response.text
         print(data)
-          # Log the URL for debugging
 
         # Extract the relevant information from the response
         data = response.json()
@@ -397,27 +391,29 @@ def chappa(request):
         return Response(data, status=status_code)
     except Exception as e:
         return Response({'message': 'Internal Server Error'}, status=500)
-api_view(['POST'])
-def ChapaCallbackView( request):
-         print('kanu')
-         data = request.POST
-         reference = data.get("tx_ref")
-         print(reference)
-        
+
+class ChapaCallbackView(View):
+    def get(self, request):
+        data = request.GET
+        reference = data.get("trx_ref")
+        print(reference)
+
         # Find the payment by reference
-         try:
-             payment = Payment.objects.get(transaction_id=reference)
-         except Payment.DoesNotExist:
-            return Response({"error": "Payment not found"}, status=404)
-        
-         if data.get("status") == "successful":
+        try:
+            payment = Payment.objects.get(transaction_id=reference)
+        except Payment.DoesNotExist:
+            return JsonResponse({"error": "Payment not found"}, status=404)
+
+        if data.get("status") == "success":
             payment.payment_status = "successful"
-         else:
+        else:
             payment.payment_status = "failed"
-        
-         payment.save()
-        
-         return Response({"message": "Payment status updated"})
+
+        payment.save()
+
+        return JsonResponse({"message": "Payment status updated"})
+
+
 
 @api_view(['POST'])
 def forgot_password(request):
