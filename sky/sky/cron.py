@@ -10,7 +10,7 @@ def my_scheduled_job():
 from django_cron import CronJobBase, Schedule
 
 class MyCronJob(CronJobBase):
-    RUN_EVERY_MINS = 1
+    RUN_EVERY_MINS = 10
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'sky.my_cron_job'  # A unique code for your cron job

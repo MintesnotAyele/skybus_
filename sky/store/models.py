@@ -38,6 +38,10 @@ class CustomUser(AbstractUser,PermissionsMixin):
     objects=UserManager()
     def __str__(self):
         return self.email
+class Profile(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    balance = models.IntegerField()
+    
 class Bus(models.Model):
     palte_number=models.CharField(max_length=50,unique=True)
     number_of_site=models.IntegerField()

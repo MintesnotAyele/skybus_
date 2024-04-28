@@ -10,7 +10,7 @@ def db_backup():
 def start():
     scheduler = BackgroundScheduler()
     scheduler.add_jobstore(DjangoJobStore(), "default")
-    scheduler.add_job(db_backup, 'interval', minutes=1,jobstore='default',id="weekly_backup",replace_existing=True)
+    scheduler.add_job(db_backup, 'interval', minutes=10,jobstore='default',id="weekly_backup",replace_existing=True)
     register_events(scheduler)
     scheduler.start()
   

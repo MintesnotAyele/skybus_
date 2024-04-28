@@ -38,6 +38,15 @@ class Availableseat extends Component {
   
       // Extract user ID from the decoded token
       const userId = localStorage.getItem("useId")
+      const requestData = {
+        balance: -price
+      };
+      axios.put(`http://localhost:8000/api/profile/${userId}/`,requestData )
+      .then(response => {
+        console.log('Schedule updated successfully:',response.data);
+        // Optionally, you can update the UI or show a success message here
+      })
+
 
       const chapaResponse = await axios.post('http://localhost:8000/pay', {
         customer_id: userId,

@@ -30,6 +30,7 @@ router.register(r'bookedseats',views.BookedSeat,basename='booked')
 router.register(r'bookedseats1',views.BookedSeat1,basename='booked1')
 router.register(r'canclation',views.Cancleview,basename='cancle')
 router.register(r'payment',views.Paymentview,basename='payment')
+router.register(r'profile',views.profileview,basename='profile')
 
 
 # 

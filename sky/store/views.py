@@ -3,9 +3,9 @@ from rest_framework import viewsets, permissions, status,generics
 from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .serializer import UsersSerializer, UserRegisterSerializer,PaymentSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
+from .serializer import UsersSerializer, ProfileSerializer,UserRegisterSerializer,PaymentSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
 from django.http import HttpResponse, HttpRequest
-from .models import  Availability, Schedule, CustomUser,Bus,Booking,Canclerequest,Payment
+from .models import  Availability, Schedule, CustomUser,Bus,Booking,Canclerequest,Payment,Profile
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
@@ -48,6 +48,35 @@ class UserViewSet(viewsets.ModelViewSet):
 class AddBus(viewsets.ModelViewSet):
     queryset=Bus.objects.all()
     serializer_class=BusSerializer
+class profileview(viewsets.ModelViewSet):
+    queryset=Profile.objects.all()
+    serializer_class=ProfileSerializer
+  
+    def update(self, request, *args, **kwargs):
+        # Call the update_balance method for PATCH requests
+        try:
+            # Get the user's profile
+            instance = self.get_object()
+            user = instance.user
+            profile = Profile.objects.get(user=user)
+
+            # Get the amount to subtract from the balance (passed in the request data)
+            amount = int(request.data.get('balance'))
+
+            # Subtract the amount from the balance
+            profile.balance += amount
+            if profile.balance <= 0:
+                profile.balance=2000
+                profile.save()
+            profile.save()
+
+            return Response({'message': 'Balance updated successfully'})
+        except Profile.DoesNotExist:
+            return Response({'error': 'User profile not found'}, status=404)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
+        
+
 class Scheduleview1(viewsets.ModelViewSet):
     queryset = Schedule.objects.select_related('busPlateNumber').all().order_by('date')
     serializer_class = ScheduleSerializer
@@ -371,6 +400,7 @@ def chappa(request):
             "phone_number": "0933205652",
             "tx_ref": reference,
             "callback_url": "http://localhost:8000/chapa-callback/",
+            "return_url": "http://localhost:3000/admins/approvedticket",
             "customization": {
                 "title": "ayy",
                 "description": "it"
