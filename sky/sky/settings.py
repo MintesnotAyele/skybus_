@@ -56,8 +56,13 @@ INSTALLED_APPS = [
     'djoser',
     'dbbackup',
     "django_apscheduler",
+    'channels',
+    'daphne',
+    'redis',
+    'channels_rabbitmq',
     
 ]
+ASGI_APPLICATION = 'sky.asgi.application'
 DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
 DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR/ 'backup'}
 MIDDLEWARE = [
@@ -78,7 +83,17 @@ CRON_CLASSES = [
 #CRONJOBS = [
    # ('*/1 * * * *', 'sky.cron.my_scheduled_job')
 #]
-
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_rabbitmq.core.RabbitmqChannelLayer",
+        "CONFIG": {
+            "hosts": [("rabbitmq", 5672)],
+            "userid": "guest",
+            "password": "guest",
+            "visibility_timeout": 3600,
+        },
+    },
+}
 ROOT_URLCONF = 'sky.urls'
 
 TEMPLATES = [

@@ -4,6 +4,7 @@ from django.contrib.auth.models import AbstractUser, Group,Permission,Permission
 from django.dispatch import receiver
 from django.db.models.signals import post_save
 from django.utils import timezone
+from channels.layers import get_channel_layer
 class UserManager(BaseUserManager):
     def create_user(self,email,password=None,phone_number=None,username=None):
         if not email:
@@ -70,9 +71,23 @@ class Payment(models.Model):
     payment_id = models.AutoField(primary_key=True)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
     payment_status = models.CharField(max_length=20, default='pending')
-    transaction_id = models.CharField(max_length=100,unique=True)
-    
-    
+    transaction_id = models.CharField(max_length=100,unique=True) 
 class Canclerequest(models.Model):
     bookingid=models.ForeignKey(Booking,on_delete=models.CASCADE)
     Requested_time=models.DateTimeField(auto_now_add=True)
+
+#@receiver(post_save, sender=Canclerequest)
+#async def notify_admin_on_cancellation(sender, instance, created, **kwargs):
+    #if created:
+       # channel_layer = get_channel_layer()
+       # message = {
+            #"message": f"New ticket cancellation request from {instance.bookingid}. Ticket ID: {instance.bookingid}",
+       # }
+        #await channel_layer.group_send("admin_notifications", message)
+
+class Feedback(models.Model):
+    first_name=models.CharField(max_length=100)
+    last_name=models.CharField(max_length=100)
+    email=models.EmailField()
+    reating=models.IntegerField()
+    feedback=models.TextField()

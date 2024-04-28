@@ -1,5 +1,5 @@
 from rest_framework import serializers,generics
-from .models import Bus,CustomUser,Schedule,Booking,Canclerequest,Payment,Profile
+from .models import Bus,CustomUser,Schedule,Booking,Canclerequest,Payment,Profile,Feedback
 from django.contrib.auth import authenticate, get_user_model
 
 
@@ -12,6 +12,10 @@ class UserbookSerializer(serializers.ModelSerializer):
 class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model=Profile
+        fields='__all__'
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Feedback
         fields='__all__'
 class UserCreateSerializer(serializers.ModelSerializer):
     class  Meta:

@@ -39,6 +39,7 @@ import Userman from './admins/userman';
 import Editschedule from './admins/editschedule';
 import Userup from './admins/userup';
 import Editu from './admins/editu';
+import NotificationListener from './admins/notifiy';
 
 
 
@@ -79,6 +80,7 @@ class App extends Component {
           <Route path="admins/addbusschedule" element={<Addbusschedule/>}/>
           <Route path="admins/aboutus" element={<Aboutus/>}/>
             <Route path="/mystyle/style" element={<Style />} />
+            <Route path="/notify" element={<NotificationListener />} />
 
             
           </Routes>

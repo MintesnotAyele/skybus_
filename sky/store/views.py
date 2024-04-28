@@ -3,9 +3,9 @@ from rest_framework import viewsets, permissions, status,generics
 from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .serializer import UsersSerializer, ProfileSerializer,UserRegisterSerializer,PaymentSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
+from .serializer import UsersSerializer, ProfileSerializer,FeedbackSerializer,UserRegisterSerializer,PaymentSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
 from django.http import HttpResponse, HttpRequest
-from .models import  Availability, Schedule, CustomUser,Bus,Booking,Canclerequest,Payment,Profile
+from .models import  Availability,Feedback, Schedule, CustomUser,Bus,Booking,Canclerequest,Payment,Profile
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
@@ -27,6 +27,8 @@ from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 import uuid
 from django.views import View
+from channels.layers import get_channel_layer
+
 class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
         return (
@@ -48,6 +50,9 @@ class UserViewSet(viewsets.ModelViewSet):
 class AddBus(viewsets.ModelViewSet):
     queryset=Bus.objects.all()
     serializer_class=BusSerializer
+class Feedbackview(viewsets.ModelViewSet):
+    queryset=Feedback.objects.all()
+    serializer_class=FeedbackSerializer
 class profileview(viewsets.ModelViewSet):
     queryset=Profile.objects.all()
     serializer_class=ProfileSerializer
@@ -174,8 +179,11 @@ def addSchedlue(request):
         available_seats=available_seats   
     )
     return Response({'message': 'schedule added successfully.'}, status=status.HTTP_201_CREATED)
+import asyncio
 @api_view(['POST'])
 def Cancle(request):
+    admin_user = CustomUser.objects.filter(is_superuser=True).first()
+    admin_email = admin_user.email
     bookig=request.data.get('bookingId')
     email=request.data.get('email')
     try:
@@ -194,6 +202,12 @@ def Cancle(request):
     Canclerequest.objects.create(
         bookingid=book
     )
+    return Response({"message": "Cancel request submitted."})
+    subject = 'Notification'
+    message = 'This is a notification for the admin there is a canclation request please check it.'
+    email_from = 'ayelemintesnot77@gmail.com'
+    recipient_list = [admin_email]
+    send_mail(subject, message, email_from, recipient_list)
     return Response({'message': 'canclation request submited.'}, status=status.HTTP_201_CREATED)
 class Cancleview(viewsets.ModelViewSet):
     queryset=Canclerequest.objects.all()
