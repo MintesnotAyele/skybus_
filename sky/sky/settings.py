@@ -41,6 +41,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
     'django_cron',
     'django_crontab',
     'django.contrib.admin',
@@ -57,7 +58,7 @@ INSTALLED_APPS = [
     'dbbackup',
     "django_apscheduler",
     'channels',
-    'daphne',
+    
     'redis',
     'channels_rabbitmq',
     

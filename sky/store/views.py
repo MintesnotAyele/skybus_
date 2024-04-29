@@ -157,6 +157,21 @@ class BookedSeat1(viewsets.ModelViewSet):
 class Bookingview(viewsets.ModelViewSet):
     queryset=Booking.objects.all()
     serializer_class=BookingE
+
+class Bookingview1(viewsets.ModelViewSet):
+    queryset=Booking.objects.all()
+    serializer_class=BookingE
+    def get_queryset(self):
+        sched=Schedule.objects.filter(available_seats=0).order_by('time').first()
+        if sched is not None:
+            book=Booking.objects.filter(schedule=sched).all()
+            return book
+        else:
+            return Booking.objects.none()
+       
+
+         
+    
 @api_view(['POST'])
 def addSchedlue(request):
     busPlateNumber=request.data.get('busPlateNumber')
@@ -202,7 +217,6 @@ def Cancle(request):
     Canclerequest.objects.create(
         bookingid=book
     )
-    return Response({"message": "Cancel request submitted."})
     subject = 'Notification'
     message = 'This is a notification for the admin there is a canclation request please check it.'
     email_from = 'ayelemintesnot77@gmail.com'
