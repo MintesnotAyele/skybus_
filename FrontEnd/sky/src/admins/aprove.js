@@ -36,7 +36,7 @@ class ApproveCancel extends Component {
     handleDelete = async (id,bokingid,scheduleId,price,useId,email) => {
         try {
             const requestData = {
-                balance: price
+                balance: price-50
               };
             axios.put(`http://localhost:8000/api/profile/${useId}/`,requestData )
             .then(response => {

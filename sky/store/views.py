@@ -107,6 +107,16 @@ class Scheduleview(viewsets.ModelViewSet):
         serializer.save(busPlateNumber=bus)
 
         return Response(serializer.data)
+class Scheduleview3(viewsets.ModelViewSet):
+    queryset = Schedule.objects.all().order_by('date')
+    serializer_class = ScheduleSerializer1
+
+    def update(self, request, *args, **kwargs):
+        sche=Schedule.objects.get(id=request.data['id'])
+        schedule = Schedule.objects.get(pk=sche)
+        schedule.available_seats ==-1
+        schedule.save()
+        return Response({'message': 'Available seats Updated successfully'}, status=200)
 def home(request):
     return render(request, "store/index.html")
 class SearcheSchedule(viewsets.ModelViewSet):
@@ -162,6 +172,14 @@ class Bookingview1(viewsets.ModelViewSet):
     queryset=Booking.objects.all()
     serializer_class=BookingE
     def get_queryset(self):
+        bus = self.request.query_params.get('plate_number', None)
+        if bus is not None:
+            sche=Schedule.objects.filter(busPlateNumber=bus).order_by('time').first()
+            if sche is not None:
+                book=Booking.objects.filter(schedule=sche).all()
+                return book
+        else:
+            return Booking.objects.none()
         sched=Schedule.objects.filter(available_seats=0).order_by('time').first()
         if sched is not None:
             book=Booking.objects.filter(schedule=sched).all()
@@ -279,7 +297,7 @@ def book_bus_seat(request):
 
 @api_view(['POST'])
 def signup(request):
-    serializer = UsersSerializer(data=request.data)
+    serializer = UserCreateSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
         user.set_password(request.data['password'])

@@ -70,7 +70,7 @@ import RequireAuth from './RequireAuth';
                 </a>
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
                 
-                <Link to="/admins/bookedticket">  <i class="fas fa-exchange-alt mr-2"></i>booked</Link>
+                <Link to="/admins/bookedticket1">  <i class="fas fa-exchange-alt mr-2"></i>booked</Link>
                 
                 </a>
             </nav>

@@ -112,13 +112,16 @@ class Availableseat extends Component {
         <div className="w-3/4 p-4">
           <h1 className="text-2xl font-bold mb-4">Available Bus Schedule</h1>
           <div className="flex mb-4">
-            <input
-              type="text"
-              placeholder="Enter destination"
+            <select
               value={this.state.destination}
               onChange={this.handleChange}
               className="border border-gray-300 px-4 py-2 mr-2"
-            />
+            >
+              <option value="">Select Destination</option>
+              <option value="hosana">HOSANA</option>
+              <option value="Addis Abeba">ADDIS-ABEBA</option>
+              <option value="jima">JIMA</option>
+            </select>
             <button
               onClick={this.handleSearch}
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -130,7 +133,7 @@ class Availableseat extends Component {
             <thead>
               <tr>
                 <th>Plate Number</th>
-                <th>From</th>
+                <th>DATE</th>
                 <th>To</th>
                 <th>Departure Time</th>
                 <th>price</th>
@@ -155,12 +158,6 @@ class Availableseat extends Component {
                   <td>
                   <button
                       onClick={(event) => this.handleBook(schedule.id, schedule.price,event)}
-                      className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                      Book
-                    </button>
-                    <button
-                      onClick={(event) => this.handleBook1(schedule.id, schedule.price,event)}
                       className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                     >
                       Book

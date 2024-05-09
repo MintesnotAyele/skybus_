@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 import { saveAs } from 'file-saver';
 import jsPDF from 'jspdf';
@@ -6,23 +6,22 @@ import 'jspdf-autotable';
 
 const Bookedticket1 = () => {
   const [tickets, setTickets] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const response = await axios.get('http://localhost:8000/api/book1');
-        setTickets(response.data);
-        setLoading(false);
-      } catch (error) {
-        setError(error.message);
-        setLoading(false);
-      }
-    };
+  const fetchTickets = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get(`http://localhost:8000/api/book1?plate_number=${searchQuery}`);
+      setTickets(response.data);
+      setLoading(false);
+    } catch (error) {
+      setError(error.message);
+      setLoading(false);
+    }
+  };
 
-    fetchTickets();
-  }, []);
   const downloadPDF = () => {
     const doc = new jsPDF();
     doc.autoTable({
@@ -39,24 +38,34 @@ const Bookedticket1 = () => {
     doc.save('booked_tickets.pdf');
   };
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  const handleSearch = () => {
+    fetchTickets();
+  };
 
   return (
     <div className="bg-white p-8 rounded-md w-full">
       <div className="flex items-center justify-between pb-6">
+        <div className="flex mb-4">
+          <input
+            type="number" // Change input type to "number"
+            placeholder="Enter destination"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="border border-gray-300 px-4 py-2 mr-2"
+            pattern="[0-9]*" // Add pattern attribute to allow only integer values
+          />
+          <button
+            onClick={handleSearch}
+            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+          >
+            Search
+          </button>
+        </div>
         <div>
           <h2 className="text-gray-600 font-semibold">TICKET Order</h2>
           <span className="text-xs">All ticket item</span>
         </div>
-        {/* Search and action buttons */}
       </div>
-      {/* Table displaying booked tickets */}
       <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
           <table className="min-w-full leading-normal">
@@ -71,11 +80,10 @@ const Bookedticket1 = () => {
               </tr>
             </thead>
             <tbody>
-              {/* Render ticket data */}
               {tickets.map(ticket => (
                 <tr key={ticket.id}>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">  
-                        <p className="text-gray-900 whitespace-no-wrap">{ticket.booking_id}</p>
+                    <p className="text-gray-900 whitespace-no-wrap">{ticket.booking_id}</p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">{ticket.customer_id.email}</p>
@@ -87,10 +95,10 @@ const Bookedticket1 = () => {
                     <p className="text-gray-900 whitespace-no-wrap">{ticket.schedule.busPlateNumber.palte_number}</p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <span className="relative">{ticket.seat_number}</span>
+                    <span className="relative">{ticket.seat_number}</span>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                      <span className="relative">{ticket.schedule.id}</span>
+                    <span className="relative">{ticket.schedule.id}</span>
                   </td>
                 </tr>
               ))}

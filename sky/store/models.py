@@ -6,13 +6,13 @@ from django.db.models.signals import post_save
 from django.utils import timezone
 from channels.layers import get_channel_layer
 class UserManager(BaseUserManager):
-    def create_user(self,email,password=None,phone_number=None,username=None):
+    def create_user(self,email,first_name=None,last_name=None,password=None,phone_number=None,username=None):
         if not email:
             raise ValueError('An email is required.')
         if not password:
             raise ValueError("A password is required.")
         email =self.normalize_email(email)
-        user = self.model(email=email, phone_number=phone_number,username=username)
+        user = self.model(email=email,first_name=first_name,last_name=last_name, phone_number=phone_number,username=username)
         user.set_password(password)
         user.save()
         return user
