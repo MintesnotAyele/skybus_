@@ -3,10 +3,9 @@ from rest_framework import viewsets, permissions, status,generics
 from rest_framework.views import APIView
 from django.contrib.auth import login, authenticate, logout
 from django.contrib import messages
-from .forms import UsersForm, LoginForm, BusForm, DestinationForm
-from .serializer import UsersSerializer, UserRegisterSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
+from .serializer import UsersSerializer, ProfileSerializer,FeedbackSerializer,UserRegisterSerializer,PaymentSerializer, BookingE, UserLoginSerializer,BusSerializer,ScheduleSerializer,BookingSerializer,ScheduleSerializer1,UsersSerializer1,UserCreateSerializer,UserUpdateSerializer,BookingSerializer1,CancleSerializer
 from django.http import HttpResponse, HttpRequest
-from .models import Users, Availability, Schedule, CustomUser,Bus,Booking,Canclerequest
+from .models import  Availability,Feedback, Schedule, CustomUser,Bus,Booking,Canclerequest,Payment,Profile
 from django.urls import reverse
 from django.contrib.auth.hashers import make_password, check_password
 from rest_framework.response import Response
@@ -16,6 +15,8 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from rest_framework.authentication import SessionAuthentication
 from .validations import custom_validation, validate_email, validate_password
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
+from django.utils import timezone
 from django.conf import settings
 from rest_framework.decorators import action
 from django.http import JsonResponse
@@ -24,6 +25,9 @@ from  datetime import datetime
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+import uuid
+from django.views import View
+from channels.layers import get_channel_layer
 
 class PasswordResetTokenGenerator(PasswordResetTokenGenerator):
     def _make_hash_value(self, user, timestamp):
@@ -36,26 +40,51 @@ password_reset_token = PasswordResetTokenGenerator()
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UsersSerializer
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        serializer = self.get_serializer(instance, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        self.perform_update(serializer)
+        return Response(serializer.data)
 class AddBus(viewsets.ModelViewSet):
     queryset=Bus.objects.all()
     serializer_class=BusSerializer
+class Feedbackview(viewsets.ModelViewSet):
+    queryset=Feedback.objects.all()
+    serializer_class=FeedbackSerializer
+class profileview(viewsets.ModelViewSet):
+    queryset=Profile.objects.all()
+    serializer_class=ProfileSerializer
+  
+    def update(self, request, *args, **kwargs):
+        # Call the update_balance method for PATCH requests
+        try:
+            # Get the user's profile
+            instance = self.get_object()
+            user = instance.user
+            profile = Profile.objects.get(user=user)
+
+            # Get the amount to subtract from the balance (passed in the request data)
+            amount = int(request.data.get('balance'))
+
+            # Subtract the amount from the balance
+            profile.balance += amount
+            if profile.balance <= 0:
+                profile.balance=2000
+                profile.save()
+            profile.save()
+
+            return Response({'message': 'Balance updated successfully'})
+        except Profile.DoesNotExist:
+            return Response({'error': 'User profile not found'}, status=404)
+        except Exception as e:
+            return Response({'error': str(e)}, status=500)
+        
+
 class Scheduleview1(viewsets.ModelViewSet):
     queryset = Schedule.objects.select_related('busPlateNumber').all().order_by('date')
     serializer_class = ScheduleSerializer
-
-    def update(self, request, *args, **kwargs):
-        bus_plate_number = request.data.get('busPlateNumber')
-
-        try:
-            bus = Bus.objects.get(palte_number=bus_plate_number)
-        except Bus.DoesNotExist:
-            return Response({'message': 'Bus with this plate number does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        instance = self.get_object()
-        serializer = self.get_serializer(instance, data=request.data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(busPlateNumber=bus)  # Assuming busPlateNumber is the ForeignKey field name in your Schedule model
-        return Response(serializer.data)
 class Scheduleview(viewsets.ModelViewSet):
     queryset = Schedule.objects.all().order_by('date')
     serializer_class = ScheduleSerializer1
@@ -87,7 +116,7 @@ class SearcheSchedule(viewsets.ModelViewSet):
         searched_destination = self.request.query_params.get('destination', None)
         if searched_destination is not None:
            
-            return Schedule.objects.select_related('busPlateNumber').filter(destination=searched_destination).order_by('time')[:1]
+            return Schedule.objects.select_related('busPlateNumber').filter(destination=searched_destination, available_seats__gt=0).order_by('time')[:1]
         else:
             return Schedule.objects.none()
 class SearcheSchedule2(viewsets.ModelViewSet):
@@ -111,9 +140,38 @@ class BookedSeat(viewsets.ModelViewSet):
             return booked_seats
         else:
             return Booking.objects.none()
+class BookedSeat1(viewsets.ModelViewSet):
+    queryset=Booking.objects.all()
+    serializer_class = BookingE
+    
+    def get_queryset(self):
+        user = self.request.query_params.get('customer_id', None)
+        print (user)
+        if user is not None:
+            last_booked_seat = Booking.objects.filter(customer_id=user).order_by('booking_date').last()
+            print(last_booked_seat)
+            return Booking.objects.filter(pk=last_booked_seat.pk) if last_booked_seat else Booking.objects.none()
+        else:
+            return Booking.objects.none()
+
 class Bookingview(viewsets.ModelViewSet):
     queryset=Booking.objects.all()
     serializer_class=BookingE
+
+class Bookingview1(viewsets.ModelViewSet):
+    queryset=Booking.objects.all()
+    serializer_class=BookingE
+    def get_queryset(self):
+        sched=Schedule.objects.filter(available_seats=0).order_by('time').first()
+        if sched is not None:
+            book=Booking.objects.filter(schedule=sched).all()
+            return book
+        else:
+            return Booking.objects.none()
+       
+
+         
+    
 @api_view(['POST'])
 def addSchedlue(request):
     busPlateNumber=request.data.get('busPlateNumber')
@@ -136,17 +194,34 @@ def addSchedlue(request):
         available_seats=available_seats   
     )
     return Response({'message': 'schedule added successfully.'}, status=status.HTTP_201_CREATED)
+import asyncio
 @api_view(['POST'])
 def Cancle(request):
+    admin_user = CustomUser.objects.filter(is_superuser=True).first()
+    admin_email = admin_user.email
     bookig=request.data.get('bookingId')
+    email=request.data.get('email')
+    try:
+        user=CustomUser.objects.get(email=email)
+    except CustomUser.DoesNotExist:
+        return Response({'message': 'user does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
     print(bookig)
     try:
         book=Booking.objects.get(booking_id=bookig)  
     except  Booking.DoesNotExist:
         return Response({'message':'bokking doesnot exist.'})  
+    userbook=Booking.objects.filter(customer_id=user)
+    print(userbook)
+    if book not in userbook:
+        return Response({'message':'you are not allowed to cancle this booking.'})
     Canclerequest.objects.create(
         bookingid=book
     )
+    subject = 'Notification'
+    message = 'This is a notification for the admin there is a canclation request please check it.'
+    email_from = 'ayelemintesnot77@gmail.com'
+    recipient_list = [admin_email]
+    send_mail(subject, message, email_from, recipient_list)
     return Response({'message': 'canclation request submited.'}, status=status.HTTP_201_CREATED)
 class Cancleview(viewsets.ModelViewSet):
     queryset=Canclerequest.objects.all()
@@ -161,6 +236,15 @@ def increment_available_seats(request):
         return Response({'message': 'Available seats incremented successfully'}, status=200)
     except Schedule.DoesNotExist:
         return Response({'message': 'Schedule not found'}, status=404)
+@api_view(['GET'])
+def book_bus(request):
+    customer_id = request.data.get('customer_id')
+    try:
+        customer = CustomUser.objects.get(id=customer_id)
+    except CustomUser.DoesNotExist:
+        return Response({'message': 'Customer does not exist.'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    
 @api_view(['POST'])
 def book_bus_seat(request):
     # Assuming the request data contains 'customer_id', 'bus_id', and 'seat_number'
@@ -185,11 +269,8 @@ def book_bus_seat(request):
     try:
         
         schedule.available_seats -= 1
-        if schedule.available_seats == 0:
-            # If available seats become zero, delete the bus schedule
-            schedule.delete()
-        else:
-            schedule.save()
+        
+        schedule.save()
     except Schedule.DoesNotExist:
         # Handle case where schedule does not exist for the bus
         pass
@@ -198,11 +279,12 @@ def book_bus_seat(request):
 
 @api_view(['POST'])
 def signup(request):
-    serializer = UserCreateSerializer(data=request.data)
+    serializer = UsersSerializer(data=request.data)
     if serializer.is_valid():
         user = serializer.save()
         user.set_password(request.data['password'])
-        user.is_active = False  # User is inactive until email is verified
+        user.is_active = False 
+        print(user) # User is inactive until email is verified
         user.save()
 
         # Generate and send verification token via email
@@ -319,13 +401,23 @@ class Adminuserupdate(generics.UpdateAPIView):
 class Adminuserdelet(generics.RetrieveDestroyAPIView):
     queryset=CustomUser.objects.all()
     serializer_class=UsersSerializer
+class Paymentview(viewsets.ModelViewSet):
+    queryset=Payment.objects.all()
+    serializer_class=PaymentSerializer
 @api_view(['POST'])
 def chappa(request):
     try:
-        now=datetime.now()
+        now = datetime.now()
         pp = request.data.get('price')
-        mm=request.data.get('userId')
-        ddt= now.strftime("%Y%m%d%H%M%S")
+        mm = request.data.get('customer_id')
+        reference = str(uuid.uuid4())
+        user = CustomUser.objects.get(id=mm)
+        ddt = now.strftime("%Y%m%d%H%M%S")
+        payment = Payment.objects.create(
+            user=user,
+            amount_paid=pp,
+            transaction_id=reference,
+        )
         url = "https://api.chapa.co/v1/transaction/initialize"
         payload = {
             "amount": pp,
@@ -334,9 +426,9 @@ def chappa(request):
             "first_name": "alu",
             "last_name": "lulu",
             "phone_number": "0933205652",
-            "tx_ref": f'tx_{mm}{ddt}',
-            "callback_url": "https://webhook.site/077164d6-29cb-40df-ba29-8a00e59a7e60",
-            "return_url": "http://localhost:3000",
+            "tx_ref": reference,
+            "callback_url": "http://localhost:8000/chapa-callback/",
+            "return_url": "http://localhost:3000/admins/approvedticket",
             "customization": {
                 "title": "ayy",
                 "description": "it"
@@ -350,7 +442,6 @@ def chappa(request):
         response = requests.post(url, json=payload, headers=headers)
         data = response.text
         print(data)
-          # Log the URL for debugging
 
         # Extract the relevant information from the response
         data = response.json()
@@ -360,6 +451,29 @@ def chappa(request):
         return Response(data, status=status_code)
     except Exception as e:
         return Response({'message': 'Internal Server Error'}, status=500)
+
+class ChapaCallbackView(View):
+    def get(self, request):
+        data = request.GET
+        reference = data.get("trx_ref")
+        print(reference)
+
+        # Find the payment by reference
+        try:
+            payment = Payment.objects.get(transaction_id=reference)
+        except Payment.DoesNotExist:
+            return JsonResponse({"error": "Payment not found"}, status=404)
+
+        if data.get("status") == "success":
+            payment.payment_status = "successful"
+        else:
+            payment.payment_status = "failed"
+
+        payment.save()
+
+        return JsonResponse({"message": "Payment status updated"})
+
+
 
 @api_view(['POST'])
 def forgot_password(request):
@@ -399,21 +513,17 @@ def reset_password(request, uidb64, token):
             return Response({'error': 'Invalid token'}, status=status.HTTP_400_BAD_REQUEST)
     except CustomUser.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
-@api_view(['GET', 'OPTIONS'])  # Allow GET requests and preflight OPTIONS requests
-def schedule_detail(request, pk):
-    try:
-        schedule = Schedule.objects.select_related('busPlateNumber').get(pk=pk)
-    except Schedule.DoesNotExist:
-        return Response({'error': 'Schedule not found'}, status=404)
-    
-    if request.method == 'GET':
-        serializer = ScheduleSerializer(schedule)
-        return Response(serializer.data)
-
-    # Handle OPTIONS requests for preflight checks
-    elif request.method == 'OPTIONS':
-        response = Response()
-        response['Access-Control-Allow-Origin'] = 'http://localhost:3000'
-        response['Access-Control-Allow-Methods'] = 'GET, OPTIONS'
-        response['Access-Control-Allow-Headers'] = 'Content-Type, Authorization'  # Adjust headers as needed
-        return response   
+@api_view(['POST'])
+def sendReminder(request):
+    schedule = request.data.get('id')
+    bookings = Booking.objects.filter(schedule_id=schedule)
+    print(bookings)
+    for booking in bookings:
+            send_reminder_email(booking.customer_id.email, booking.schedule)
+    return Response({"message": "eamil message sent to the user."})
+def send_reminder_email(user_email, schedule_details):
+    subject = 'Reminder: Bus Schedule Starting Soon'
+    print(schedule_details)
+    message = f'your bus ' + schedule_details.busPlateNumber.palte_number + ' is starting in 15 minutes'
+    send_mail(subject, message, 'ayelemintesnot77@gmail.com', [user_email])
+    print('yess')

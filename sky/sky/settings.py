@@ -41,6 +41,9 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    
+    'django_cron',
+    'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -52,9 +55,17 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'dbbackup',
+    "django_apscheduler",
+    'channels',
+    
+    'redis',
+    'channels_rabbitmq',
     
 ]
-
+ASGI_APPLICATION = 'sky.asgi.application'
+DBBACKUP_STORAGE = 'django.core.files.storage.FileSystemStorage'
+DBBACKUP_STORAGE_OPTIONS = {'location': BASE_DIR/ 'backup'}
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -66,7 +77,24 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     
 ]
+CRON_CLASSES = [
+    'sky.cron.MyCronJob',
+]
 
+#CRONJOBS = [
+   # ('*/1 * * * *', 'sky.cron.my_scheduled_job')
+#]
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_rabbitmq.core.RabbitmqChannelLayer",
+        "CONFIG": {
+            "hosts": [("rabbitmq", 5672)],
+            "userid": "guest",
+            "password": "guest",
+            "visibility_timeout": 3600,
+        },
+    },
+}
 ROOT_URLCONF = 'sky.urls'
 
 TEMPLATES = [
@@ -94,14 +122,14 @@ WSGI_APPLICATION = 'sky.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'sky',
+        'NAME': 'skybackup',
         'HOST': 'localhost',
         'USER': 'root',
         'PASSWORD': '161616'
     },
     'second_db': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'skybackup',
+        'NAME': 'sky',
         'USER': 'root',
         'PASSWORD': '161616',
         'HOST': 'localhost'
@@ -162,6 +190,7 @@ LOGIN_REDIRECT_URL = 'store/templates/store/success.html'  # replace 'url-name' 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ORIGIN_WHITELIST =(
     'http://localhost:3000',
+    'https://checkout.chapa.co/',
 )
 CORS_ALLOWED_ORIGIN_REGEXES = [
     "http://localhost:3000/*",  # Allow all paths from http://localhost:3000
@@ -171,7 +200,16 @@ CORS_ALLOWED_ORIGINS = [
     
     "http://localhost:3000",
     "http://127.0.0.1:9000",
+    'https://checkout.chapa.co',
 ]
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'rpc://'
+
+# Configure Celery to use Django settings
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'
 # Optional: Allow credentials (cookies, authorization headers, etc.)
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_METHODS = [
@@ -182,6 +220,7 @@ CORS_ALLOW_METHODS = [
     'POST',
     'PUT',
 ]
+#9ade90dc-1570-4db5-a29e-867e4062fe3a
 #res.setHeader("Access-Control-Allow-Origin", "*");
 #dydi wcyw rvuv grjp
 # settings.py

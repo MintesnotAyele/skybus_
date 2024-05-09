@@ -63,8 +63,8 @@ class Home extends Component {
             A TICKET ONLINE
           </h1>
           <p className="par">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt neque
-            atque eveniet <br />
+          Make Your Bus Booking Smoother With Wolkite Bus Station. 
+           convenient and user-friendly bus booking website! <br />
             delectus <br />a quae totam ipsa illum minus laudantium?
           </p>
           <button className="cn">

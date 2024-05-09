@@ -1,0 +1,684 @@
+-- MySQL dump 10.13  Distrib 8.0.36, for Win64 (x86_64)
+--
+-- Host: localhost    Database: skybackup
+-- ------------------------------------------------------
+-- Server version	8.0.36
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `auth_group`
+--
+
+DROP TABLE IF EXISTS `auth_group`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_group` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group`
+--
+
+LOCK TABLES `auth_group` WRITE;
+/*!40000 ALTER TABLE `auth_group` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_group_permissions`
+--
+
+DROP TABLE IF EXISTS `auth_group_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_group_permissions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `group_id` int NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_group_permissions_group_id_permission_id_0cd325b0_uniq` (`group_id`,`permission_id`),
+  KEY `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `auth_group_permissio_permission_id_84c5c92e_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`),
+  CONSTRAINT `auth_group_permissions_group_id_b120cbf9_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_group_permissions`
+--
+
+LOCK TABLES `auth_group_permissions` WRITE;
+/*!40000 ALTER TABLE `auth_group_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `auth_group_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `auth_permission`
+--
+
+DROP TABLE IF EXISTS `auth_permission`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `auth_permission` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `content_type_id` int NOT NULL,
+  `codename` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `auth_permission_content_type_id_codename_01ab375a_uniq` (`content_type_id`,`codename`),
+  CONSTRAINT `auth_permission_content_type_id_2f476e4b_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `auth_permission`
+--
+
+LOCK TABLES `auth_permission` WRITE;
+/*!40000 ALTER TABLE `auth_permission` DISABLE KEYS */;
+INSERT INTO `auth_permission` VALUES (1,'Can add log entry',1,'add_logentry'),(2,'Can change log entry',1,'change_logentry'),(3,'Can delete log entry',1,'delete_logentry'),(4,'Can view log entry',1,'view_logentry'),(5,'Can add permission',2,'add_permission'),(6,'Can change permission',2,'change_permission'),(7,'Can delete permission',2,'delete_permission'),(8,'Can view permission',2,'view_permission'),(9,'Can add group',3,'add_group'),(10,'Can change group',3,'change_group'),(11,'Can delete group',3,'delete_group'),(12,'Can view group',3,'view_group'),(13,'Can add content type',4,'add_contenttype'),(14,'Can change content type',4,'change_contenttype'),(15,'Can delete content type',4,'delete_contenttype'),(16,'Can view content type',4,'view_contenttype'),(17,'Can add session',5,'add_session'),(18,'Can change session',5,'change_session'),(19,'Can delete session',5,'delete_session'),(20,'Can view session',5,'view_session'),(21,'Can add bus',6,'add_bus'),(22,'Can change bus',6,'change_bus'),(23,'Can delete bus',6,'delete_bus'),(24,'Can view bus',6,'view_bus'),(25,'Can add user',7,'add_customuser'),(26,'Can change user',7,'change_customuser'),(27,'Can delete user',7,'delete_customuser'),(28,'Can view user',7,'view_customuser'),(29,'Can add booking',8,'add_booking'),(30,'Can change booking',8,'change_booking'),(31,'Can delete booking',8,'delete_booking'),(32,'Can view booking',8,'view_booking'),(33,'Can add availability',9,'add_availability'),(34,'Can change availability',9,'change_availability'),(35,'Can delete availability',9,'delete_availability'),(36,'Can view availability',9,'view_availability'),(37,'Can add canclerequest',10,'add_canclerequest'),(38,'Can change canclerequest',10,'change_canclerequest'),(39,'Can delete canclerequest',10,'delete_canclerequest'),(40,'Can view canclerequest',10,'view_canclerequest'),(41,'Can add payment',11,'add_payment'),(42,'Can change payment',11,'change_payment'),(43,'Can delete payment',11,'delete_payment'),(44,'Can view payment',11,'view_payment'),(45,'Can add schedule',12,'add_schedule'),(46,'Can change schedule',12,'change_schedule'),(47,'Can delete schedule',12,'delete_schedule'),(48,'Can view schedule',12,'view_schedule'),(49,'Can add Token',13,'add_token'),(50,'Can change Token',13,'change_token'),(51,'Can delete Token',13,'delete_token'),(52,'Can view Token',13,'view_token'),(53,'Can add Token',14,'add_tokenproxy'),(54,'Can change Token',14,'change_tokenproxy'),(55,'Can delete Token',14,'delete_tokenproxy'),(56,'Can view Token',14,'view_tokenproxy'),(57,'Can add cron job log',15,'add_cronjoblog'),(58,'Can change cron job log',15,'change_cronjoblog'),(59,'Can delete cron job log',15,'delete_cronjoblog'),(60,'Can view cron job log',15,'view_cronjoblog'),(61,'Can add cron job lock',16,'add_cronjoblock'),(62,'Can change cron job lock',16,'change_cronjoblock'),(63,'Can delete cron job lock',16,'delete_cronjoblock'),(64,'Can view cron job lock',16,'view_cronjoblock'),(65,'Can add django job',17,'add_djangojob'),(66,'Can change django job',17,'change_djangojob'),(67,'Can delete django job',17,'delete_djangojob'),(68,'Can view django job',17,'view_djangojob'),(69,'Can add django job execution',18,'add_djangojobexecution'),(70,'Can change django job execution',18,'change_djangojobexecution'),(71,'Can delete django job execution',18,'delete_djangojobexecution'),(72,'Can view django job execution',18,'view_djangojobexecution'),(73,'Can add profile',19,'add_profile'),(74,'Can change profile',19,'change_profile'),(75,'Can delete profile',19,'delete_profile'),(76,'Can view profile',19,'view_profile'),(77,'Can add feedback',20,'add_feedback'),(78,'Can change feedback',20,'change_feedback'),(79,'Can delete feedback',20,'delete_feedback'),(80,'Can view feedback',20,'view_feedback');
+/*!40000 ALTER TABLE `auth_permission` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `authtoken_token`
+--
+
+DROP TABLE IF EXISTS `authtoken_token`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `authtoken_token` (
+  `key` varchar(40) NOT NULL,
+  `created` datetime(6) NOT NULL,
+  `user_id` bigint NOT NULL,
+  PRIMARY KEY (`key`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `authtoken_token_user_id_35299eff_fk_store_customuser_id` FOREIGN KEY (`user_id`) REFERENCES `store_customuser` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `authtoken_token`
+--
+
+LOCK TABLES `authtoken_token` WRITE;
+/*!40000 ALTER TABLE `authtoken_token` DISABLE KEYS */;
+INSERT INTO `authtoken_token` VALUES ('8e4a9199371bb039484c22f61c55e9f4e27de292','2024-04-26 21:01:05.480251',1);
+/*!40000 ALTER TABLE `authtoken_token` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_admin_log`
+--
+
+DROP TABLE IF EXISTS `django_admin_log`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_admin_log` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `action_time` datetime(6) NOT NULL,
+  `object_id` longtext,
+  `object_repr` varchar(200) NOT NULL,
+  `action_flag` smallint unsigned NOT NULL,
+  `change_message` longtext NOT NULL,
+  `content_type_id` int DEFAULT NULL,
+  `user_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_admin_log_content_type_id_c4bce8eb_fk_django_co` (`content_type_id`),
+  KEY `django_admin_log_user_id_c564eba6_fk_store_customuser_id` (`user_id`),
+  CONSTRAINT `django_admin_log_content_type_id_c4bce8eb_fk_django_co` FOREIGN KEY (`content_type_id`) REFERENCES `django_content_type` (`id`),
+  CONSTRAINT `django_admin_log_user_id_c564eba6_fk_store_customuser_id` FOREIGN KEY (`user_id`) REFERENCES `store_customuser` (`id`),
+  CONSTRAINT `django_admin_log_chk_1` CHECK ((`action_flag` >= 0))
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_admin_log`
+--
+
+LOCK TABLES `django_admin_log` WRITE;
+/*!40000 ALTER TABLE `django_admin_log` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_admin_log` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_apscheduler_djangojob`
+--
+
+DROP TABLE IF EXISTS `django_apscheduler_djangojob`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_apscheduler_djangojob` (
+  `id` varchar(255) NOT NULL,
+  `next_run_time` datetime(6) DEFAULT NULL,
+  `job_state` longblob NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_apscheduler_djangojob_next_run_time_2f022619` (`next_run_time`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_apscheduler_djangojob`
+--
+
+LOCK TABLES `django_apscheduler_djangojob` WRITE;
+/*!40000 ALTER TABLE `django_apscheduler_djangojob` DISABLE KEYS */;
+INSERT INTO `django_apscheduler_djangojob` VALUES ('weekly_backup','2024-04-29 09:41:32.041361',_binary 'Äï\0\0\0\0\0\0}î(åversionîKåidîå\rweekly_backupîåfuncîå#store.scheduler.scheduler:db_backupîåtriggerîåapscheduler.triggers.intervalîåIntervalTriggerîìî)Åî}î(hKåtimezoneîåbuiltinsîågetattrîìîåzoneinfoîåZoneInfoîìîå	_unpickleîÜîRîåAtlantic/ReykjavikîKÜîRîå\nstart_dateîådatetimeîådatetimeîìîC\n\Ë	 \0°ëîhÜîRîåend_dateîNåintervalîh\Zå	timedeltaîìîK\0MXK\0áîRîåjitterîNubåexecutorîådefaultîåargsî)åkwargsî}îånameîå	db_backupîåmisfire_grace_timeîKåcoalesceîàå\rmax_instancesîKå\rnext_run_timeîhC\n\Ë	) \0°ëîhÜîRîu.');
+/*!40000 ALTER TABLE `django_apscheduler_djangojob` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_apscheduler_djangojobexecution`
+--
+
+DROP TABLE IF EXISTS `django_apscheduler_djangojobexecution`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_apscheduler_djangojobexecution` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `status` varchar(50) NOT NULL,
+  `run_time` datetime(6) NOT NULL,
+  `duration` decimal(15,2) DEFAULT NULL,
+  `finished` decimal(15,2) DEFAULT NULL,
+  `exception` varchar(1000) DEFAULT NULL,
+  `traceback` longtext,
+  `job_id` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_job_executions` (`job_id`,`run_time`),
+  KEY `django_apscheduler_djangojobexecution_run_time_16edd96b` (`run_time`),
+  CONSTRAINT `django_apscheduler_djangojobexecution_job_id_daf5090a_fk` FOREIGN KEY (`job_id`) REFERENCES `django_apscheduler_djangojob` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_apscheduler_djangojobexecution`
+--
+
+LOCK TABLES `django_apscheduler_djangojobexecution` WRITE;
+/*!40000 ALTER TABLE `django_apscheduler_djangojobexecution` DISABLE KEYS */;
+INSERT INTO `django_apscheduler_djangojobexecution` VALUES (1,'Executed','2024-04-27 19:45:36.037027',1.69,1714247137.73,NULL,NULL,'weekly_backup'),(3,'Executed','2024-04-27 19:47:27.165017',0.50,1714247247.66,NULL,NULL,'weekly_backup'),(4,'Executed','2024-04-28 12:16:46.646055',29.12,1714306635.77,NULL,NULL,'weekly_backup'),(6,'Executed','2024-04-28 12:17:46.646055',1.73,1714306668.38,NULL,NULL,'weekly_backup'),(7,'Executed','2024-04-28 12:18:46.646055',1.89,1714306728.53,NULL,NULL,'weekly_backup'),(9,'Missed!','2024-04-28 12:55:30.064898',2.98,1714308933.04,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(10,'Missed!','2024-04-28 13:08:34.754229',3.77,1714309718.52,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(11,'Executed','2024-04-28 13:20:17.146718',16.30,1714310433.45,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(12,'Executed','2024-04-28 13:51:48.531844',4.58,1714312313.11,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(13,'Executed','2024-04-28 14:13:51.750547',7.25,1714313639.00,NULL,NULL,'weekly_backup'),(15,'Missed!','2024-04-28 14:23:51.750547',2.59,1714314234.34,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(17,'Missed!','2024-04-28 17:26:59.191457',10.41,1714325229.60,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(19,'Executed','2024-04-28 17:36:59.191457',33.24,1714325852.44,NULL,NULL,'weekly_backup'),(22,'Missed!','2024-04-28 17:46:59.191457',1.73,1714326420.92,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(23,'Executed','2024-04-28 19:17:44.239138',7.66,1714331871.90,NULL,NULL,'weekly_backup'),(24,'Executed','2024-04-28 19:27:44.239138',2.47,1714332466.70,NULL,NULL,'weekly_backup'),(25,'Executed','2024-04-28 19:37:44.239138',2.42,1714333066.66,NULL,NULL,'weekly_backup'),(26,'Executed','2024-04-28 20:10:24.714243',3.56,1714335028.27,NULL,NULL,'weekly_backup'),(27,'Missed!','2024-04-29 08:36:35.323447',10.31,1714379805.63,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(28,'Executed','2024-04-29 08:46:35.323447',22.22,1714380417.54,NULL,NULL,'weekly_backup'),(29,'Executed','2024-04-29 08:56:35.323447',4.16,1714380999.49,NULL,NULL,'weekly_backup'),(31,'Missed!','2024-04-29 09:06:35.323447',8.76,1714381604.09,'Run time of job \'weekly_backup\' was missed!',NULL,'weekly_backup'),(32,'Executed','2024-04-29 09:21:32.041361',12.29,1714382504.33,NULL,NULL,'weekly_backup'),(33,'Executed','2024-04-29 09:31:32.041361',4.50,1714383096.54,NULL,NULL,'weekly_backup');
+/*!40000 ALTER TABLE `django_apscheduler_djangojobexecution` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_content_type`
+--
+
+DROP TABLE IF EXISTS `django_content_type`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_content_type` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `app_label` varchar(100) NOT NULL,
+  `model` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `django_content_type_app_label_model_76bd3d3b_uniq` (`app_label`,`model`)
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_content_type`
+--
+
+LOCK TABLES `django_content_type` WRITE;
+/*!40000 ALTER TABLE `django_content_type` DISABLE KEYS */;
+INSERT INTO `django_content_type` VALUES (1,'admin','logentry'),(3,'auth','group'),(2,'auth','permission'),(13,'authtoken','token'),(14,'authtoken','tokenproxy'),(4,'contenttypes','contenttype'),(17,'django_apscheduler','djangojob'),(18,'django_apscheduler','djangojobexecution'),(16,'django_cron','cronjoblock'),(15,'django_cron','cronjoblog'),(5,'sessions','session'),(9,'store','availability'),(8,'store','booking'),(6,'store','bus'),(10,'store','canclerequest'),(7,'store','customuser'),(20,'store','feedback'),(11,'store','payment'),(19,'store','profile'),(12,'store','schedule');
+/*!40000 ALTER TABLE `django_content_type` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_cron_cronjoblock`
+--
+
+DROP TABLE IF EXISTS `django_cron_cronjoblock`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_cron_cronjoblock` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `job_name` varchar(200) NOT NULL,
+  `locked` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `job_name` (`job_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_cron_cronjoblock`
+--
+
+LOCK TABLES `django_cron_cronjoblock` WRITE;
+/*!40000 ALTER TABLE `django_cron_cronjoblock` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_cron_cronjoblock` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_cron_cronjoblog`
+--
+
+DROP TABLE IF EXISTS `django_cron_cronjoblog`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_cron_cronjoblog` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `code` varchar(64) NOT NULL,
+  `start_time` datetime(6) NOT NULL,
+  `end_time` datetime(6) NOT NULL,
+  `is_success` tinyint(1) NOT NULL,
+  `message` longtext NOT NULL,
+  `ran_at_time` time(6) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `django_cron_cronjoblog_code_start_time_4fc78f9d_idx` (`code`,`start_time`),
+  KEY `django_cron_cronjoblog_code_start_time_ran_at_time_8b50b8fa_idx` (`code`,`start_time`,`ran_at_time`),
+  KEY `django_cron_cronjoblog_code_is_success_ran_at_time_84da9606_idx` (`code`,`is_success`,`ran_at_time`),
+  KEY `django_cron_cronjoblog_code_48865653` (`code`),
+  KEY `django_cron_cronjoblog_start_time_d68c0dd9` (`start_time`),
+  KEY `django_cron_cronjoblog_end_time_7918602a` (`end_time`),
+  KEY `django_cron_cronjoblog_ran_at_time_7fed2751` (`ran_at_time`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_cron_cronjoblog`
+--
+
+LOCK TABLES `django_cron_cronjoblog` WRITE;
+/*!40000 ALTER TABLE `django_cron_cronjoblog` DISABLE KEYS */;
+INSERT INTO `django_cron_cronjoblog` VALUES (1,'sky.my_cron_job','2024-04-27 19:11:01.613675','2024-04-27 19:11:03.287461',1,'',NULL);
+/*!40000 ALTER TABLE `django_cron_cronjoblog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_migrations`
+--
+
+DROP TABLE IF EXISTS `django_migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_migrations` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `app` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `applied` datetime(6) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_migrations`
+--
+
+LOCK TABLES `django_migrations` WRITE;
+/*!40000 ALTER TABLE `django_migrations` DISABLE KEYS */;
+INSERT INTO `django_migrations` VALUES (1,'contenttypes','0001_initial','2024-04-26 20:49:50.503360'),(2,'contenttypes','0002_remove_content_type_name','2024-04-26 20:49:51.701699'),(3,'auth','0001_initial','2024-04-26 20:49:56.484062'),(4,'auth','0002_alter_permission_name_max_length','2024-04-26 20:49:57.943856'),(5,'auth','0003_alter_user_email_max_length','2024-04-26 20:49:58.021929'),(6,'auth','0004_alter_user_username_opts','2024-04-26 20:49:58.092539'),(7,'auth','0005_alter_user_last_login_null','2024-04-26 20:49:58.185549'),(8,'auth','0006_require_contenttypes_0002','2024-04-26 20:49:58.295998'),(9,'auth','0007_alter_validators_add_error_messages','2024-04-26 20:49:58.385466'),(10,'auth','0008_alter_user_username_max_length','2024-04-26 20:49:58.463985'),(11,'auth','0009_alter_user_last_name_max_length','2024-04-26 20:49:58.560937'),(12,'auth','0010_alter_group_name_max_length','2024-04-26 20:49:58.730139'),(13,'auth','0011_update_proxy_permissions','2024-04-26 20:49:58.792958'),(14,'auth','0012_alter_user_first_name_max_length','2024-04-26 20:49:58.863290'),(15,'store','0001_initial','2024-04-26 20:50:13.153628'),(16,'admin','0001_initial','2024-04-26 20:50:15.254725'),(17,'admin','0002_logentry_remove_auto_add','2024-04-26 20:50:15.285962'),(18,'admin','0003_logentry_add_action_flag_choices','2024-04-26 20:50:15.332087'),(19,'authtoken','0001_initial','2024-04-26 20:50:16.680603'),(20,'authtoken','0002_auto_20160226_1747','2024-04-26 20:50:16.748914'),(21,'authtoken','0003_tokenproxy','2024-04-26 20:50:16.821219'),(22,'authtoken','0004_alter_tokenproxy_options','2024-04-26 20:50:16.883531'),(23,'sessions','0001_initial','2024-04-26 20:50:17.637146'),(24,'django_cron','0001_initial','2024-04-27 19:10:55.353629'),(25,'django_cron','0002_remove_max_length_from_CronJobLog_message','2024-04-27 19:10:55.478577'),(26,'django_cron','0003_cronjoblock','2024-04-27 19:10:56.167619'),(27,'django_apscheduler','0001_initial','2024-04-27 19:25:53.376647'),(28,'django_apscheduler','0002_auto_20180412_0758','2024-04-27 19:25:54.648459'),(29,'django_apscheduler','0003_auto_20200716_1632','2024-04-27 19:25:54.757359'),(30,'django_apscheduler','0004_auto_20200717_1043','2024-04-27 19:25:58.272204'),(31,'django_apscheduler','0005_migrate_name_to_id','2024-04-27 19:25:58.380999'),(32,'django_apscheduler','0006_remove_djangojob_name','2024-04-27 19:25:59.294821'),(33,'django_apscheduler','0007_auto_20200717_1404','2024-04-27 19:26:00.296454'),(34,'django_apscheduler','0008_remove_djangojobexecution_started','2024-04-27 19:26:00.502635'),(35,'django_apscheduler','0009_djangojobexecution_unique_job_executions','2024-04-27 19:26:00.983256'),(36,'django_cron','0004_alter_cronjoblock_id_alter_cronjoblog_id','2024-04-28 12:14:04.390728'),(37,'store','0002_profile','2024-04-28 12:14:08.928260'),(38,'store','0003_alter_profile_balance','2024-04-28 12:14:09.070692'),(39,'store','0004_feedback','2024-04-28 17:05:33.938075');
+/*!40000 ALTER TABLE `django_migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `django_session`
+--
+
+DROP TABLE IF EXISTS `django_session`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `django_session` (
+  `session_key` varchar(40) NOT NULL,
+  `session_data` longtext NOT NULL,
+  `expire_date` datetime(6) NOT NULL,
+  PRIMARY KEY (`session_key`),
+  KEY `django_session_expire_date_a5c62663` (`expire_date`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `django_session`
+--
+
+LOCK TABLES `django_session` WRITE;
+/*!40000 ALTER TABLE `django_session` DISABLE KEYS */;
+/*!40000 ALTER TABLE `django_session` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_availability`
+--
+
+DROP TABLE IF EXISTS `store_availability`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_availability` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `available_seats` int NOT NULL,
+  `bus_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `store_availability_bus_id_06030083_fk_store_bus_id` (`bus_id`),
+  CONSTRAINT `store_availability_bus_id_06030083_fk_store_bus_id` FOREIGN KEY (`bus_id`) REFERENCES `store_bus` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_availability`
+--
+
+LOCK TABLES `store_availability` WRITE;
+/*!40000 ALTER TABLE `store_availability` DISABLE KEYS */;
+/*!40000 ALTER TABLE `store_availability` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_booking`
+--
+
+DROP TABLE IF EXISTS `store_booking`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_booking` (
+  `booking_id` int NOT NULL AUTO_INCREMENT,
+  `booking_date` datetime(6) NOT NULL,
+  `seat_number` int NOT NULL,
+  `customer_id_id` bigint NOT NULL,
+  `schedule_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`booking_id`),
+  KEY `store_booking_schedule_id_68f45151_fk_store_schedule_id` (`schedule_id`),
+  KEY `store_booking_customer_id_id_10a126ad_fk_store_customuser_id` (`customer_id_id`),
+  CONSTRAINT `store_booking_customer_id_id_10a126ad_fk_store_customuser_id` FOREIGN KEY (`customer_id_id`) REFERENCES `store_customuser` (`id`),
+  CONSTRAINT `store_booking_schedule_id_68f45151_fk_store_schedule_id` FOREIGN KEY (`schedule_id`) REFERENCES `store_schedule` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_booking`
+--
+
+LOCK TABLES `store_booking` WRITE;
+/*!40000 ALTER TABLE `store_booking` DISABLE KEYS */;
+INSERT INTO `store_booking` VALUES (2,'2024-04-26 21:54:41.770563',5,1,1),(3,'2024-04-26 22:00:11.244927',4,1,1),(4,'2024-04-26 22:02:13.886172',1,1,1),(5,'2024-04-26 22:05:08.237030',2,1,1),(6,'2024-04-26 22:09:02.786251',3,1,1),(7,'2024-04-26 22:10:53.929821',6,1,1),(10,'2024-04-26 22:31:03.245546',7,1,1),(11,'2024-04-26 22:33:19.111828',8,1,1),(12,'2024-04-26 22:42:59.030026',10,1,1),(13,'2024-04-27 07:47:53.457462',12,1,1),(14,'2024-04-27 07:48:56.912093',9,1,1),(15,'2024-04-27 07:52:59.058819',18,1,1),(16,'2024-04-27 07:55:44.115960',11,1,1),(17,'2024-04-27 07:57:48.925815',13,1,1),(18,'2024-04-27 08:01:37.638543',14,1,1),(19,'2024-04-27 08:03:14.355860',15,1,1),(20,'2024-04-27 08:10:55.318172',16,1,1),(21,'2024-04-27 09:25:58.163491',17,1,1),(22,'2024-04-27 09:41:50.671100',19,1,1),(23,'2024-04-27 09:57:32.041899',20,1,1),(24,'2024-04-27 10:03:01.162721',21,1,1),(26,'2024-04-27 10:15:27.515438',23,1,1),(28,'2024-04-27 13:11:21.795457',9,1,2),(30,'2024-04-28 13:27:01.808253',1,1,3),(31,'2024-04-28 13:35:22.534977',25,1,1),(32,'2024-04-28 13:36:45.889918',26,1,1);
+/*!40000 ALTER TABLE `store_booking` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_bus`
+--
+
+DROP TABLE IF EXISTS `store_bus`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_bus` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `palte_number` varchar(50) NOT NULL,
+  `number_of_site` int NOT NULL,
+  `owner_name` varchar(100) NOT NULL,
+  `owner_ac` int NOT NULL,
+  `city` varchar(50) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `palte_number` (`palte_number`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_bus`
+--
+
+LOCK TABLES `store_bus` WRITE;
+/*!40000 ALTER TABLE `store_bus` DISABLE KEYS */;
+INSERT INTO `store_bus` VALUES (1,'121212',15,'kanu',1234,'jima'),(2,'272727',15,'kanu',1234,'hosana');
+/*!40000 ALTER TABLE `store_bus` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_canclerequest`
+--
+
+DROP TABLE IF EXISTS `store_canclerequest`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_canclerequest` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `Requested_time` datetime(6) NOT NULL,
+  `bookingid_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `store_canclerequest_bookingid_id_a38cae87_fk_store_boo` (`bookingid_id`),
+  CONSTRAINT `store_canclerequest_bookingid_id_a38cae87_fk_store_boo` FOREIGN KEY (`bookingid_id`) REFERENCES `store_booking` (`booking_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_canclerequest`
+--
+
+LOCK TABLES `store_canclerequest` WRITE;
+/*!40000 ALTER TABLE `store_canclerequest` DISABLE KEYS */;
+INSERT INTO `store_canclerequest` VALUES (7,'2024-04-28 18:09:26.982738',22),(8,'2024-04-28 18:11:23.120363',22),(9,'2024-04-28 18:12:57.706908',22),(10,'2024-04-28 18:14:28.516921',22),(11,'2024-04-28 18:37:21.961699',22),(12,'2024-04-28 18:38:35.253099',22),(13,'2024-04-28 18:38:50.938169',22),(14,'2024-04-28 18:39:17.123042',22),(15,'2024-04-28 18:42:41.372401',22),(16,'2024-04-28 18:46:37.607897',22),(17,'2024-04-28 18:57:48.868395',18),(18,'2024-04-28 19:03:46.270788',18),(19,'2024-04-28 19:08:06.422602',16),(20,'2024-04-28 19:47:11.555381',17),(21,'2024-04-28 19:53:13.644607',11),(22,'2024-04-28 19:53:35.427071',11),(23,'2024-04-28 19:53:45.206123',11),(24,'2024-04-28 20:00:34.964119',11),(25,'2024-04-28 20:15:14.339657',11),(26,'2024-04-28 20:26:25.469993',11),(27,'2024-04-28 20:28:04.942264',12);
+/*!40000 ALTER TABLE `store_canclerequest` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_customuser`
+--
+
+DROP TABLE IF EXISTS `store_customuser`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_customuser` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `last_login` datetime(6) DEFAULT NULL,
+  `is_superuser` tinyint(1) NOT NULL,
+  `first_name` varchar(150) NOT NULL,
+  `last_name` varchar(150) NOT NULL,
+  `is_staff` tinyint(1) NOT NULL,
+  `is_active` tinyint(1) NOT NULL,
+  `date_joined` datetime(6) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
+  `phone_number` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_customuser`
+--
+
+LOCK TABLES `store_customuser` WRITE;
+/*!40000 ALTER TABLE `store_customuser` DISABLE KEYS */;
+INSERT INTO `store_customuser` VALUES (1,NULL,1,'','',0,1,'2024-04-26 21:01:03.964183','ayelekanu@gmail.com','daye','pbkdf2_sha256$720000$NkqRgRm2nlxtR0eFF5b6Ld$Xs0cQ2ro8orPKgc8OOeJdcfIjg/XsiaNltqED+Sy/3E=',974789926);
+/*!40000 ALTER TABLE `store_customuser` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_customuser_groups`
+--
+
+DROP TABLE IF EXISTS `store_customuser_groups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_customuser_groups` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `customuser_id` bigint NOT NULL,
+  `group_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `store_customuser_groups_customuser_id_group_id_23393c5e_uniq` (`customuser_id`,`group_id`),
+  KEY `store_customuser_groups_group_id_fef77dc1_fk_auth_group_id` (`group_id`),
+  CONSTRAINT `store_customuser_gro_customuser_id_43cfc1b5_fk_store_cus` FOREIGN KEY (`customuser_id`) REFERENCES `store_customuser` (`id`),
+  CONSTRAINT `store_customuser_groups_group_id_fef77dc1_fk_auth_group_id` FOREIGN KEY (`group_id`) REFERENCES `auth_group` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_customuser_groups`
+--
+
+LOCK TABLES `store_customuser_groups` WRITE;
+/*!40000 ALTER TABLE `store_customuser_groups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `store_customuser_groups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_customuser_user_permissions`
+--
+
+DROP TABLE IF EXISTS `store_customuser_user_permissions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_customuser_user_permissions` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `customuser_id` bigint NOT NULL,
+  `permission_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `store_customuser_user_pe_customuser_id_permission_1a1bbfaa_uniq` (`customuser_id`,`permission_id`),
+  KEY `store_customuser_use_permission_id_0a1c95d7_fk_auth_perm` (`permission_id`),
+  CONSTRAINT `store_customuser_use_customuser_id_840e2c9f_fk_store_cus` FOREIGN KEY (`customuser_id`) REFERENCES `store_customuser` (`id`),
+  CONSTRAINT `store_customuser_use_permission_id_0a1c95d7_fk_auth_perm` FOREIGN KEY (`permission_id`) REFERENCES `auth_permission` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_customuser_user_permissions`
+--
+
+LOCK TABLES `store_customuser_user_permissions` WRITE;
+/*!40000 ALTER TABLE `store_customuser_user_permissions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `store_customuser_user_permissions` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_feedback`
+--
+
+DROP TABLE IF EXISTS `store_feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_feedback` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `email` varchar(254) NOT NULL,
+  `reating` int NOT NULL,
+  `feedback` longtext NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_feedback`
+--
+
+LOCK TABLES `store_feedback` WRITE;
+/*!40000 ALTER TABLE `store_feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `store_feedback` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_payment`
+--
+
+DROP TABLE IF EXISTS `store_payment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_payment` (
+  `payment_id` int NOT NULL AUTO_INCREMENT,
+  `amount_paid` decimal(10,2) NOT NULL,
+  `payment_status` varchar(20) NOT NULL,
+  `transaction_id` varchar(100) NOT NULL,
+  `user_id` bigint DEFAULT NULL,
+  PRIMARY KEY (`payment_id`),
+  UNIQUE KEY `transaction_id` (`transaction_id`),
+  KEY `store_payment_user_id_5edbc869_fk_store_customuser_id` (`user_id`),
+  CONSTRAINT `store_payment_user_id_5edbc869_fk_store_customuser_id` FOREIGN KEY (`user_id`) REFERENCES `store_customuser` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_payment`
+--
+
+LOCK TABLES `store_payment` WRITE;
+/*!40000 ALTER TABLE `store_payment` DISABLE KEYS */;
+INSERT INTO `store_payment` VALUES (1,250.00,'pending','d7ef0783-f760-4636-be9d-91aca7b328ae',1),(2,250.00,'pending','6cbc3cd3-f5bb-487f-9010-d66408b3e84a',1),(3,250.00,'pending','17613d80-a228-40cd-a701-4aeb77b2d0a0',1),(4,250.00,'pending','b8d8c05e-171d-426d-b5e6-316aab8db928',1),(5,250.00,'pending','17b09361-8fe2-45fc-ac3d-0473d5ed5ab8',1),(6,250.00,'pending','2951a9ee-e13b-4c9f-a9f4-149c41027179',1),(7,250.00,'pending','7b2eb350-701f-4817-b019-21b8acb402d0',1),(8,250.00,'pending','dea3089f-079a-44b6-98d5-52b02b9cae50',1),(9,250.00,'pending','2ad5f431-1019-4bea-b258-2953978ecea2',1),(10,250.00,'pending','47eb9d82-41a8-4269-8bc2-501aa809561b',1),(11,250.00,'pending','ef990b5c-5a17-491b-a9fd-0ba29f5c2505',1),(12,250.00,'pending','e9f620b6-6ad3-453e-b320-7fd1e2ffa94f',1),(13,250.00,'pending','69d90b5e-19b2-4406-addc-2b20a72b6b28',1),(14,250.00,'pending','972cef2f-5f26-4397-8f5b-f81156776e12',1),(15,250.00,'pending','7ef84098-22a0-4d1a-b19c-64f58f7fee8f',1),(16,250.00,'pending','e60a6304-67ba-48ba-99be-6ee15d885bda',1),(17,250.00,'pending','de843b81-38fb-4833-85ac-0574f70e8b0c',1),(18,250.00,'pending','c993cee4-b549-424a-8bb9-a899251bd15c',1),(19,250.00,'pending','f9386fcc-a7b9-4252-8346-246c92e22216',1),(20,250.00,'pending','6a3534d9-7db1-4944-a2b5-4a27cba22a4d',1),(21,250.00,'pending','1e844147-9e8f-41c7-9347-bb1859b78dc1',1),(22,250.00,'pending','f76a06f9-caf6-4d12-86a6-58133a23f4e4',1),(23,250.00,'pending','85c5d371-9d70-4706-8491-448da2c408ce',1),(24,250.00,'pending','9ade90dc-1570-4db5-a29e-867e4062fe3a',1),(25,250.00,'pending','55719392-d267-4f9c-af24-f9da95c543d4',1),(26,250.00,'pending','ca5e67ed-605e-4bcc-8002-309bd4ddf93a',1),(27,250.00,'pending','e192ee92-b7d1-4b3a-9e3c-74b85e68d2d2',1),(28,250.00,'pending','66bad996-9d09-4991-b057-634b27cbfbcb',1),(29,250.00,'pending','3fd366c3-02a9-402a-bbbc-244523acdd52',1),(30,250.00,'pending','c7648c29-8156-45fe-83c5-1f0b3f0ecb77',1),(31,250.00,'failed','4855e627-7839-404e-882f-50bd6bc38a34',1),(32,250.00,'pending','8f087efe-78fb-4f40-8dc2-aef82974b10b',1),(33,200.00,'successful','48b1344a-da4f-45ae-aaec-827b19bc5308',1),(34,200.00,'pending','27694771-742d-44f1-bcea-e0a6621a665e',1),(35,250.00,'pending','94ff3543-8622-4cd8-9c5b-df0ac720568e',1),(36,250.00,'pending','c9e4fcb4-4869-4277-94b9-618db988423f',1);
+/*!40000 ALTER TABLE `store_payment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_profile`
+--
+
+DROP TABLE IF EXISTS `store_profile`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_profile` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `balance` int NOT NULL,
+  `user_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  CONSTRAINT `store_profile_user_id_d67604a1_fk_store_customuser_id` FOREIGN KEY (`user_id`) REFERENCES `store_customuser` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_profile`
+--
+
+LOCK TABLES `store_profile` WRITE;
+/*!40000 ALTER TABLE `store_profile` DISABLE KEYS */;
+INSERT INTO `store_profile` VALUES (1,1550,1);
+/*!40000 ALTER TABLE `store_profile` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `store_schedule`
+--
+
+DROP TABLE IF EXISTS `store_schedule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `store_schedule` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `date` date NOT NULL,
+  `destination` varchar(100) NOT NULL,
+  `time` time(6) NOT NULL,
+  `price` int NOT NULL,
+  `available_seats` int DEFAULT NULL,
+  `busPlateNumber_id` bigint NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `store_schedule_busPlateNumber_id_d40d6974_fk_store_bus_id` (`busPlateNumber_id`),
+  CONSTRAINT `store_schedule_busPlateNumber_id_d40d6974_fk_store_bus_id` FOREIGN KEY (`busPlateNumber_id`) REFERENCES `store_bus` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `store_schedule`
+--
+
+LOCK TABLES `store_schedule` WRITE;
+/*!40000 ALTER TABLE `store_schedule` DISABLE KEYS */;
+INSERT INTO `store_schedule` VALUES (1,'2024-04-26','jima','01:40:00.000000',250,54,1),(2,'2024-04-27','addis abeba','13:20:00.000000',250,19,1),(3,'2024-04-27','hosana','13:40:00.000000',200,18,2);
+/*!40000 ALTER TABLE `store_schedule` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
+
+-- Dump completed on 2024-04-29  9:31:40

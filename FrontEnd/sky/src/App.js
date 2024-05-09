@@ -23,8 +23,13 @@ import Report from './admins/report';
 import Availableseat from './assis/availableseat';
 import Viewschedule from './assis/viewschedule'; 
 import Bookedticket from './admins/bookedticket';
+<<<<<<< HEAD
 import Addbusschedule from './admins/addbusschedule'; 
 import Aboutus from './aboutus';
+=======
+import Addbusschedule from './admins/addbusschedule';
+import Aboutus from './admins/aboutus';
+>>>>>>> d68833c8613ef01f857a81bedb698444eb2fe71b
 
 //import Approve from './admins/approve';
 
@@ -37,6 +42,10 @@ import './App.css';
 import Verify from './Fpassenger/verifiy';
 import Userman from './admins/userman';
 import Editschedule from './admins/editschedule';
+import Userup from './admins/userup';
+import Editu from './admins/editu';
+import NotificationListener from './admins/notifiy';
+import Bookedticket1 from './admins/bookedticket1';
 
 
 
@@ -55,7 +64,9 @@ class App extends Component {
             <Route path="/adminpage" element={<Adminpage />} />
             <Route path="/forgot" element={<ForgotPassword />} />
             <Route path="/userman" element={<Userman />} />
+            <Route path="/userup" element={<Userup />} />
             <Route path="/edit/:id" element={<Editschedule />} />
+            <Route path="/editu/:id" element={<Editu />} />
             <Route path="/verifiy/:token" element={<Verify />} />
             <Route path="/reset-password/:uid/:token" element={<ResetPassword />} />
             <Route path="/admins/busmanage" element={<Busmanage/>}/>
@@ -69,13 +80,21 @@ class App extends Component {
             <Route path="/Fpassenger/pass" element={<Pass/>}/>
             <Route path="/contactform" element={<ContactForm />} />
            <Route path="/admins/bookedticket" element={<Bookedticket/>} />
+           <Route path="/admins/bookedticket1" element={<Bookedticket1/>} />
           <Route path="admins/addbus" element={<Addbus/>}/>
           <Route path="admins/feedback" element={<Feedback/>}/>
           <Route path="admins/approvedticket" element={<Approvedticket/>}/>
           <Route path="admins/addbusschedule" element={<Addbusschedule/>}/>
+<<<<<<< HEAD
           <Route path="aboutus/aboutus" element={<Aboutus/>}/>
             <Route path="/mystyle/style" element={<Style />} />
             <Route path="mystyle/aboutus" element={<Aboutus/>}/>
+=======
+          <Route path="admins/aboutus" element={<Aboutus/>}/>
+            <Route path="/mystyle/style" element={<Style />} />
+            <Route path="/notify" element={<NotificationListener />} />
+
+>>>>>>> d68833c8613ef01f857a81bedb698444eb2fe71b
             
           </Routes>
           

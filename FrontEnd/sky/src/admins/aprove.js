@@ -13,7 +13,8 @@ class ApproveCancel extends Component {
 
     fetchCancelRequests = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/api/canclation/'); // Replace with your API endpoint
+            const response = await axios.get('http://localhost:8000/api/canclation/');
+            response.data.bookingid // Replace with your API endpoint
             this.setState({ cancelRequests: response.data });
         } catch (error) {
             console.error('Error fetching cancel requests:', error);
@@ -32,8 +33,16 @@ class ApproveCancel extends Component {
             
         }
     }
-    handleDelete = async (id,bokingid,scheduleId,email) => {
+    handleDelete = async (id,bokingid,scheduleId,price,useId,email) => {
         try {
+            const requestData = {
+                balance: price
+              };
+            axios.put(`http://localhost:8000/api/profile/${useId}/`,requestData )
+            .then(response => {
+              console.log('profile updated successfully:',response.data);
+              // Optionally, you can update the UI or show a success message here
+            })
             await axios.delete(`http://localhost:8000/cancel/${id}/`);
             await axios.post('http://localhost:8000/sendEmailA/', { email: email });
             this.setState(prevState => ({
@@ -81,7 +90,7 @@ class ApproveCancel extends Component {
                                 <td className="border px-4 py-2">{request.bookingid.customer_id.email}</td>
                                 <td className="border px-4 py-2">{request.Requested_time}</td>
                                 <td>
-                                    <button onClick={() => this.handleDelete(request.id, request.bookingid.booking_id,request.bookingid.schedule,request.bookingid.customer_id.email)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Approve</button>
+                                    <button onClick={() => this.handleDelete(request.id, request.bookingid.booking_id,request.bookingid.schedule.id,request.bookingid.schedule.price,request.bookingid.customer_id.id,request.bookingid.customer_id.email)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Approve</button>
                                 </td>
                                 <td>
                                     <button onClick={() => this.handlDicline(request.id,request.bookingid.customer_id.email)} className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Declien</button>

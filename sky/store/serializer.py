@@ -1,5 +1,5 @@
 from rest_framework import serializers,generics
-from .models import Users,Bus,CustomUser,Schedule,Booking,Canclerequest
+from .models import Bus,CustomUser,Schedule,Booking,Canclerequest,Payment,Profile,Feedback
 from django.contrib.auth import authenticate, get_user_model
 
 
@@ -8,13 +8,15 @@ Usermodel=get_user_model()
 class UserbookSerializer(serializers.ModelSerializer):
     class Meta:
         model=CustomUser
-        fields=['email']
-class BookingE(serializers.ModelSerializer):
-    customer_id=UserbookSerializer()
+        fields=['id','email','phone_number']
+class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
-        model=Booking
+        model=Profile
         fields='__all__'
-
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Feedback
+        fields='__all__'
 class UserCreateSerializer(serializers.ModelSerializer):
     class  Meta:
         model =Usermodel
@@ -84,8 +86,24 @@ class UsersSerializer1(serializers.ModelSerializer):
     def create(self, validated_data):
         user = CustomUser.objects.create_user(**validated_data)
         return user
+
+class BookingE(serializers.ModelSerializer):
+    customer_id=UserbookSerializer()
+    schedule=ScheduleSerializer()
+    class Meta:
+        model=Booking
+        fields='__all__'
+class BookingF(serializers.ModelSerializer):
+    schedule=ScheduleSerializer()
+    class Meta:
+        model=Booking
+        fields='__all__'
 class CancleSerializer(serializers.ModelSerializer):
     bookingid=BookingE()
     class  Meta:
         model=Canclerequest
+        fields='__all__'
+class PaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Payment
         fields='__all__'

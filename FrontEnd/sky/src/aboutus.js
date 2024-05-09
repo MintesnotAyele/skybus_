@@ -5,7 +5,7 @@ export class Aboutus extends Component {
     return (
         <div class="text-center p-8 bg-orange-100">
         <h2 class="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl">
-            About  US?
+            ABOUT  US?
         </h2>
     
         <div class="flex flex-wrap items-center mt-20 text-left text-center">

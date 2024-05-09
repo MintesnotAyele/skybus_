@@ -1,8 +1,18 @@
 import React, { Component } from 'react';
 
+<<<<<<< HEAD
 //import { Link } from 'react-router-dom';
 
 
+=======
+
+//import { Link } from 'react-router-dom';
+
+
+//import {Link, Navigate } from 'react-router-dom';
+
+
+>>>>>>> d68833c8613ef01f857a81bedb698444eb2fe71b
 import {Link, Navigate } from 'react-router-dom';
 
 class Passenger extends Component {
