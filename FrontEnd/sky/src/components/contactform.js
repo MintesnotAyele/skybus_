@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 
 const ContactForm = () => {
+  const [formData, setFormData] = useState({
+    first_name: '',
+    last_name: '',
+    email: '',
+    feedback: ''
+  });
+  const [errors, setErrors] = useState({});
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setSubmitting(true);
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/Feedback/', formData);
+      console.log(response);
+      setSubmitting(false);
+    } catch (error) {
+      setErrors(error.response.data);
+      setSubmitting(false);
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
+  };
+
+  const handleCheckboxChange = (event) => {
+    const { name, checked } = event.target;
+    setFormData((prevFormData) => ({ ...prevFormData, [name]: checked }));
+  };
+
   return (
     <div className="max-w-screen-lg mx-auto p-5">
-      <div className="grid grid-cols-1 md:grid-cols-12 border">
+       <div className="grid grid-cols-1 md:grid-cols-12 border">
         <div className="bg-gray-900 md:col-span-4 p-10 text-white">
           <p className="mt-4 text-sm leading-7 font-regular uppercase text-sm 0.875rem;">Contact</p>
           <h3 className="text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight">Get In <span className="text-indigo-600">Touch</span></h3>
@@ -31,33 +64,38 @@ const ContactForm = () => {
             <p class="ms-1 text-sm font-medium text-gray-500 dark:text-gray-400">5</p>
           </div>
         </div>
-        <form className="md:col-span-8 p-10">
-        <div className="flex flex-wrap -mx-3 mb-6">
-                    <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-                        <label htmlFor="grid-first-name" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                            First Name
-                        </label>
-                        <input
-                            id="grid-first-name"
-                            type="text"
-                            placeholder="Samuel"
-                            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
-                        />
-                        <p className="text-red-500 text-xs italic">Please fill out this field.</p>
-                    </div>
-                    <div className="w-full md:w-1/2 px-3">
-                        <label htmlFor="grid-last-name" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
-                            Last Name
-                        </label>
-                        <input
-                            id="grid-last-name"
-                            type="text"
-                            placeholder="FIkre"
-                            className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
-                        />
-                    </div>
-                </div>
-                <div className="flex flex-wrap -mx-3 mb-6">
+        <form className="md:col-span-8 p-10" onSubmit={handleSubmit}>
+          <div className="flex flex-wrap -mx-3 mb-6">
+            <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+              <label htmlFor="grid-first-name" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                First Name
+              </label>
+              <input
+                id="grid-first-name"
+                type="text"
+                name="first_name"
+                value={formData.first_name}
+                onChange={handleChange}
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
+              />
+              {errors.firstName && <p className="text-red-500 text-xs italic">{errors.firstName}</p>}
+            </div>
+            <div className="w-full md:w-1/2 px-3">
+              <label htmlFor="grid-last-name" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                Last Name
+              </label>
+              <input
+                id="grid-last-name"
+                type="text"
+                name="last_name"
+                value={formData.last_name}
+                onChange={handleChange}
+                className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              />
+              {errors.lastName && <p className="text-red-500 text-xs italic">{errors.lastName}</p>}
+            </div>
+          </div>
+          <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
                         <label htmlFor="grid-email" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
                             Email Address
@@ -65,7 +103,10 @@ const ContactForm = () => {
                         <input
                             id="grid-email"
                             type="email"
+                            name='email'
                             placeholder="********@*****.**"
+                            value={formData.email}
+                            onChange={handleChange}
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
                     </div>
@@ -79,36 +120,40 @@ const ContactForm = () => {
                         <textarea
                             id="grid-message"
                             rows="10"
+                            type="text"
+                            name="feedback"
+                            value={formData.feedback}
+                            onChange={handleChange}
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         ></textarea>
-                    </div>
-                    <div className="flex justify-between w-full px-3">
-                        <div className="md:flex md:items-center">
-                            <label className="block text-gray-500 font-bold">
-                                <input
-                                    type="checkbox"
-                                    className="mr-2 leading-tight"
-                                    onChange={() => {}} // Add your onChange logic here
-                                />
-                                <span className="text-sm">
-                                    Send me your newsletter!
-                                </span>
-                            </label>
-                        </div>
-
-  
-                        <button
-                            type="submit"
-                            className="shadow bg-blue-600 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-6 rounded"
-                        >
-                            Send Message
-                        </button>
-                    </div>
-                </div>
+                    </div></div>
+          <div className="flex justify-between w-full px-3">
+            <div className="md:flex md:items-center">
+              <label className="block text-gray-500 font-bold">
+                <input
+                  type="checkbox"
+                  name="newsletter"
+                  checked={formData.newsletter}
+                  onChange={handleCheckboxChange}
+                  className="mr-2 leading-tight"
+                />
+                <span className="text-sm">
+                  Send me your newsletter!
+                </span>
+              </label>
+            </div>
+            <button
+              type="submit"
+              className="shadow bg-blue-600 hover:bg-indigo-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-6 rounded"
+              disabled={submitting}
+            >
+              {submitting ? 'Sending...' : 'Send Message'}
+           </button>
+          </div>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default ContactForm;

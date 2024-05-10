@@ -38,19 +38,33 @@ class Availableseat extends Component {
   
       // Extract user ID from the decoded token
       const userId = localStorage.getItem("useId")
+      const first_name=localStorage.getItem("first_name");
+      const last_name=localStorage.getItem("last_name");
+      const email=localStorage.getItem("email"); 
       const requestData = {
         balance: -price
       };
+      const bresponse = await axios.post('http://localhost:8000/booking', {
+        customer_id: userId,
+        seat_number: seatNumber,
+        schedule: scheduleId
+      });
       axios.put(`http://localhost:8000/api/profile/${userId}/`,requestData )
       .then(response => {
         console.log('Schedule updated successfully:',response.data);
         // Optionally, you can update the UI or show a success message here
-      })
+      });
+      book=bresponse.data.booking_id
+
 
 
       const chapaResponse = await axios.post('http://localhost:8000/pay', {
         customer_id: userId,
         price: price,
+        book:book,
+        first_name:first_name,
+        last_name:last_name,
+        email:email
 
       });
       const redirectUrl=chapaResponse.data.data.checkout_url;
@@ -59,13 +73,9 @@ class Availableseat extends Component {
       window.location.href = redirectUrl;
       // 2. Handle Payment Response from Chapa API
       console.log(seatNumber)
-      const response = await axios.post('http://localhost:8000/booking', {
-        customer_id: userId,
-        seat_number: seatNumber,
-        schedule: scheduleId
-      });
+      
       console.log(userId)
-      console.log(response.data);
+      console.log(bresponse.data);
       // Assuming you want to refresh the available seats after booking
       this.handleSearch();
     } catch (error) {

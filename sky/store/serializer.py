@@ -104,6 +104,12 @@ class CancleSerializer(serializers.ModelSerializer):
         model=Canclerequest
         fields='__all__'
 class PaymentSerializer(serializers.ModelSerializer):
+    user=UsersSerializer()
+    booking=BookingSerializer()
     class Meta:
         model=Payment
+        fields='__all__'
+class FeedbackSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Feedback
         fields='__all__'

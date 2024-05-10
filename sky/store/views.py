@@ -428,10 +428,15 @@ def chappa(request):
         now = datetime.now()
         pp = request.data.get('price')
         mm = request.data.get('customer_id')
+        first_name=request.data.get('first_name')
+        last_name=request.data.get('last_name')
+        email=request.data.get('email')
+        book=request.data.get('book')
         reference = str(uuid.uuid4())
         user = CustomUser.objects.get(id=mm)
         ddt = now.strftime("%Y%m%d%H%M%S")
         payment = Payment.objects.create(
+            booking=book,
             user=user,
             amount_paid=pp,
             transaction_id=reference,
@@ -440,9 +445,9 @@ def chappa(request):
         payload = {
             "amount": pp,
             "currency": "ETB",
-            "email": "alu@gmail.com",
-            "first_name": "alu",
-            "last_name": "lulu",
+            "email": email,
+            "first_name":first_name,
+            "last_name": last_name,
             "phone_number": "0933205652",
             "tx_ref": reference,
             "callback_url": "http://localhost:8000/chapa-callback/",

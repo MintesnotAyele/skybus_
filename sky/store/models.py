@@ -67,6 +67,7 @@ class Booking(models.Model):
     booking_date = models.DateTimeField(auto_now_add=True)
     seat_number = models.IntegerField() 
 class Payment(models.Model):
+    booking=models.ForeignKey(Booking,on_delete=models.CASCADE,null=True)
     user=models.ForeignKey(CustomUser,on_delete=models.CASCADE,null=True)
     payment_id = models.AutoField(primary_key=True)
     amount_paid = models.DecimalField(max_digits=10, decimal_places=2)
@@ -89,5 +90,4 @@ class Feedback(models.Model):
     first_name=models.CharField(max_length=100)
     last_name=models.CharField(max_length=100)
     email=models.EmailField()
-    reating=models.IntegerField()
     feedback=models.TextField()
