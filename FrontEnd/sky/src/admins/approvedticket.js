@@ -5,7 +5,7 @@ import jsPDF from 'jspdf';
 import { Link } from 'react-router-dom';
 
 const Approvedticket = () => {
-  const [ticketDetails, setTicketDetails] = useState(null);
+  const [ticketDetails, setTicketDetails] = useState([]);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const user = localStorage.getItem('useId');

@@ -76,7 +76,7 @@ const Payment = () => {
                     <p className="text-gray-900 whitespace-no-wrap">{payment.user.email}</p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                    <p className="text-gray-900 whitespace-no-wrap">{payment.booking}</p>
+                    <p className="text-gray-900 whitespace-no-wrap">{payment.booking.booking_id}</p>
                   </td>
                   <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
                     <p className="text-gray-900 whitespace-no-wrap">{payment.amount_paid}</p>
@@ -88,7 +88,7 @@ const Payment = () => {
                       <span className="relative">{payment.payment_status}</span>
                   </td>
                   <td className="border px-4 py-2">
-                    <FaTrashAlt onClick={() => handleDelete(payment.booking)} style={{ cursor: 'pointer' }} />
+                    <FaTrashAlt onClick={() => handleDelete(payment.booking.booking_id)} style={{ cursor: 'pointer' }} />
 
                   </td>
                 </tr>

@@ -293,7 +293,7 @@ def book_bus_seat(request):
         # Handle case where schedule does not exist for the bus
         pass
 
-    return Response({'message': 'Bus seat booked successfully.'}, status=status.HTTP_201_CREATED)
+    return Response({'message': 'Bus seat booked successfully.','booking_id': booking.booking_id},status=status.HTTP_201_CREATED)
 
 @api_view(['POST'])
 def signup(request):
@@ -432,11 +432,13 @@ def chappa(request):
         last_name=request.data.get('last_name')
         email=request.data.get('email')
         book=request.data.get('book')
+        booking=Booking.objects.get(booking_id=book)
+        print(booking)
         reference = str(uuid.uuid4())
         user = CustomUser.objects.get(id=mm)
         ddt = now.strftime("%Y%m%d%H%M%S")
         payment = Payment.objects.create(
-            booking=book,
+            booking=booking,
             user=user,
             amount_paid=pp,
             transaction_id=reference,
@@ -484,6 +486,15 @@ class ChapaCallbackView(View):
         # Find the payment by reference
         try:
             payment = Payment.objects.get(transaction_id=reference)
+            admin=CustomUser.objects.filter(is_superuser=True).first()
+            email=admin.email
+            user=payment.user
+            name=user.username
+            subject="Payment Notification"
+            message=f"User {name} has been made a payment of {payment.amount_paid} to book a ticket. Thank you!!."
+            send_mail(subject,message,'ayelemintesnot77@gmail.com', [email])
+            # Send an email to the admin
+
         except Payment.DoesNotExist:
             return JsonResponse({"error": "Payment not found"}, status=404)
 

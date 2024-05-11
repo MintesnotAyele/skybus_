@@ -49,12 +49,15 @@ class Availableseat extends Component {
         seat_number: seatNumber,
         schedule: scheduleId
       });
+      const book=bresponse.data.booking_id
+     
       axios.put(`http://localhost:8000/api/profile/${userId}/`,requestData )
       .then(response => {
+        console.log(book)
         console.log('Schedule updated successfully:',response.data);
         // Optionally, you can update the UI or show a success message here
       });
-      book=bresponse.data.booking_id
+     
 
 
 
