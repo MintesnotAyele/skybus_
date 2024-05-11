@@ -16,6 +16,10 @@ class ApproveCancel extends Component {
             const response = await axios.get('http://localhost:8000/api/canclation/');
             response.data.bookingid // Replace with your API endpoint
             this.setState({ cancelRequests: response.data });
+            console.log(response.data.length);
+            localStorage.removeItem('cancle');
+            localStorage.setItem('cancle',response.data.length);
+
         } catch (error) {
             console.error('Error fetching cancel requests:', error);
         }

@@ -16,6 +16,9 @@ const Userup = () => {
     try {
       const response = await axios.get('http://localhost:8000/api/Users/');
       setUsers(response.data);
+      localStorage.removeItem('user');
+      console.log(response.data.length);
+      localStorage.setItem('user',response.data.length)
     } catch (error) {
       console.error('Error fetching schedules:', error);
     }

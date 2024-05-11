@@ -6,11 +6,15 @@ import FeedbackItem from './FeedbackItem';
 
 const Feedback = () => {
   const [feedbackItems, setFeedbackItems] = useState([]);
-
+  const [feedbackCount, setFeedbackCount] = useState(0);
   useEffect(() => {
     axios.get('http://localhost:8000/api/Feedback') // assuming Django backend API endpoint
      .then(response => {
         setFeedbackItems(response.data);
+        setFeedbackCount(response.data.length);
+        console.log(response.data.length);
+        localStorage.removeItem('feed')
+        localStorage.setItem('feed',response.data.length);
       })
      .catch(error => {
         console.error(error);

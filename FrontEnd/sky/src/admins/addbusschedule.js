@@ -11,9 +11,30 @@ const Addbusschedule = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // First name should not contain special characters or numbers
+    // Last name should not contain special characters or numbers
+    if (!/^[a-zA-Z]+$/.test(destination)) {
+      newErrors.destination = 'destination should only contain letters.';
+    }
+
+    // Phone number should only contain digits
+    if (!/^\d+$/.test(busPlateNumber)) {
+      newErrors.busPlateNumber = 'bus plate numbers should only contain numbers.';
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0; // Returns true if there are no errors
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
+    if(validateForm()){
     try {
       const response = await axios.post('http://localhost:8000/addschedule/', {
         busPlateNumber,
@@ -30,7 +51,7 @@ const Addbusschedule = () => {
       console.error('Error adding bus schedule:', error);
       setModalMessage(error.response.data.error);
       setModalOpen(true);
-    }
+    }}
     setLoading(false);
   };
 
@@ -46,10 +67,12 @@ const Addbusschedule = () => {
               <div>
                 <label htmlFor="bus_plate_number" className="block text-gray-700 dark:text-white mb-1">Bus Plate Number</label>
                 <input type="text" id="bus_plate_number" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none" value={busPlateNumber} onChange={(e) => setBusPlateNumber(e.target.value)} />
+                {errors.busPlateNumber && <p className="text-red-500 text-sm">{errors.busPlateNumber}</p>} 
               </div>
               <div>
                 <label htmlFor="destination" className="block text-gray-700 dark:text-white mb-1">Destination</label>
                 <input type="text" id="destination" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none" value={destination} onChange={(e) => setDestination(e.target.value)} />
+                {errors.destination && <p className="text-red-500 text-sm">{errors.destination}</p>} 
               </div>
             </div>
 

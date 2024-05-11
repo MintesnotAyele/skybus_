@@ -11,6 +11,9 @@ const Bookedticket = () => {
       try {
         const response = await axios.get('http://localhost:8000/api/book');
         setTickets(response.data);
+        console.log(response.data.length);
+        localStorage.removeItem('book');
+        localStorage.setItem('book',response.data.length);
         setLoading(false);
       } catch (error) {
         setError(error.message);

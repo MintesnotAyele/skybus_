@@ -1,14 +1,18 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom';
 
 
  class Report extends Component {
 
   render() {
+    const feed=localStorage.getItem('feed');
+    const book=localStorage.getItem('book');
+    const cancle=localStorage.getItem('cancle');
     return (
       <div>
          <div className="flex justify-center bg-gray-100 py-10 p-14">
   {/* First Stats Container */}
-  <div className="container mx-auto pr-4">
+  <Link to="/admins/bookedticket"><div className="container mx-auto pr-4">
     <div className="w-72 bg-blue-100 max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-200 cursor-pointer">
       <div className="h-20 bg-red-400 flex items-center justify-between">
         <p className="mr-0 text-white text-lg pl-5">to day ticket</p>
@@ -16,11 +20,11 @@ import React, { Component } from 'react'
       <div className="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
         <p>TOTAL</p>
       </div>
-      <p className="py-4 text-3xl ml-5">20,456</p>
+      <p className="py-4 text-3xl ml-5">{book}</p>
     </div>
-  </div>
+  </div></Link>
   {/* Second Stats Container */}
-  <div className="container mx-auto pr-4">
+  <Link to='/admins/feedback'><div className="container mx-auto pr-4">
     <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
       <div className="h-20 bg-blue-500 flex items-center justify-between">
         <p className="mr-0 text-white text-lg pl-5">number of feedback</p>
@@ -28,9 +32,9 @@ import React, { Component } from 'react'
       <div className="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
         <p>TOTAL</p>
       </div>
-      <p className="py-4 text-3xl ml-5">19,694</p>
+      <p className="py-4 text-3xl ml-5">{feed}</p>
     </div>
-  </div>
+  </div></Link>
   {/* Third Stats Container */}
   <div className="container mx-auto pr-4">
     <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
@@ -44,7 +48,7 @@ import React, { Component } from 'react'
     </div>
   </div>
   {/* Fourth Stats Container */}
-  <div className="container mx-auto">
+  <Link to="/admins/aprove"><div className="container mx-auto">
     <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
       <div className="h-20 bg-amber-900 flex items-center justify-between">
         <p className="mr-0 text-white text-lg pl-5">number of canceled ticket</p>
@@ -52,9 +56,11 @@ import React, { Component } from 'react'
       <div className="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
         <p>TOTAL</p>
       </div>
-      <p className="py-4 text-3xl ml-5">0</p>
+      <p className="py-4 text-3xl ml-5">{cancle}</p>
     </div>
+    
   </div>
+  </Link>
 </div>
 {/* Table Stats */}
 <div className="flex justify-center bg-gray-100 py-10 p-5">

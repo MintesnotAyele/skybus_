@@ -10,9 +10,30 @@ const Addbus = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    // First name should not contain special characters or numbers
+    // Last name should not contain special characters or numbers
+    if (!/^[a-zA-Z]+$/.test(owner_name)) {
+      newErrors.owner_name = 'Name should only contain letters.';
+    }
+
+    // Phone number should only contain digits
+    if (!/^\d+$/.test(palte_number)) {
+      newErrors.palte_number = 'bus plate numbers should only contain numbers.';
+    }
+
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0; // Returns true if there are no errors
+  };
 
   const handleSubmit = async () => {
     setLoading(true);
+    if(validateForm()){
     try {
       const response = await axios.post('http://localhost:8000/api/bus/', {
         
@@ -29,7 +50,7 @@ const Addbus = () => {
       console.error('Error adding bus:', error);
       setModalMessage('An error occurred while adding the bus.');
       setModalOpen(true);
-    }
+    }}
     setLoading(false);
   };
 
@@ -51,11 +72,13 @@ const Addbus = () => {
                   <div className="md:col-span-5">
                     <label htmlFor="bus_owner">Bus Owner</label>
                     <input type="text" name="bus_owner" id="bus_owner" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={owner_name} onChange={(e) => setBusOwner(e.target.value)} />
+                    {errors.owner_name && <p className="text-red-500 text-sm">{errors.owner_name}</p>} 
                   </div>
 
                   <div className="md:col-span-5">
                     <label htmlFor="plate">Plate Number</label>
                     <input type="text" name="plate" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={palte_number} onChange={(e) => setPlateNumber(e.target.value)} />
+                    {errors.palte_number && <p className="text-red-500 text-sm">{errors.palte_number}</p>} 
                   </div>
 
                   <div className="md:col-span-3">

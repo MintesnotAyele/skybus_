@@ -6,7 +6,11 @@ const Pass = () => {
   const email=localStorage.getItem("email");
   const navigate = useNavigate();
   const handleLogout = () => {
-    localStorage.clear(); // clear all local storage
+    localStorage.removeItem("token"); // clear all local storage
+    localStorage.removeItem("email"); // clear all local storage
+    localStorage.removeItem("first_name"); // clear all local storage
+    localStorage.removeItem("last_name"); // clear all local storage
+    localStorage.removeItem("useId"); // clear all local storage
     navigate('/'); // navigate to homepage
   };
   return (
