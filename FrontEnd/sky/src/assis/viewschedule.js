@@ -30,9 +30,9 @@ const Viewschedule = () => {
           <div className="bg-gray-800 text-white p-4">Admin Panel</div>
           <nav className="bg-gray-700 text-white flex-1">
             <ul className="p-2">
-              <li className="py-2 px-4 hover:bg-gray-600"><Link to="/adminpage">Dashboard</Link></li>
+              <li className="py-2 px-4 hover:bg-gray-600"><Link to="/assistant">Dashboard</Link></li>
               <li className="py-2 px-4 hover:bg-gray-600"><Link to="/assis/viewschedule">Bus Schedule</Link></li>
-              <li className="py-2 px-4 hover:bg-gray-600"><Link to="/admins/bookedticket">Bus Bookings</Link></li>
+              <li className="py-2 px-4 hover:bg-gray-600"><Link to="/admins/bookedticket1">Bus Bookings</Link></li>
               <li className="py-2 px-4 hover:bg-gray-600" onClick={handleLogout}>Logout</li>
             </ul>
           </nav>
@@ -49,6 +49,7 @@ const Viewschedule = () => {
                 <th className="border px-4 py-2">Destination</th>
                 <th className="border px-4 py-2">Date</th>
                 <th className="border px-4 py-2">time</th>
+                <th className="border px-4 py-2">Available_seats</th>
                 <th className="border px-4 py-2">price</th>
               </tr>
             </thead>
@@ -59,6 +60,7 @@ const Viewschedule = () => {
                   <td className="border px-4 py-2">{schedule.destination}</td>
                   <td className="border px-4 py-2">{schedule.date}</td>
                   <td className="border px-4 py-2">{schedule.time}</td>
+                  <td className="border px-4 py-2">{schedule. available_seats}</td>
                   <td className="border px-4 py-2">{schedule.price}</td>
                 </tr>
               ))}

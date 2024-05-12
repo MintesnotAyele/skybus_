@@ -42,6 +42,7 @@ import Editu from './admins/editu';
 import NotificationListener from './admins/notifiy';
 import Bookedticket1 from './admins/bookedticket1';
 import Payment from './admins/payment';
+import Profile from './admins/aprofile';
 
 
 
@@ -76,6 +77,7 @@ class App extends Component {
             <Route path="/Fpassenger/pass" element={<Pass/>}/>
             <Route path="/contactform" element={<ContactForm />} />
             <Route path="/payment" element={<Payment />} />
+            <Route path="/Profile" element={<Profile />} />
            <Route path="/admins/bookedticket" element={<Bookedticket/>} />
            <Route path="/admins/bookedticket1" element={<Bookedticket1/>} />
           <Route path="admins/addbus" element={<Addbus/>}/>

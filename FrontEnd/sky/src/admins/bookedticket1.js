@@ -15,6 +15,7 @@ const Bookedticket1 = () => {
     try {
       const response = await axios.get(`http://localhost:8000/api/book1?plate_number=${searchQuery}`);
       setTickets(response.data);
+      console.log(response.data);
       setLoading(false);
     } catch (error) {
       setError(error.message);
@@ -48,7 +49,7 @@ const Bookedticket1 = () => {
         <div className="flex mb-4">
           <input
             type="number" // Change input type to "number"
-            placeholder="Enter destination"
+            placeholder="Enter Bus plate number"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="border border-gray-300 px-4 py-2 mr-2"

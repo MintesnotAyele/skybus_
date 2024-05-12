@@ -34,11 +34,11 @@ const Login = () => {
       console.log(rsp.is_superuser);  
       sessionStorage.setItem('token', rsp1.token);  
       localStorage.setItem("useId",rsp.id);  
-      localStorage.setItem("first_name",rsp.first_nmae);  
-      localStorage.setItem("last_name",rsp.last_nmae);  
+      localStorage.setItem("first_name",rsp.first_name);  
+      localStorage.setItem("last_name",rsp.last_name);  
       localStorage.setItem('token',rsp1.token);  
       localStorage.setItem("email",rsp.email);  
-  
+  console.log(rsp.first_name);
       // Ensure response and response.data exist before accessing data  
       if(rsp.is_superuser){  
         console.log('noo');  

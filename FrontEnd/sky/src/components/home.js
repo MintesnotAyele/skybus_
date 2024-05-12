@@ -62,10 +62,10 @@ class Home extends Component {
             <span>WE MAKE IT EASY TO BUY </span> <br />
             A TICKET ONLINE
           </h1>
-          <p className="par">
-          Make Your Bus Booking Smoother With Wolkite Bus Station. 
-           convenient and user-friendly bus booking website! <br />
-            delectus <br />a quae totam ipsa illum minus laudantium?
+          <p className="par"> 
+          Make Your Bus Booking Smoother With Wolkite Bus Station.  
+           convenient and user-friendly bus booking website! <br /> 
+             <br />we're all about making your journey as smooth as possible! 
           </p>
           <button className="cn">
             <a href="#">JOIN US</a>

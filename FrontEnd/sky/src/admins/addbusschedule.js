@@ -15,20 +15,34 @@ const Addbusschedule = () => {
 
   const validateForm = () => {
     const newErrors = {};
-
+  
     // First name should not contain special characters or numbers
     // Last name should not contain special characters or numbers
     if (!/^[a-zA-Z]+$/.test(destination)) {
       newErrors.destination = 'destination should only contain letters.';
     }
-
+  
     // Phone number should only contain digits
     if (!/^\d+$/.test(busPlateNumber)) {
       newErrors.busPlateNumber = 'bus plate numbers should only contain numbers.';
     }
-
+  
+    // Time should not be in the past
+    const currentTime = new Date();
+    const selectedTime = new Date(`2024-05-07T${time}`);
+    if (false) {
+      newErrors.time = "Time cannot be in the past";
+    }
+  
+    // Date should not be in the past
+    const currentDate = new Date();
+    const selectedDate = new Date(date);
+    if (selectedDate < currentDate) {
+      newErrors.date = "Date cannot be in the past";
+    }
+  
     setErrors(newErrors);
-
+  
     return Object.keys(newErrors).length === 0; // Returns true if there are no errors
   };
 
@@ -90,10 +104,12 @@ const Addbusschedule = () => {
               <div>
                 <label htmlFor="time" className="block text-gray-700 dark:text-white mb-1">Time</label>
                 <input type="time" id="time" className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" value={time} onChange={(e) => setTime(e.target.value)} />
+                {errors.time && <p className="text-red-500 text-sm">{errors.time}</p>} 
               </div>
               <div>
                 <label htmlFor="date" className="block text-gray-700 dark:text-white mb-1">Date</label>
                 <input type="date" id="date" className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" value={date} onChange={(e) => setDate(e.target.value)} />
+                {errors.date && <p className="text-red-500 text-sm">{errors.date}</p>} 
               </div>
             </div>
           </div>

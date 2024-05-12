@@ -9,10 +9,7 @@ class UserbookSerializer(serializers.ModelSerializer):
     class Meta:
         model=CustomUser
         fields=['id','email','phone_number']
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Profile
-        fields='__all__'
+
 class FeedbackSerializer(serializers.ModelSerializer):
     class Meta:
         model=Feedback
@@ -25,6 +22,11 @@ class UserCreateSerializer(serializers.ModelSerializer):
 class UsersSerializer(serializers.ModelSerializer):
     class   Meta:
         model = CustomUser
+        fields='__all__'
+class ProfileSerializer(serializers.ModelSerializer):
+    user=UsersSerializer()
+    class Meta:
+        model=Profile
         fields='__all__'
 class UserUpdateSerializer(serializers.ModelSerializer):
     class Meta:

@@ -4,6 +4,8 @@ import React from 'react';
 
 const Pass = () => {
   const email=localStorage.getItem("email");
+  const first_name=localStorage.getItem("first_name");
+  const last_name=localStorage.getItem("last_name");
   const navigate = useNavigate();
   const handleLogout = () => {
     localStorage.removeItem("token"); // clear all local storage
@@ -24,7 +26,7 @@ const Pass = () => {
 
     <div class="flex flex-col items-center mt-6 -mx-2">
         <img class="object-cover w-24 h-24 mx-2 rounded-full" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA0L3BmLWljb240LWppcjIwNjItcG9yLWwtam9iNzg4LnBuZw.png" alt="avatar"/>
-        <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">samuel fikre</h4>
+        <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">{first_name} {last_name}</h4>
         <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">{email}</p>
     </div>
 

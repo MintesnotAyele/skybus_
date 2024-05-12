@@ -174,7 +174,11 @@ class Bookingview1(viewsets.ModelViewSet):
     def get_queryset(self):
         bus = self.request.query_params.get('plate_number', None)
         if bus is not None:
-            sche=Schedule.objects.filter(busPlateNumber=bus).order_by('time').first()
+            bus1=Bus.objects.get(palte_number=bus)
+            sche=Schedule.objects.filter(busPlateNumber=bus1,available_seats=0).order_by('time').first()
+            sche.available_seats=-1
+            sche.save()
+            print(sche)
             if sche is not None:
                 book=Booking.objects.filter(schedule=sche).all()
                 return book

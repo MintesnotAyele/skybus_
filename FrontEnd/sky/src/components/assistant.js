@@ -4,6 +4,8 @@ import RequireAuth from './RequireAuth';
  class Assistant extends Component {
   render() {
     const email=localStorage.getItem("email");
+  const first_name=localStorage.getItem("first_name");
+  const last_name=localStorage.getItem("last_name");
     return (
       <div>
        
@@ -43,20 +45,13 @@ import RequireAuth from './RequireAuth';
             <div class="flex flex-col items-center mt-6 -mx-2">
         <img class="object-cover w-24 h-24 mx-2 rounded-full" 
         src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA0L3BmLWljb240LWppcjIwNjItcG9yLWwtam9iNzg4LnBuZw.png" alt="avatar"/>
-        <h4 class="mx-2 mt-2 font-medium text-blue-200 dark:text-gray-200">assistant</h4>
+        <h4 class="mx-2 mt-2 font-medium text-blue-200 dark:text-gray-200">{first_name} {last_name}</h4>
         <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">{email}</p>
     </div>
 
               
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
                 
-                <Link to="/assis/availableseat"><i class="fas fa-home mr-2"></i>availableseat</Link>
-                </a>
 
-
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                <Link to="/admins/feedback"><i class="fas fa-home mr-2"></i>notification</Link>
-                </a>
                
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
                 
@@ -66,9 +61,7 @@ import RequireAuth from './RequireAuth';
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
                 <Link to="/admins/report"> <i class="fas fa-users mr-2"></i>view report</Link>
                 </a>
-                <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
-                    <i class="fas fa-store mr-2"></i>view schedule
-                </a>
+                
                 <a class="block text-gray-500 py-2.5 px-4 my-4 rounded transition duration-200 hover:bg-gradient-to-r hover:from-cyan-500 hover:to-cyan-500 hover:text-white" href="#">
                 
                 <Link to="/admins/bookedticket1">  <i class="fas fa-exchange-alt mr-2"></i>booked</Link>
@@ -99,7 +92,7 @@ import RequireAuth from './RequireAuth';
             </div>
 
             <div class="mt-8 flex flex-wrap space-x-0 space-y-2 md:space-x-4 md:space-y-0">
-              
+              <Link to="/assis/viewschedule">
                 <div class="flex-1 bg-white p-4 shadow rounded-lg md:w-1/2">
                     <h2 class="text-gray-500 text-lg font-semibold pb-1">Usuarios</h2>
                     <div class="my-1"></div> 
@@ -109,8 +102,8 @@ import RequireAuth from './RequireAuth';
                         <canvas id="usersChart"></canvas>
                     </div>
                 </div>
-
-         
+                </Link>
+                <Link to="/admins/bookedticket1">
                 <div class="flex-1 bg-white p-4 shadow rounded-lg md:w-1/2">
                     <h2 class="text-gray-500 text-lg font-semibold pb-1">Comercios</h2>
                     <div class="my-1"></div> 
@@ -120,9 +113,10 @@ import RequireAuth from './RequireAuth';
                         <canvas id="commercesChart"></canvas>
                     </div>
                 </div>
+                </Link>
             </div>
 
-           
+            
             <div class="mt-8 bg-white p-4 shadow rounded-lg">
                 <h2 class="text-gray-500 text-lg font-semibold pb-4">Autorizaciones Pendientes</h2>
                 <div class="my-1"></div> 
