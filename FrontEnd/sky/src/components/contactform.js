@@ -11,19 +11,25 @@ const ContactForm = () => {
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setSubmitting(true);
-    try {
-      const response = await axios.post('http://127.0.0.1:8000/api/Feedback/', formData);
-      console.log(response);
-      setSubmitting(false);
-    } catch (error) {
-      setErrors(error.response.data);
-      setSubmitting(false);
-    }
-  };
+  const validateForm = () => {
+    const newErrors = {};
 
+    // First name should not contain special characters or numbers
+    if (!/^[a-zA-Z]+$/.test(formData.first_name)) {
+      newErrors.first_name = 'First name should only contain letters.';
+    }
+
+    // Last name should not contain special characters or numbers
+    if (!/^[a-zA-Z]+$/.test(formData.last_name)) {
+      newErrors.last_name = 'Last name should only contain letters.';
+    }
+    if (!/^[^@]+@[^@]+\.[^@]+$/.test(formData.email)) {
+      newErrors.email = 'Last name should only contain letters.';
+    }
+    setErrors(newErrors);
+
+    return Object.keys(newErrors).length === 0; // Returns true if there are no errors
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: value }));
@@ -33,6 +39,22 @@ const ContactForm = () => {
     const { name, checked } = event.target;
     setFormData((prevFormData) => ({ ...prevFormData, [name]: checked }));
   };
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if(validateForm()){
+    setSubmitting(true);
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/api/Feedback/', formData);
+      console.log(response);
+      setSubmitting(false);
+    } catch (error) {
+      setErrors(error.response.data);
+      setSubmitting(false);
+    }}
+  };
+  
+
+ 
 
   return (
     <div className="max-w-screen-lg mx-auto p-5">
@@ -78,7 +100,7 @@ const ContactForm = () => {
                 onChange={handleChange}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-red-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white"
               />
-              {errors.firstName && <p className="text-red-500 text-xs italic">{errors.firstName}</p>}
+              {errors.first_name && <p className="text-red-500 text-xs italic">{errors.first_name}</p>}
             </div>
             <div className="w-full md:w-1/2 px-3">
               <label htmlFor="grid-last-name" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
@@ -92,7 +114,7 @@ const ContactForm = () => {
                 onChange={handleChange}
                 className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
               />
-              {errors.lastName && <p className="text-red-500 text-xs italic">{errors.lastName}</p>}
+              {errors.last_name && <p className="text-red-500 text-xs italic">{errors.last_name}</p>}
             </div>
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
@@ -109,6 +131,7 @@ const ContactForm = () => {
                             onChange={handleChange}
                             className="appearance-none block w-full bg-gray-200 text-gray-700 border border-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
                         />
+                    {errors.email && <p className="text-red-500 text-xs italic">{errors.email}</p>}
                     </div>
                 </div>
     

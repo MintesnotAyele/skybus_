@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 const Approvedticket = () => {
   const [ticketDetails, setTicketDetails] = useState([]);
   const [error, setError] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const user = localStorage.getItem('useId');
+  const navigate = useNavigate();
 
   const fetchTicket = async () => {
     try {
@@ -52,6 +53,7 @@ const Approvedticket = () => {
 
   const closeModalAndRedirect = () => {
     setShowModal(false); // Close modal
+    navigate('/Fpassenger/pass');
     //history.push('/'); // Redirect to home page
   };
 

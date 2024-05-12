@@ -1,13 +1,39 @@
-import React, { Component } from 'react'
+
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
-
- class Report extends Component {
-
-  render() {
+const Report = () =>{
+ 
     const feed=localStorage.getItem('feed');
     const book=localStorage.getItem('book');
     const cancle=localStorage.getItem('cancle');
+
+    const [payments, setPayments] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchPayments = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/api/payment');
+        setPayments(response.data);
+        setLoading(false);
+      } catch (error) {
+        setError(error.message);
+        setLoading(false);
+      }
+    };
+
+    fetchPayments();
+  }, []);
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error}</div>;
+  }
     return (
       <div>
          <div className="flex justify-center bg-gray-100 py-10 p-14">
@@ -67,156 +93,40 @@ import { Link } from 'react-router-dom';
   {/* First Table */}
   <div className="container mr-5 ml-2 mx-auto bg-white shadow-xl">
     <div className="w-11/12 mx-auto">
-      <div className="bg-white my-6">
+      <div className="bg-white my-6 mx-2">
         <table className="text-left w-full border-collapse">
           <thead>
             <tr>
               <th className="py-4 px-6 bg-red-400 font-bold uppercase text-sm text-white border-b border-grey-light">username</th>
-              <th className="py-4 px-6 text-center bg-purple-300 font-bold uppercase text-sm text-white border-b border-grey-light">TOTAL ENTRIES</th>
+              <th className="py-4 px-6 text-center bg-purple-300 font-bold uppercase text-sm text-white border-b border-grey-light">TOTAL Amount</th>
+              <th className="py-4 px-6 text-center bg-blue-300 font-bold uppercase text-sm text-white border-b border-grey-light">BOOKINGID</th>
             </tr>
           </thead>
           <tbody>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">Bible</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">11,980</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">Blah</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">340</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">Blah</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">901</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">Blah</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">11,950</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">Blah</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">459</td>
-            </tr>
+          {payments.map(payment => (
+                <tr key={payment.id}>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p className="text-gray-900 whitespace-no-wrap">{payment.user.username}</p>
+                  </td>
+                  
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p className="text-gray-900 whitespace-no-wrap">{payment.amount_paid}</p>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <p className="text-gray-900 whitespace-no-wrap">{payment.booking.booking_id}</p>
+                  </td>
+                </tr>
+              ))}
           </tbody>
         </table>
       </div>
     </div>
   </div>
-  <div className="container mr-5 mx-auto bg-white shadow-xl">
-    <div className="w-11/12 mx-auto">
-      <div className="bg-white my-6">
-        <table className="text-left w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="py-4 px-6 bg-sky-500 font-bold uppercase text-sm text-white border-b border-grey-light">username</th>
-              <th className="py-4 px-6 text-center bg-purple-300 font-bold uppercase text-sm text-white border-b border-grey-light">ENTRIES</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">495,455</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">495,455</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">495,455</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">32,333</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">31,199</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  {/* Second Table */}
-  <div className="container mr-5 mx-auto bg-white shadow-xl">
-    <div className="w-11/12 mx-auto">
-      <div className="bg-white my-6">
-        <table className="text-left w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="py-4 px-6 bg-orange-400 font-bold uppercase text-sm text-white border-b border-grey-light">username</th>
-              <th className="py-4 px-6 text-center bg-purple-300 font-bold uppercase text-sm text-white border-b border-grey-light">ENTRIES</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">495,455</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">495,455</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">495,455</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">32,333</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">26809304030</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">31,199</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </div>
-  {/* Third Table */}
-  <div className="container mx-auto bg-white shadow-xl">
-    <div className="w-11/12 mx-auto">
-      <div className="bg-white my-6">
-        <table className="text-left w-full border-collapse">
-          <thead>
-            <tr>
-              <th className="py-4 px-6 bg-amber-900 font-bold uppercase text-sm text-white border-b border-grey-light">username</th>
-              <th className="py-4 px-6 text-center bg-purple-300 font-bold uppercase text-sm text-white border-b border-grey-light">POINTS</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">28679609009</td>
-              <td className="py-4 text-center px-6 border-b border-grey-light">11,290</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">28679609009</td>
-              <td className="py-4 text-center px-6 border-b border-grey-light">9,230</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">28679609009</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">234</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">28679609009</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">56,230</td>
-            </tr>
-            <tr className="hover:bg-grey-lighter">
-              <td className="py-4 px-6 border-b border-grey-light">28679609009</td>
-              <td className="py-4 px-6 text-center border-b border-grey-light">323</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  
   </div>
 </div>
+      );
+  };
 
-
-      </div>
-    )
-  }
-}
 
 export default Report
