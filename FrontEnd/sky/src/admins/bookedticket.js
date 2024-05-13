@@ -33,11 +33,11 @@ const Bookedticket = () => {
   }
 
   return (
-    <div className="bg-white p-8 rounded-md w-full">
+    <div className="bg-orange-100 p-8 rounded-md w-full">
       <div className="flex items-center justify-between pb-6">
         <div>
-          <h2 className="text-gray-600 font-semibold">TICKET Order</h2>
-          <span className="text-xs">All ticket item</span>
+          <h2 className="text-slate-950 font-bold text-2xl">Booked Ticket Order</h2>
+          <span className="font-semibold text-xl ">All ticket item</span>
         </div>
         {/* Search and action buttons */}
       </div>
@@ -46,13 +46,13 @@ const Bookedticket = () => {
         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
           <table className="min-w-full leading-normal">
             <thead>
-              <tr>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">USER_EMAIL</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Created at</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">BUS_PLATE_NUMBER</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Seat_number</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Schedule</th>
+              <tr >
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-900 text-left text-xs font-semibold  uppercase tracking-wider text-white  ">ID</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-900 text-left text-xs font-semibold  uppercase tracking-wider text-white ">USER_EMAIL</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-900 text-left text-xs font-semibold  uppercase tracking-wider text-white">Created at</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-900 text-left text-xs font-semibold  uppercase tracking-wider text-white">BUS_PLATE_NUMBER</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-900 text-left text-xs font-semibold  uppercase tracking-wider text-white">Seat_number</th>
+                
               </tr>
             </thead>
             <tbody>

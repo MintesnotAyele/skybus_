@@ -17,16 +17,16 @@ const Pass = () => {
   };
   return (
     <div>
-      <div className="min-h-screen bg-gray-50/35">
-        <aside className=" fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0">
-        <div class=" flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-white border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
+      <div className="min-h-screen bg-gray-50/20">
+        <aside className=" fixed inset-0 z-50 my-4 ml-4 h-[calc(100vh-32px)] w-72 rounded-xl transition-transform duration-300 xl:translate-x-0 ">
+        <div class=" flex flex-col w-64 h-screen px-4 py-8 overflow-y-auto bg-slate-900 border-r rtl:border-r-0 rtl:border-l dark:bg-gray-900 dark:border-gray-700">
     <a href="#" class="mx-auto">
         <img class="w-15 h-5 sm:h-7" src="https://cdn.pixabay.com/photo/2014/04/03/11/55/bus-312564_640.png" alt=""/>
     </a>
 
     <div class="flex flex-col items-center mt-6 -mx-2">
         <img class="object-cover w-24 h-24 mx-2 rounded-full" src="https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIyLTA0L3BmLWljb240LWppcjIwNjItcG9yLWwtam9iNzg4LnBuZw.png" alt="avatar"/>
-        <h4 class="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200">{first_name} {last_name}</h4>
+        <h4 class="mx-2 mt-2 font-medium text-gray-50 dark:text-gray-200">{first_name} {last_name}</h4>
         <p class="mx-2 mt-1 text-sm font-medium text-gray-600 dark:text-gray-400">{email}</p>
     </div>
 
@@ -48,7 +48,7 @@ const Pass = () => {
                 </svg>
 
                 <Link to="/admins/cancelticket">
-                <span class="mx-4 font-medium">cancel requiest</span>
+                <span class="mx-4 font-medium text-gray-50">cancel requiest</span>
                 </Link>
             </a>
             
@@ -58,7 +58,7 @@ const Pass = () => {
                 </svg>
                 <Link to="/assis/availableseat">
                 
-                <span class="mx-4 font-medium">Search Bus </span></Link>
+                <span class="mx-4 font-medium text-gray-50">Search Bus </span></Link>
             </a>
 
 
@@ -68,7 +68,7 @@ const Pass = () => {
                     <path d="M15 12C15 13.6569 13.6569 15 12 15C10.3431 15 9 13.6569 9 12C9 10.3431 10.3431 9 12 9C13.6569 9 15 10.3431 15 12Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 </svg>
                 <Link to="/contactform">
-                <span class="mx-4 font-medium">Feedback</span></Link>
+                <span class="mx-4 font-medium text-gray-50">Feedback</span></Link>
             </a>
             <a class="flex items-center px-2 py-2 text-gray-700 bg-gray-100 rounded-lg dark:bg-gray-800 dark:text-gray-200" href="#">
             <svg class="w-[41px] h-[41px] text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="20" height="24" fill="none" viewBox="0 0 24 24">
@@ -90,7 +90,7 @@ const Pass = () => {
             <ol class="flex flex-wrap items-center w-full bg-opacity-60 rounded-md bg-transparent p-0 transition-all">
               
               <li class="flex items-center text-blue-900 antialiased font-sans text-sm font-normal leading-normal cursor-pointer transition-colors duration-300 hover:text-blue-500">
-                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">home</p>
+                <p class="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal text-gray-50">home</p>
               </li>
             </ol>
           </nav>
@@ -157,7 +157,7 @@ const Pass = () => {
         </a>
         <h2 class=" text-orange-200 block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug !mb-2 text-primary">Frameworks Integration</h2>
         </div>
-        <p class="block antialiased font-sans text-base font-light leading-relaxed text-inherit !mb-4 !font-normal !text-gray-600">Framework-specific guides that cover our recommended approach to installing @material-tailwind/react in a number of popular environments. Select your preferred framework from the list below and follow the instructions.</p>
+        <p class="block antialiased font-sans text-base font-light leading-relaxed text-inherit !mb-4 !font-normal !text-gray-50">Framework-specific guides that cover our recommended approach to installing @material-tailwind/react in a number of popular environments. Select your preferred framework from the list below and follow the instructions.</p>
         <div class="mt-8 grid grid-cols-2 gap-6 md:grid-cols-4" id="frameworks-integration">
        <Link to='/admins/cancelticket'> <a class="grid w-full min-w-[7rem] transform cursor-pointer place-items-center rounded-xl border border-blue-gray-50 bg-white px-3 py-2 transition-all hover:scale-105 hover:border-blue-gray-100 hover:bg-blue-gray-50 hover:bg-opacity-25" href="#">
             <span class="my-6 grid h-24 w-24 place-items-center">

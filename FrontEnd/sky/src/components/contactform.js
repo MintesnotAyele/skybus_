@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const ContactForm = () => {
@@ -10,6 +11,10 @@ const ContactForm = () => {
   });
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState('');
+  const [modalType, setModalType] = useState('');
+  const navigate = useNavigate();
 
   const validateForm = () => {
     const newErrors = {};
@@ -46,23 +51,32 @@ const ContactForm = () => {
     try {
       const response = await axios.post('http://127.0.0.1:8000/api/Feedback/', formData);
       console.log(response);
+      setModalMessage('Your message has been sent successfully.');
+      setModalType('success');
+      setShowModal(true);
       setSubmitting(false);
     } catch (error) {
       setErrors(error.response.data);
+      setModalMessage('There was an error sending your message. Please try again later.');
+      setModalType('error');
+      setShowModal(true);
       setSubmitting(false);
     }}
   };
-  
 
- 
+  const handleModalClose = () => {
+    setShowModal(false);
+    navigate('/');
+
+  };
 
   return (
     <div className="max-w-screen-lg mx-auto p-5">
-       <div className="grid grid-cols-1 md:grid-cols-12 border">
+      <div className="grid grid-cols-1 md:grid-cols-12 border">
         <div className="bg-gray-900 md:col-span-4 p-10 text-white">
           <p className="mt-4 text-sm leading-7 font-regular uppercase text-sm 0.875rem;">Contact</p>
           <h3 className="text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight">Get In <span className="text-indigo-600">Touch</span></h3>
-          <p className="mt-4 leading-7 text-gray-200">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</p>
+          <p className="mt-4 leading-7 text-gray-200">We are dedicated to providing you with the best possible travel experiance.if you have any feedback dont hesistate to get in touch withus.</p>
           <div className="flex items-center mt-5">
             <svg className="h-6 mr-2 text-indigo-600" fill="currentColor" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 489.536 489.536" xmlnsXlink="http://www.w3.org/1999/xlink"></svg>
             <span className="text-sm">Address #14, Street #12, Gurage, central Ethiopia, Ethiopia.</span>
@@ -87,9 +101,9 @@ const ContactForm = () => {
           </div>
         </div>
         <form className="md:col-span-8 p-10" onSubmit={handleSubmit}>
-          <div className="flex flex-wrap -mx-3 mb-6">
+        <div className="flex flex-wrap -mx-3 mb-6">
             <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-              <label htmlFor="grid-first-name" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              <label htmlFor="grid-first-name" className="block uppercase tracking-wide text-gray-50 text-xs font-bold mb-2">
                 First Name
               </label>
               <input
@@ -103,7 +117,7 @@ const ContactForm = () => {
               {errors.first_name && <p className="text-red-500 text-xs italic">{errors.first_name}</p>}
             </div>
             <div className="w-full md:w-1/2 px-3">
-              <label htmlFor="grid-last-name" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+              <label htmlFor="grid-last-name" className="block uppercase tracking-wide text-gray-50 text-xs font-bold mb-2">
                 Last Name
               </label>
               <input
@@ -119,7 +133,7 @@ const ContactForm = () => {
           </div>
           <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label htmlFor="grid-email" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        <label htmlFor="grid-email" className="block uppercase tracking-wide text-gray-50 text-xs font-bold mb-2">
                             Email Address
                         </label>
                         <input
@@ -137,7 +151,7 @@ const ContactForm = () => {
     
                 <div className="flex flex-wrap -mx-3 mb-6">
                     <div className="w-full px-3">
-                        <label htmlFor="grid-message" className="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2">
+                        <label htmlFor="grid-message" className="block uppercase tracking-wide text-gray-50 text-xs font-bold mb-2">
                             Your Message
                         </label>
                         <textarea
@@ -160,7 +174,7 @@ const ContactForm = () => {
                   onChange={handleCheckboxChange}
                   className="mr-2 leading-tight"
                 />
-                <span className="text-sm">
+                <span className="text-sm text-gray-50">
                   Send me your newsletter!
                 </span>
               </label>
@@ -175,6 +189,23 @@ const ContactForm = () => {
           </div>
         </form>
       </div>
+      {showModal && (
+        <div className={`fixed z-10 inset-0 overflow-y-auto ${modalType === 'error' ? 'bg-red-500' : 'bg-green-500'} flex items-center justify-center`}>
+          <div className="bg-white rounded-lg p-6 max-w-md w-full">
+            <div className="text-center">
+              <h2 className="text-xl font-bold mb-2">{modalType === 'error' ? 'Error' : 'Success'}</h2>
+              <p className="text-gray-700">{modalMessage}</p>
+            </div>
+            <div className="mt-5 text-right"><button
+                className="bg-gray-500 text-white py-2 px-4 rounded"
+                onClick={handleModalClose}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

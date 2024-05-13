@@ -70,16 +70,16 @@ const Addbusschedule = () => {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-gray-900">
+    <div className="bg-orange-100  dark:bg-gray-900">
       <div className="w-full max-w-3xl mx-auto p-8">
         <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md border dark:border-gray-700">
-          <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">Bus Schedule</h1>
+          <h1 className="text-2xl font-bold text-slate-950 dark:text-white mb-4">Bus Schedule</h1>
 
           <div className="mb-6">
-            <h2 className="text-xl font-semibold text-gray-700 dark:text-white mb-2">Fill Bus Schedule</h2>
+            <h2 className="text-xl font-semibold text-slate-950 dark:text-white mb-2">Fill Bus Schedule</h2>
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <label htmlFor="bus_plate_number" className="block text-gray-700 dark:text-white mb-1">Bus Plate Number</label>
+                <label htmlFor="bus_plate_number" className="block text-slate-950 dark:text-white mb-1">Bus Plate Number</label>
                 <input type="text" id="bus_plate_number" className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none" value={busPlateNumber} onChange={(e) => setBusPlateNumber(e.target.value)} />
                 {errors.busPlateNumber && <p className="text-red-500 text-sm">{errors.busPlateNumber}</p>} 
               </div>
@@ -115,7 +115,7 @@ const Addbusschedule = () => {
           </div>
 
           <div className="mt-8 flex justify-end">
-            <button onClick={handleSubmit} className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-700 dark:bg-teal-600 dark:text-white dark:hover:bg-teal-900">Place Order</button>
+            <button onClick={handleSubmit} className="bg-sky-500 text-white px-4 py-2 rounded-lg hover:bg-teal-700 dark:bg-teal-600 dark:text-white dark:hover:bg-teal-900">Place Order</button>
           </div>
         </div>
       </div>

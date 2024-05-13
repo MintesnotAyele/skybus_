@@ -73,6 +73,11 @@ const Approvedticket = () => {
               <br />
               <span><strong>BUSPLATENUMBER: </strong> {ticket.schedule.busPlateNumber.palte_number}</span>
               <br />
+              <span><strong>Date: </strong> {ticket.schedule.date}</span>
+              <br/>
+              <span><strong>Time: </strong> {ticket.schedule.time}</span>
+              <br />
+              
               <span><strong>Seat_number: </strong> {ticket.seat_number}</span>
               <br />
               <span><strong>Phone:</strong> {ticket.customer_id.phone_number}</span>

@@ -63,7 +63,8 @@ class profileview(viewsets.ModelViewSet):
             # Get the user's profile
             instance = self.get_object()
             user = instance.user
-            profile = Profile.objects.get(user=user)
+            user1=CustomUser.objects.get(id=user)
+            profile = Profile.objects.get(user=user1)
 
             # Get the amount to subtract from the balance (passed in the request data)
             amount = int(request.data.get('balance'))
@@ -258,6 +259,22 @@ def increment_available_seats(request):
         return Response({'message': 'Available seats incremented successfully'}, status=200)
     except Schedule.DoesNotExist:
         return Response({'message': 'Schedule not found'}, status=404)
+@api_view(['POST'])
+def updateprofile(request):
+    user = request.data.get('userId')
+    try:
+        pro = Profile.objects.get(user=user)
+        amount = int(request.data.get('balance'))
+
+            # Subtract the amount from the balance
+        pro.balance += amount
+        if pro.balance <= 0:
+            pro.balance=2000
+            pro.save()
+        pro.save()
+        return Response({'message': 'Balance updated successfully'})
+    except Profile.DoesNotExist:
+        return Response({'error': 'User profile not found'}, status=404)
 @api_view(['GET'])
 def book_bus(request):
     customer_id = request.data.get('customer_id')
@@ -308,7 +325,11 @@ def signup(request):
         user.is_active = False 
         print(user) # User is inactive until email is verified
         user.save()
-
+        payment = Profile.objects.create(
+            user=user,
+            balance=500
+            
+        )
         # Generate and send verification token via email
         verification_token = Token.objects.create(user=user)
         send_verification_email(user.email, verification_token.key)

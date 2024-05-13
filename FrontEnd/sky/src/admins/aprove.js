@@ -40,9 +40,10 @@ class ApproveCancel extends Component {
     handleDelete = async (id,bokingid,scheduleId,price,useId,email) => {
         try {
             const requestData = {
-                balance: price-50
+                balance: price-=50,
+                userId: useId
               };
-            axios.put(`http://localhost:8000/api/profile/${useId}/`,requestData )
+            axios.post(`http://localhost:8000/updatepro/`,requestData )
             .then(response => {
               console.log('profile updated successfully:',response.data);
               // Optionally, you can update the UI or show a success message here

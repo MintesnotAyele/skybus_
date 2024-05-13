@@ -69,43 +69,43 @@ const Editschedule = () => {
   };
 
   return (
-    <div class="min-h-screen p-6 bg-gray-100 flex items-center justify-center">
+    <div class="min-h-screen p-6 bg-orange-200 flex items-center justify-center">
     <div class="container max-w-screen-lg mx-auto">
       <div>
-        <h2 class="font-semibold text-xl text-gray-600">edit Schedule</h2>
+        <h2 class="font-semibold text-xl text-slate-950">edit Schedule</h2>
  
   
-        <div class="bg-white rounded shadow-lg p-4 px-4 md:p-8 mb-6">
+        <div class="bg-neutral-700 rounded shadow-lg p-4 px-4 md:p-8 mb-6">
           <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 lg:grid-cols-3">
-            <div class="text-gray-600">
-              <p class="font-medium text-lg">Schedule Details</p>
-              <p>Please edit a fields you want.</p>
+            <div class="text-white">
+              <p class="font-size-1.125rem">Schedule Details</p>
+              <p >Please edit a fields you want.</p>
             </div>
   
-            <div class="lg:col-span-2">
-              <div class="grid gap-4 gap-y-2 text-sm grid-cols-1 md:grid-cols-5">
-                <div class="md:col-span-5">
-                  <label for="bus_id">Date</label>
-                  <input type="text" name="date" id="date" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={schedules.date} onChange={handleChange} />
+            <div class="lg:col-span-2  text-white">
+              <div class="grid gap-4 gap-y-2 text-zinc-950 grid-cols-1 md:grid-cols-5">
+                <div class="md:col-span-5 ">
+                  <label class="text-white" for="bus_id ">Date</label>
+                  <input type="text-zinc-900" name="date" id="date" className="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={schedules.date} onChange={handleChange} />
                 </div>
   
-                <div class="md:col-span-5">
-                  <label for="plate">plate number</label>
+                <div class="md:col-span-5 text-zinc-950">
+                  <label class="text-white" for="plate ">plate number</label>
                   <input type="text" name='plate' class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={schedules.plate} onChange={handleChange}/>
                 </div>
   
-                <div class="md:col-span-3">
-                  <label for="address">Available seats</label>
+                <div class="md:col-span-3 text-zinc-950">
+                  <label class="text-white" for="address ">Available seats</label>
                   <input type="text" name="seats" id="seats" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={schedules.seats} onChange={handleChange} />
                 </div>
   
-                <div class="md:col-span-2">
-                  <label for="city">Destination</label>
+                <div class="md:col-span-2 text-zinc-950">
+                  <label class="text-white" for="city ">Destination</label>
                   <input type="text" name="destination" id="city" class="h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={schedules.destination} onChange={handleChange} />
                 </div>
   
-                <div class="md:col-span-2">
-                  <label for="country">Time</label>
+                <div class="md:col-span-2 text-zinc-950">
+                  <label class="text-white" for="country ">Time</label>
                   <div class="h-10 bg-gray-50 flex border border-gray-200 rounded items-center mt-1">
                     <input name="time" id="country" placeholder="Country" class="px-4 appearance-none outline-none text-gray-800 w-full bg-transparent" value={schedules.time} onChange={handleChange}/>
                     <button tabindex="-1" class="cursor-pointer outline-none focus:outline-none transition-all text-gray-300 hover:text-red-600">
@@ -121,7 +121,7 @@ const Editschedule = () => {
                 </div>
                 
                 <div class="md:col-span-1">
-                  <label for="zipcode">Price</label>
+                  <label class="text-white" for="zipcode">Price</label>
                   <input type="text" name="price" id="price" class="transition-all flex items-center h-10 border mt-1 rounded px-4 w-full bg-gray-50" value={schedules.price} onChange={handleChange}/>
                 </div>
                 

@@ -41,27 +41,27 @@ const Payment = () => {
   }; 
 
   return (
-    <div className="bg-white p-8 rounded-md w-full">
+    <div className="bg-orange-100 p-8 rounded-md w-full">
       <div className="flex items-center justify-between pb-6">
         <div>
-          <h2 className="text-gray-600 font-semibold">Payment Information</h2>
-          <span className="text-xs">All Payment item</span>
+          <h2 className="text-slate-950 font-bold text-3xl">Payment Information</h2>
+          <span className="text-slate-950 text-2xl font-semibold">All Payment item</span>
         </div>
         {/* Search and action buttons */}
       </div>
       {/* Table displaying booked tickets */}
-      <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+      <div className="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto ">
         <div className="inline-block min-w-full shadow rounded-lg overflow-hidden">
-          <table className="min-w-full leading-normal">
+          <table className="min-w-full leading-normal bg-slate-400">
             <thead>
               <tr>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">ID</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">USER_EMAIL</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Booking ID</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Amount_paid</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Transaction_id</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Payment_status</th>
-                <th className="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Actions</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-800 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-white">ID</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-800 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-white">USER_EMAIL</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-800 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-white">Booking ID</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-800 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-white">Amount_paid</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-800 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-white">Transaction_id</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-cyan-800 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-white">Payment_status</th>
+                <th className="px-5 py-3 border-b-2 border-gray-200 bg-red-500 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider text-white">Actions</th>
     
               </tr>
             </thead>

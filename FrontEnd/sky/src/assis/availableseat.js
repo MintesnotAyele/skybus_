@@ -42,7 +42,8 @@ class Availableseat extends Component {
       const last_name=localStorage.getItem("last_name");
       const email=localStorage.getItem("email"); 
       const requestData = {
-        balance: -price
+        balance: -price,
+        userId: userId
       };
       const bresponse = await axios.post('http://localhost:8000/booking', {
         customer_id: userId,
@@ -51,7 +52,7 @@ class Availableseat extends Component {
       });
       const book=bresponse.data.booking_id
      
-      axios.put(`http://localhost:8000/api/profile/${userId}/`,requestData )
+      axios.post(`http://localhost:8000/updatepro/`,requestData )
       .then(response => {
         console.log(book)
         console.log('Schedule updated successfully:',response.data);
@@ -131,8 +132,8 @@ class Availableseat extends Component {
               className="border border-gray-300 px-4 py-2 mr-2"
             >
               <option value="">Select Destination</option>
-              <option value="hosana">HOSANA</option>
-              <option value="Addis Abeba">ADDIS-ABEBA</option>
+              <option value="hosana">HOSSANA</option>
+              <option value="AddisAbeba">ADDIS-ABEBA</option>
               <option value="jima">JIMA</option>
             </select>
             <button

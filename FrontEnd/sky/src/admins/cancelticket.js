@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const Cancelticket = () => {
@@ -7,7 +8,7 @@ const Cancelticket = () => {
   const [reason, setReason] = useState('');
   const [modalOpen, setModalOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
-
+  const navigate = useNavigate();
   const handleChange = (event) => {
     const { name, value } = event.target;
     if (name === 'bookingId') setBookingId(value);
@@ -42,6 +43,7 @@ const Cancelticket = () => {
   const closeModal = () => {
     setModalOpen(false);
     setErrorMessage('');
+    navigate('/Fpassenger/pass/');
   };
 
   return (
@@ -63,7 +65,7 @@ const Cancelticket = () => {
             <textarea id="reason" name="reason" value={reason} onChange={handleChange} rows="3" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-primary-500 focus:border-primary-500 sm:text-sm"></textarea>
           </div>
         </form>
-        <button type="button" onClick={cancel} className="mt-4 w-full bg-blue-950 text-white py-2 px-4 rounded-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">Cancel</button>
+        <button type="button" onClick={cancel} className="mt-4 w-full bg-blue-950 text-white py-2 px-4 rounded-md hover:bg-blue-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2">Cancel request</button>
       </div>
 
       {/* Modal */}

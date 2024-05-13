@@ -36,23 +36,25 @@ const Report = () =>{
   }
     return (
       <div>
-         <div className="flex justify-center bg-gray-100 py-10 p-14">
+
+         <div className="flex justify-center bg-orange-100 py-10 p-14">
   {/* First Stats Container */}
-  <Link to="/admins/bookedticket"><div className="container mx-auto pr-4">
-    <div className="w-72 bg-blue-100 max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-200 cursor-pointer">
-      <div className="h-20 bg-red-400 flex items-center justify-between">
+  <Link to="/admins/bookedticket"><div className="container mx-auto pr-4  ">
+    <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-200 cursor-pointer">
+      <div className="h-20 bg-slate-900 flex items-center justify-between">
         <p className="mr-0 text-white text-lg pl-5">to day ticket</p>
       </div>
       <div className="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
         <p>TOTAL</p>
       </div>
+
       <p className="py-4 text-3xl ml-5">{book}</p>
     </div>
   </div></Link>
   {/* Second Stats Container */}
   <Link to='/admins/feedback'><div className="container mx-auto pr-4">
     <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
-      <div className="h-20 bg-blue-500 flex items-center justify-between">
+      <div className="h-20 bg-slate-900 flex items-center justify-between">
         <p className="mr-0 text-white text-lg pl-5">number of feedback</p>
       </div>
       <div className="flex justify-between px-5 pt-6 mb-2 text-sm text-gray-600">
@@ -62,9 +64,10 @@ const Report = () =>{
     </div>
   </div></Link>
   {/* Third Stats Container */}
+  <Link to="/payment">
   <div className="container mx-auto pr-4">
     <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
-      <div className="h-20 bg-orange-400 flex items-center justify-between">
+      <div className="h-20 bg-slate-900 flex items-center justify-between">
         <p className="mr-0 text-white text-lg pl-5">available ticket</p>
       </div>
       <div className="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
@@ -72,11 +75,11 @@ const Report = () =>{
       </div>
       <p className="py-4 text-3xl ml-5">711</p>
     </div>
-  </div>
+  </div></Link>
   {/* Fourth Stats Container */}
   <Link to="/admins/aprove"><div className="container mx-auto">
     <div className="w-72 bg-white max-w-xs mx-auto rounded-sm overflow-hidden shadow-lg hover:shadow-2xl transition duration-500 transform hover:scale-100 cursor-pointer">
-      <div className="h-20 bg-amber-900 flex items-center justify-between">
+      <div className="h-20 bg-slate-900 flex items-center justify-between">
         <p className="mr-0 text-white text-lg pl-5">number of canceled ticket</p>
       </div>
       <div className="flex justify-between pt-6 px-5 mb-2 text-sm text-gray-600">
@@ -89,7 +92,7 @@ const Report = () =>{
   </Link>
 </div>
 {/* Table Stats */}
-<div className="flex justify-center bg-gray-100 py-10 p-5">
+<div className="flex justify-center bg-orange-100 py-20 p-5">
   {/* First Table */}
   <div className="container mr-5 ml-2 mx-auto bg-white shadow-xl">
     <div className="w-11/12 mx-auto">
@@ -97,9 +100,9 @@ const Report = () =>{
         <table className="text-left w-full border-collapse">
           <thead>
             <tr>
-              <th className="py-4 px-6 bg-red-400 font-bold uppercase text-sm text-white border-b border-grey-light">username</th>
-              <th className="py-4 px-6 text-center bg-purple-300 font-bold uppercase text-sm text-white border-b border-grey-light">TOTAL Amount</th>
-              <th className="py-4 px-6 text-center bg-blue-300 font-bold uppercase text-sm text-white border-b border-grey-light">BOOKINGID</th>
+              <th className="py-4 px-6 bg-slate-400 font-bold uppercase text-sm text-white border-b border-grey-light">username</th>
+              <th className="py-4 px-6 text-center bg-neutral-700 font-bold uppercase text-sm text-white border-b border-grey-light">TOTAL Amount</th>
+              <th className="py-4 px-6 text-center bg-orange-900 font-bold uppercase text-sm text-white border-b border-grey-light">BOOKINGID</th>
             </tr>
           </thead>
           <tbody>

@@ -45,18 +45,18 @@ const Userup = () => {
 
   return (
     <div>
-      <div className="flex h-screen bg-gray-200">
+      <div className="flex h-screen bg-orange-100">
         {/* Sidebar */}
         <div className="flex flex-col w-64">
           {/* Sidebar content */}
           {/* Replace this with your sidebar content */}
-          <div className="bg-gray-800 text-white p-4">Admin Panel</div>
+          <div className="bg-slate-950 text-white p-4">Admin Panel</div>
           <nav className="bg-gray-700 text-white flex-1">
             <ul className="p-2">
-              <li className="py-2 px-4 hover:bg-gray-600"><Link to="/adminpage">Dashboard</Link></li>
-              <li className="py-2 px-4 hover:bg-gray-600"><Link to="/assis/viewschedule">Bus Schedule</Link></li>
-              <li className="py-2 px-4 hover:bg-gray-600"><Link to="/admins/bookedticket">Bus Bookings</Link></li>
-              <li className="py-2 px-4 hover:bg-gray-600" onClick={handleLogout}><Link>Logout</Link></li>
+              <li className="py-2 px-4 bg-stone-400 "><Link to="/adminpage">Dashboard</Link></li>
+              <li className="py-2 px-4 hover:bg-sky-500"><Link to="/assis/viewschedule">Bus Schedule</Link></li>
+              <li className="py-2 px-4 hover:bg-sky-500"><Link to="/admins/bookedticket">Bus Bookings</Link></li>
+              <li className="py-2 px-4 hover:bg-sky-500" onClick={handleLogout}><Link>Logout</Link></li>
             </ul>
           </nav>
         </div>
@@ -67,10 +67,10 @@ const Userup = () => {
           <table className="w-full bg-white shadow-md rounded">
             <thead>
               <tr>
-                <th className="border px-4 py-2">Email</th>
-                <th className="border px-4 py-2">Username</th>
-                <th className="border px-4 py-2">PhoneNumber</th>
-                <th className="border px-4 py-2">Actions</th>
+                <th className="border px-4 py-2 bg-neutral-400">Email</th>
+                <th className="border px-4 py-2  bg-neutral-400">Username</th>
+                <th className="border px-4 py-2  bg-neutral-400">PhoneNumber</th>
+                <th className="border px-4 py-2  bg-red-400">Actions</th>
               </tr>
             </thead>
             <tbody>

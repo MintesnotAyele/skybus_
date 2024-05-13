@@ -27,7 +27,7 @@ const Viewschedule = () => {
     <div>
       <div className="flex h-screen bg-gray-200">
         <div className="flex flex-col w-64">
-          <div className="bg-gray-800 text-white p-4">Admin Panel</div>
+          <div className="bg-slate-900 text-white p-4">assistant Panel</div>
           <nav className="bg-gray-700 text-white flex-1">
             <ul className="p-2">
               <li className="py-2 px-4 hover:bg-gray-600"><Link to="/assistant">Dashboard</Link></li>
@@ -38,19 +38,19 @@ const Viewschedule = () => {
           </nav>
         </div>
 
-        <div className="flex-1 p-6">
+        <div className="flex-1 p-6 bg-orange-100">
           <h1 className="text-2xl font-bold mb-4">Sky Bus Schedule </h1>
           <img className="w-18 h-14 mr-6" src="https://cdn.pixabay.com/photo/2014/04/03/11/55/bus-312564_640.png" alt="Flowbite Logo" />
 
-          <table className="w-full bg-white shadow-md rounded">
+          <table className="w-full bg-blue-100 shadow-md rounded">
             <thead>
-              <tr>
-                <th className="border px-4 py-2">busPlateNumber</th>
-                <th className="border px-4 py-2">Destination</th>
-                <th className="border px-4 py-2">Date</th>
-                <th className="border px-4 py-2">time</th>
-                <th className="border px-4 py-2">Available_seats</th>
-                <th className="border px-4 py-2">price</th>
+              <tr >
+                <th className="border px-4 py-2 bg-teal-900 text-white">busPlateNumber</th>
+                <th className="border px-4 py-2 bg-teal-900 text-white">Destination</th>
+                <th className="border px-4 py-2 bg-teal-900  text-white">Date</th>
+                <th className="border px-4 py-2 bg-teal-900  text-white">time</th>
+                <th className="border px-4 py-2 bg-teal-900  text-white">Available_seats</th>
+                <th className="border px-4 py-2 bg-teal-900  text-white">price</th>
               </tr>
             </thead>
             <tbody>
